@@ -1,0 +1,133 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 uploadBannerContainer">
+            <form [formGroup]="form">
+                <div class="row">
+
+
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label required" for="bannerType">Banner type</label>
+                            <select id="bannerType"
+                                [ngClass]="{'is-invalid': form.get('type').touched && form.get('type').invalid}"
+                                class="form-control" formControlName="type">
+                                <option disabled value="">Choose Type</option>
+                                <option *ngFor="let item of bannerTypes" [value]="item.value">
+                                    {{ item.title }}
+                                </option>
+                            </select>
+                            <div *ngIf="form.get('image').touched && form.get('image').invalid"
+                                class="invalid-feedback">
+                                <span>This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label required">Title</label>
+                            <input type="text" name="altText"
+                                [ngClass]="{'is-invalid': form.get('altText').touched && form.get('altText').invalid}"
+                                class="form-control" formControlName="altText" (blur)="trim(form.get('altText'))" />
+                            <div *ngIf="form.get('image').touched && form.get('image').invalid"
+                                class="invalid-feedback">
+                                <span>This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label required" for="cardType">Card Type</label>
+                            <select id="cardType"
+                                [ngClass]="{'is-invalid': form.get('cardType').touched && form.get('cardType').invalid}"
+                                class="form-control" formControlName="cardType">
+                                <option disabled value="">Choose Card Type</option>
+                                <option *ngFor="let item of cardTypes" [value]="item.value">
+                                    {{ item.title }}
+                                </option>
+                            </select>
+                            <div *ngIf="form.get('image').touched && form.get('image').invalid"
+                                class="invalid-feedback">
+                                <span>This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="bannerLink">Banner Link</label>
+                            <input type="text" id="bannerLink"
+                                [ngClass]="{'is-invalid': form.get('link').touched && form.get('link').invalid}"
+                                class="form-control" formControlName="link" (blur)="trim(form.get('link'))"
+                                placeholder="eg. /categories/personal-care" />
+                            <div *ngIf="form.get('image').touched && form.get('image').invalid"
+                                class="invalid-feedback">
+                                <span>This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="couponCode">Coupon Code</label>
+                            <input type="text" id="couponCode"
+                                [ngClass]="{'is-invalid': form.get('couponCode').touched && form.get('couponCode').invalid}"
+                                class="form-control" formControlName="couponCode" (blur)="trim(form.get('couponCode'))"
+                                placeholder="eg. HBFRSHP500" />
+                            <div *ngIf="form.get('couponCode').touched && form.get('couponCode').invalid"
+                                class="invalid-feedback">
+                                <span>This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div id="addproduct-img-collapse">
+                            <div class="mb-3">
+                                <label class="required mb-0">Image </label>
+                                <div class="mb-2 fs-13">Shop Now and Lifestyle Tips: 1440px * 358px <br>Consult Us,
+                                    Health Packages, and
+                                    Lab Tests: 1350px * 200px<br>File Format: .webp, .png, .jpg, .jpeg</div>
+                                <app-dropzone formControlName="image" accept="image/jpeg,image/png,image/webp"
+                                    [multiple]="false"
+                                    [ngClass]="{'is-invalid': form.get('image').touched && form.get('image').invalid}">
+                                </app-dropzone>
+
+                                <div *ngIf="form.get('image').touched && form.get('image').invalid"
+                                    class="invalid-feedback">
+                                    <span>This field is required.</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div id="addproduct-img-collapse">
+                            <div class="mb-3">
+                                <label class="mb-0">Mobile Image</label>
+                                <div class="mb-2 fs-13">400px * 200px <br>File Format: .webp, .png, .jpg, .jpeg</div>
+                                <app-dropzone formControlName="mobImage" accept="image/jpeg,image/png,image/webp"
+                                    [multiple]="false"
+                                    [ngClass]="{'is-invalid': form.get('mobImage').touched && form.get('mobImage').invalid}">
+                                </app-dropzone>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="mb-3">
+                            <label class="label">Active</label>
+                            <app-hb-switch formControlName="active" defaultBoColor="#dfdfdf" size="small" color="#f46a6a">
+                            </app-hb-switch>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid"
+                    (click)="onSubmit()">{{editId?'Update':'Add'}} Promotional Banner</button>
+            </form>
+        </div>
+    </div>
+</div>

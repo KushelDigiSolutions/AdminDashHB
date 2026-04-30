@@ -1,0 +1,141 @@
+.profile {
+  svg {
+    width: 40px;
+  }
+}
+
+table td {
+  color: #000;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+.btn-sm {
+  font-size: 0.9rem;
+}
+
+.doc {
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  span {
+    color: #888;
+    font-size: 12px;
+  }
+}
+
+.apptDate {
+  b {
+    display: block;
+    font-size: 13px;
+  }
+}
+
+#calendar {
+  .btn-light {
+    color: #000;
+    background-color: #fff;
+    border-color: #e8e8e9;
+    font-size: 18px;
+  }
+
+  .mdi-menu-down::before {
+    content: "󰍝";
+    margin-left: 40px;
+    font-size: 30px;
+    line-height: 0px;
+    position: relative;
+    top: 5px;
+    color: #5b73e8;
+  }
+
+  .line {
+    width: 100%;
+    color: #bbb8b8 !important;
+    margin-left: 20px;
+    margin-right: 3px;
+    height: 2px;
+  }
+
+  .dateMain {
+    margin-bottom: 35px;
+
+    .dateLine {
+      width: 13px;
+      margin-left: 13px;
+      margin-right: 10px;
+    }
+
+    .btn {
+      border-radius: 0;
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+
+    .healthDate {
+      .text {
+        font-size: 13px;
+        margin-right: 10px;
+        font-weight: 500;
+      }
+
+      .btn-light {
+        color: #a9a6a6;
+        background-color: #fff;
+        border-color: transparent;
+        font-size: 13px;
+        border-bottom: 1px solid #5b73e8;
+        border-radius: 0;
+        padding-left: 0px;
+        padding-right: 0;
+        padding-top: 0px;
+        padding-bottom: 5px;
+      }
+
+      .mdi-menu-down::before {
+        margin-left: 5px;
+        font-size: 23px;
+        line-height: 0px;
+        position: relative;
+        top: 4px;
+        color: #000000;
+        left: 5px;
+      }
+    }
+  }
+}
+
+.fullcalendar {
+  ::ng-deep {
+    .fc-header-toolbar {
+      border: 1px solid #f5f6f8;
+      margin-bottom: 0rem!important;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .fc-toolbar-chunk:nth-child(2) {
+      div {
+        display: flex;
+        .btn {
+          background: transparent;
+          border: transparent;
+          color: #5b73e8;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          padding-left: 25px;
+          padding-right: 25px;
+          box-shadow: none;
+          outline: none;
+        }
+      }
+    }
+    .fc-col-header-cell-cushion {
+      padding: 10px 4px;
+    }
+  }
+
+}

@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <app-page-title title="Blog Pool" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="row mb-md-2">
+        <div class="col-sm-12 col-md-6">
+          <div class="dataTables_length">
+            <label class="d-inline-flex align-items-center">Show<select name="pageSize" [(ngModel)]="pageSize" class="
+                    custom-select custom-select-sm
+                    form-control form-control-sm form-select form-select-sm
+                  " (change)="changeValue(pageSize,'limit')">
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="25">25</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+              </select>
+              entries</label>
+          </div>
+        </div>
+        <!-- Search -->
+        <div class="col-sm-12 col-md-6">
+          <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+            <form #search="ngForm" (submit)="onSearch(search)">
+              <label class="d-inline-flex align-items-center">Search:
+                <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                  aria-controls="tickets-table" ngModel /></label>
+            </form>
+          </div>
+        </div>
+        <!-- End search -->
+      </div>
+      <div class="table-responsive mb-4">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+          <form>
+            <table class="
+                  table table-centered
+                  datatables
+                  dt-responsive
+                  nowrap
+                  table-card-list
+                " style="border-spacing: 0 12px; width: 100%">
+              <thead>
+                <tr class="bg-transparent">
+                  <th scope="col">
+                    Image
+                  </th>
+                  <th scope="col">
+                    Date
+                  </th>
+                  <th scope="col">
+                    {{ "Blogs.blogTitle" | translate }}
+                  </th>
+                  <th scope="col">
+                    {{ "Blogs.blogType" | translate }}
+                  </th>
+                  <th scope="col">
+                    {{ "Blogs.blogStatus" | translate }}
+                  </th>
+                  <th style="width: 170px">{{ "Order.action" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of dataArray; let i = index" class="odd">
+                  <td [width]="70">
+                    <img style="width: 70px;" [src]="imgUrl+data.featuredImage.savedName" />
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.createdAt|date: 'medium'" [term]="service?.searchTerm">
+                    </ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.title" [term]="service?.searchTerm">
+                    </ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.blogType" [term]="service?.searchTerm">
+                    </ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.status" [term]="service?.searchTerm">
+                    </ngb-highlight>
+                  </td>
+                  <td>
+                    <!-- <a [routerLink]="['edit', data._id]" href="javascript:void(0);" class="px-3 text-primary"
+                      placement="top" ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="px-3 text-danger" placement="top" ngbTooltip="Delete"
+                      (click)="removeBlog(data._id)"><i class="uil uil-trash-alt font-size-18"></i></a> -->
+                    <a [routerLink]="['..','blogs','view', data._id]" class="btn btn-sm btn-primary me-2">View</a>
+                    <a href="javascript:void(0);" class="btn btn-sm btn-success" placement="top"
+                      ngbTooltip="Accept To Review" (click)="acceptBlogToReview(data._id,i)">Accept</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="float-end">
+              <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize"
+                (pageChange)="changeValue($event,'page')">
+                <ng-template ngbPaginationPrevious>Previous</ng-template>
+                <ng-template ngbPaginationNext>Next</ng-template>
+              </ngb-pagination>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

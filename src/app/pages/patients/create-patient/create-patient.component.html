@@ -1,0 +1,92 @@
+<div class="container-fluid">
+  <app-page-title title="Add Patient" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-8 col-12">
+          <form [formGroup]="form" (submit)="onSubmit()">
+            <div class="row">
+              <div class="col-lg-6 mb-3">
+
+                <label>First Name</label>
+                <input formControlName="firstName" type="text" class="form-control"
+                  [ngClass]="{'is-invalid': (submitted || f.firstName.touched) && f.firstName.invalid}"
+                  placeholder="First Name" (blur)="trimValue(f.firstName)">
+                <div class="invalid-feedback">This field is required</div>
+              </div>
+              <div class="col-lg-6 mb-3">
+                <label>Last Name</label>
+                <input formControlName="lastName" type="text" class="form-control"
+                  [ngClass]="{'is-invalid': (submitted || f.lastName.touched) && f.lastName.invalid}"
+                  placeholder="Last Name" (blur)="trimValue(f.lastName)">
+                <div class="invalid-feedback">
+                  <span *ngIf="f.lastName.errors?.required">This field is required</span>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-3">
+                <label>Email</label>
+                <input formControlName="email" type="text" class="form-control"
+                  [ngClass]="{'is-invalid': (submitted || f.email.touched) && f.email.invalid}" placeholder="Email"
+                  (blur)="trimValue(f.email)">
+                <div class="invalid-feedback">
+                  <span *ngIf="f.email.errors?.required">This field is required</span>
+                  <span *ngIf="f.email.errors?.pattern">Please enter valid email address</span>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-3">
+                <label>Phone</label>
+                <ngx-intl-tel-input formControlName="phone" [cssClass]="'custom'"
+                  [onlyCountries]="intlTelInput.onlyCountries" [preferredCountries]="intlTelInput.preferredCountries"
+                  [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                  [searchCountryField]="intlTelInput.searchCountryField" [selectFirstCountry]="false"
+                  [selectedCountryISO]="intlTelInput.selectedCountryISO" [maxLength]="15" [phoneValidation]="true"
+                  [separateDialCode]="intlTelInput.separateDialCode"
+                  [numberFormat]="intlTelInput.PhoneNumberFormat.National" name="phone"
+                  [ngClass]="{'is-invalid': (submitted || f.phone.touched) &&  f.phone.invalid}">
+                </ngx-intl-tel-input>
+                <div class="invalid-feedback">This field is required</div>
+              </div>
+              <div class="col-lg-6 mb-3">
+                <label>Gender</label>
+                <select formControlName="gender" type="text" class="form-control"
+                  [ngClass]="{'is-invalid': (submitted || f.gender.touched) && f.gender.invalid}">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback">
+                  <span *ngIf="f.gender.errors?.required">This field is required</span>
+                  <span *ngIf="f.gender.errors?.pattern">Please enter valid email address</span>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-3">
+                <label>D.O.B</label>
+                <input formControlName="DOB" type="date" class="form-control"
+                  [ngClass]="{'is-invalid': (submitted || f.DOB.touched) && f.DOB.invalid}" placeholder="D.O.B">
+                <div class="invalid-feedback">
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-3">
+                <label>Body Type</label>
+                <input formControlName="bodyType" type="text" class="form-control"
+                  [ngClass]="{'is-invalid': (submitted || f.bodyType.touched) && f.bodyType.invalid}" placeholder="eg: Vata, Pitta, and Kapha">
+                <div class="invalid-feedback">
+                  <span *ngIf="f.gender.errors?.required">This field is required</span>
+                  <span *ngIf="f.gender.errors?.pattern">Please enter valid email address</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary mb-3" type="submit">Create Patient</button>
+            <div *ngIf="reqError" class="alert alert-danger">
+              <strong>Error!</strong> {{reqError}}
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

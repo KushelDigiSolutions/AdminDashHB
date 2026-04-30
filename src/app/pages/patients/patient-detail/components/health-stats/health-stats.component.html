@@ -1,0 +1,146 @@
+<div id="calendar">
+    <div class="d-flex align-items-center mb-5">
+        <div class="dropdown mt-4 mt-sm-0" ngbDropdown>
+            <a class="btn btn-light dropdown-toggle" ngbDropdownToggle>
+                {{tabs[activeTab].label}} <i class="mdi mdi-menu-down"></i>
+            </a>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <ng-container *ngFor="let tab of tabs | keyvalue">
+                    <a *ngIf="tab.key != activeTab" class="dropdown-item" href="javascript: void(0);"
+                        (click)="onChangeTab(tab.key)">{{tab.value.label}}</a>
+                </ng-container>
+            </div>
+        </div>
+        <hr class="line">
+    </div>
+    <div class="d-flex align-items-center justify-content-between dateMain">
+        <div>
+            <form [formGroup]="rangeForm" *ngIf="activeTab == 'vitals'" class="d-flex healthStatsRangeForm" (submit)="getVitals()">
+                <div class="d-flex align-items-center healthDate">
+                    <div class="text">
+                        FROM
+                    </div>
+                    <div class="mt-4 mt-sm-0">
+                        <div class="input-group clockpicker">
+                            <input formControlName="startDate" ngbDatepicker class="form-control" [autoClose]="true"
+                                [maxDate]="maxDate" placeholder="yyyy-mm-dd" #date="ngbDatepicker"
+                                (dateSelect)="onDateSelect($event)" (click)="date.toggle()" />
+                            <!-- <div class="input-group-append" (click)="date.toggle()">
+                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <hr class="dateLine">
+                <div class="d-flex align-items-center healthDate me-3">
+                    <div class="text">
+                        TO
+                    </div>
+                    <div class="mt-4 mt-sm-0">
+                        <div class="mt-4 mt-sm-0">
+                            <div class="input-group clockpicker">
+                                <input formControlName="endDate" ngbDatepicker class="form-control" [autoClose]="true"
+                                    [maxDate]="maxDate" placeholder="yyyy-mm-dd" #date2="ngbDatepicker"
+                                    (dateSelect)="onDateSelect($event)" (click)="date2.toggle()" />
+                                <!-- <div class="input-group-append" (click)="date2.toggle()">
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary font-size-24 px-2 py-0"><i class="uil-arrow-right"></i></button>
+            </form>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-primary" (click)="openModal(healthStatsModal)">
+                <i class="mdi mdi-plus"></i>
+                {{activeTab == 'vitals'? 'ADD VITALS':'ADD SYMPTOM'}}
+            </button>
+        </div>
+    </div>
+    <!-- calendar -->
+    <div *ngIf="activeTab == 'symptoms'">
+        <div class="mb-4 symptomsCont">
+            <div class="d-flex justify-content-center align-items-center calendarHead">
+                <i class="mdi mdi-chevron-left pointer p-2 text-primary font-size-24"
+                    (click)="changeSymptomsFilterDate('prev')"></i>
+                <span class="px-4">{{sliderDate | date: 'MMM yyyy'}}</span>
+                <i class="mdi mdi-chevron-right pointer p-2 text-primary font-size-24"
+                    (click)="changeSymptomsFilterDate('next')"></i>
+            </div>
+            <swiper [config]="config" (swiper)="onSwiper($event)" (slideChange)="onSlideChange()">
+                <ng-template swiperSlide *ngFor="let data of symptomsList;">
+                    <div class="symptomsSlide pointer" [ngClass]="{active: selectedDay == data}"
+                        (click)="onSelectDay(data)">
+                        <div class="text-center p-2 day">{{data.label}}</div>
+                        <ul class="list-unstyled symptoms">
+                            <li *ngFor="let symptom of data.symptoms" class="px-2 py-3 mb-2">
+                                <h6>{{symptom.name}}</h6>
+                                <span class="twoLines">{{symptom.description}}</span>
+                                <span class="text-muted d-block font-size-10 b-6 mt-1">{{symptom.createdAt | date:
+                                    'hh:mm a'}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </ng-template>
+
+            </swiper>
+        </div>
+        <div class="symptomsCont">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 150px;">DATE</th>
+                        <th>SYMPTOMS</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="selectedDay">
+                    <tr *ngFor="let symptom of selectedDay.symptoms">
+                        <td>{{symptom.createdAt | date:'hh:mm a'}} <br> {{symptom.createdAt | date:'dd MMM, yyyy'}}</td>
+                        <td>
+                            <h6 class="mb-1">{{symptom.name}}</h6>
+                            <p>{{symptom.description}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="py-4"></td>
+                        <td class="py-4"></td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="!selectedDay">
+                    <tr>
+                        <td colspan="2" class="text-center pt-5">
+                            <p>No date selected!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="activeTab == 'vitals'">
+        <div>
+            <app-vital-chart [data]="vitals"></app-vital-chart>
+        </div>
+    </div>
+</div>
+<ng-template #healthStatsModal role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">
+            {{activeTab == 'vitals'? 'Update Vitals': 'Update symptom'}}
+        </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <app-add-health-stats [type]="activeTab" [userId]="userId" (updated)="onUpdatedStats($event)">
+        </app-add-health-stats>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+            Close
+        </button>
+        <button type="submit" form="healthStatsForm" class="btn btn-primary">
+            Save changes
+        </button>
+    </div>
+</ng-template>

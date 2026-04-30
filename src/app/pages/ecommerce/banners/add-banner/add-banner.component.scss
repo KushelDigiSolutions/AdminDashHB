@@ -1,0 +1,27 @@
+.uploadBannerContainer{
+    background-color: #fff;
+    padding: 2rem;
+}
+.custom-dropzone {
+	height: 250px;
+	background: #333;
+	color: #fff;
+	border: 5px dashed #058f46;
+	border-radius: 5px;
+	font-size: 20px;
+}
+
+.custom-dropzone.ngx-dz-hovered {
+  border: 5px solid #058f46;
+}
+
+.label{
+    font-weight: 700;
+    margin-right: 1rem;
+    font-size: 18px;
+}
+
+ngx-dropzone-preview{
+  width: 100%!important;
+  max-width: 100%!important;
+}

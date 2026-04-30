@@ -1,0 +1,107 @@
+<div class="container-fluid">
+  <app-page-title title="Survey Report" [breadcrumbItems]="breadcrumb">
+  </app-page-title>
+  <div class="analysis" *ngIf="data">
+    <h2 class="know">{{data.assessment_id?.name}}</h2>
+    <hr>
+    <div class="container-fluid">
+      <div class="row anls">
+        <div class="col-md-3 mb-3 mb-md-0">
+          <h6 class="anls-lb">FULL NAME</h6>
+          <p class="anls-name">{{data.firstName}} {{data.lastName}}</p>
+        </div>
+        <div class="col-md-3 mb-3 mb-md-0">
+          <h6 class="anls-lb">Email</h6>
+          <p class="anls-name">{{data.email}}</p>
+        </div>
+        <div class="col-md-3 mb-3 mb-md-0">
+          <h6 class="anls-lb">Phone</h6>
+          <p class="anls-name">{{data.countryCode}} {{data.phone}}</p>
+        </div>
+        <div class="col-md-3">
+          <h6 class="anls-lb">DATE AND TIME</h6>
+          <p class="anls-name">{{data.createdAt | date:'MMM d, y, h:mm a'}}</p>
+        </div>
+      </div>
+      <div class="row anls-s2 align-items-center">
+        <div class="col-lg-2 pl-4 pl-md-3 pt-3 pt-md-0">
+          <h6 class="anls-lb">PRAKRITI TYPE</h6>
+          <p class="anls-name">{{data.analysis?.type}}</p>
+        </div>
+        <div class="col-lg-7">
+          <div class="row">
+            <div class="align-items-center col-sm-4 col-6 d-flex">
+              <div class="pr-2">
+                <canvas baseChart [datasets]="vataChartJs.datasets" [type]="'doughnut'" [options]="vataChartJs.options"
+                  [labels]="vataChartJs.labels" height="70" width="70">
+                </canvas>
+              </div>
+              <div class="d-flex flex-column">
+                <span class="vata">VATA</span>
+                <span>{{ data.analysis?.vata }}%</span>
+              </div>
+            </div>
+            <div class="align-items-center col-sm-4 col-6 d-flex">
+              <div class="pr-2">
+                <canvas baseChart [datasets]="pittaChartJs.datasets" [type]="'doughnut'"
+                  [options]="pittaChartJs.options" [labels]="pittaChartJs.labels" height="70" width="70">
+                </canvas>
+              </div>
+              <div class="d-flex flex-column">
+                <span class="vata">PITTA</span>
+                <span>{{ data.analysis?.pitta }}%</span>
+              </div>
+            </div>
+            <div class="align-items-center col-sm-4 col-6 d-flex">
+              <div class="pr-2">
+                <canvas baseChart [datasets]="kaphaChartJs.datasets" [type]="'doughnut'"
+                  [options]="kaphaChartJs.options" [labels]="kaphaChartJs.labels" height="70" width="70">
+                </canvas>
+              </div>
+              <div class="d-flex flex-column">
+                <span class="vata">KAPHA</span>
+                <span>{{ data.analysis?.kapha }}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="d-flex align-items-center">
+            <div class="pr-2">
+              <canvas baseChart [datasets]="overviewChartJs.datasets" [type]="'doughnut'"
+                [options]="overviewChartJs.options" [labels]="overviewChartJs.labels" height="80" width="80">
+              </canvas>
+            </div>
+            <div>
+              <ul class="vata pl-2 pt-4">
+                <li>VATA</li>
+                <li>PITTA</li>
+                <li>KAPHA</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row anls-s3">
+        <div class="col-md-12">
+          <div class="dt-box">
+            <h6 class="anls-dt">Detail</h6>
+            <p class="anls-p">{{data.analysis?.detail}}</p>
+          </div>
+          <div class="dt-box">
+            <h6 class="anls-dt">Personal Characteristics</h6>
+            <p class="anls-p">{{data.analysis?.characteristics}}</p>
+          </div>
+          <div class="dt-box">
+            <h6 class="anls-dt">Disorders</h6>
+            <p class="anls-p">{{data.analysis?.disorders}}</p>
+          </div>
+          <div class="dt-box">
+            <h6 class="anls-dt">Tips</h6>
+            <p class="anls-p">{{data.analysis?.tips}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

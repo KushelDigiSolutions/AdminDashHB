@@ -1,0 +1,67 @@
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <app-page-title title="Create Season" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <!-- end page title -->
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mt-4">
+                        <form #form="ngForm" (submit)="onSubmit(form)">
+                            <div class="mb-3">
+                                <label class="form-label" for="season-name">Season Name</label>
+                                <input name="season" #season="ngModel" ngModel type="text"
+                                    [ngClass]="{'is-invalid': season.touched && season.invalid}" class="form-control"
+                                    id="season-name" (blur)="trim(season)" required>
+                                <div *ngIf="season.touched && season.invalid" class="invalid-feedback">
+                                    <span>This field is required.</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="start-month">Start Month</label>
+                                        <select name="startMonth" #startMonth="ngModel" ngModel
+                                            [ngClass]="{'is-invalid': startMonth.touched && startMonth.invalid}"
+                                            class="form-control" id="start-month" required>
+                                            <option value="">-- Select Month --</option>
+                                            <option [value]="month" *ngFor="let month of months">{{month}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="startMonth.touched && startMonth.invalid" class="invalid-feedback">
+                                            <span>This field is required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="end-month">End Month</label>
+                                        <select name="endMonth" #endMonth="ngModel" ngModel
+                                            [ngClass]="{'is-invalid': endMonth.touched && endMonth.invalid}"
+                                            class="form-control" id="end-month" required>
+                                            <option value="">-- Select Month --</option>
+                                            <option [value]="month" *ngFor="let month of months">{{month}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="endMonth.touched && endMonth.invalid" class="invalid-feedback">
+                                            <span>This field is required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <button type="submit" [disabled]="form.invalid"
+                                    class="btn btn-primary w-md">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- container-fluid -->

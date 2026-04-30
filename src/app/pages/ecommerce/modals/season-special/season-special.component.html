@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row">
+    <form [formGroup]="seasonFormGroup">
+      <div class="col-lg-12 p-5">
+        <div class="mb-3">
+          <label class="control-label">Select Seasons</label>
+          <ng-select
+            class="select2"
+            name="healthConcern"
+            bindLabel="healthConcern"
+            placeholder="Choose Health Concern"
+            formControlName="season"
+            multiple="true"
+          >
+            <ng-option *ngFor="let item of seasonList" [value]="item?._id">
+              {{ item?.season }}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-lg-12 p-5">
+        <button class="btn btn-outline-primary btn-lg" (click)="closeModal()">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.menu {
+    &,
+    ul {
+        list-style: none;
+    }
+}
+.link {
+    position: relative;
+    > i {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 18px;
+    }
+}

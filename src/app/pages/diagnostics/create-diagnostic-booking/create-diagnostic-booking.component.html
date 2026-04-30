@@ -1,0 +1,174 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between mb-4 titleTabs">
+    <h5 class="title">Update Booking </h5>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form *ngIf="!editId" [formGroup]="form" (submit)="onSubmit()">
+        <div class="mb-3">
+          <label>Booking Type</label>
+          <div class="d-flex">
+            <div class="form-check me-5 mb-3">
+              <label class="form-check-label">
+                <input name="type" formControlName="type" value="camp" class="form-check-input" type="radio"
+                  (change)="onChangeType()">
+                Camp Collection
+              </label>
+            </div>
+            <div class="form-check mb-3">
+              <label class="form-check-label">
+                <input name="type" formControlName="type" value="home" class="form-check-input" type="radio"
+                  (change)="onChangeType()">
+                Home Collection
+              </label>
+            </div>
+
+          </div>
+
+
+        </div>
+      </form>
+      <form [formGroup]="pincodeFG" *ngIf="!editId && f.type.value == 'home'" class="d-flex"
+        (submit)="checkAvailability()">
+        <div class="mb-3 me-3">
+          <label class="required">Pincode</label>
+          <input formControlName="Pincode" type="text" class="form-control"
+            [ngClass]="{'is-invalid': (pincodeFG.get('Pincode').touched || submitted) && pincodeFG.get('Pincode').invalid}"
+            placeholder="e.g. 143001" (blur)="trimInputValue(pincodeFG.get('Pincode'))" (input)="onChangePincode()">
+          <div class="invalid-feedback">This field is required</div>
+          <div *ngIf="isPincodeServiceable === 1" class="app-text-primary">Yes! We serve this pincode</div>
+          <div *ngIf="isPincodeServiceable === 0" class="error">No! We don't serve this pincode</div>
+        </div>
+        <div class="mb-3">
+          <label>&nbsp;</label><br>
+          <button class="btn btn-primary" type="submit">Check Availability</button>
+        </div>
+      </form>
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-sm-6 mb-3">
+            <label>Booking Status</label>
+            <select formControlName="status" class="form-control"
+              [ngClass]="{'is-invalid': (f.status.touched || submitted) && f.status.invalid}">
+              <option value="">--Select Status--</option>
+              <option value="Pending">Pending</option>
+              <option value="Payment-Awaited">Payment-Awaited</option>
+              	
+              <option value="Confirmed">Confirmed</option>
+              <option value="Booked">Booked</option>
+              <option value="Done">Done</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <ng-container *ngIf="f.type.value == 'home' && isPincodeServiceable === 1" formGroupName="home">
+            <div class="col-sm-6 mb-3">
+              <label class="required">Appointment Date</label>
+              <input formControlName="date" class="form-control" [min]="minDate" [max]="maxDate"
+                [ngClass]="{'is-invalid': (f.home.get('date').touched || submitted) && f.home.get('date').invalid}"
+                type="date" (change)="onChangeDate()" (blur)="trimInputValue(f.home.get('date'))">
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <label class="required">Select Time</label>
+              <select formControlName="time" class="form-control"
+                [ngClass]="{'is-invalid': (f.home.get('time').touched || submitted) && f.home.get('time').invalid}">
+                <option value="">-- Select Slot --</option>
+                <option [value]="slot.value" *ngFor="let slot of slotes;">{{slot.slot12}}</option>
+              </select>
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="isPincodeServiceable === 1 || (f.type.value == 'camp' && campList.length) ">
+            <div class="col-sm-6 mb-3">
+              <label class="required">Name</label>
+              <input formControlName="OrderBy" class="form-control"
+                [ngClass]="{'is-invalid': (f.OrderBy.touched || submitted) && f.OrderBy.invalid}" type="text"
+                (blur)="trimInputValue(f.OrderBy)">
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <label class="required">Email</label>
+              <input formControlName="Email" class="form-control"
+                [ngClass]="{'is-invalid': (f.Email.touched || submitted) && f.Email.invalid}" type="text"
+                (blur)="trimInputValue(f.Email)">
+              <div class="invalid-feedback">
+                <div *ngIf="f.Email.errors?.required">Email is required</div>
+                <div *ngIf="f.Email.errors?.email">Email must be a valid email address</div>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <label class="required">Phone</label>
+              <ngx-intl-tel-input formControlName="Mobile" [cssClass]="'custom'"
+                [preferredCountries]="intlTelInput.preferredCountries" [enableAutoCountrySelect]="true"
+                [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="intlTelInput.searchCountryField" [selectFirstCountry]="false"
+                [selectedCountryISO]="intlTelInput.selectedCountryISO" [maxLength]="15" [phoneValidation]="true"
+                [separateDialCode]="intlTelInput.separateDialCode"
+                [numberFormat]="intlTelInput.PhoneNumberFormat.National"
+                [ngClass]="{'is-invalid': (f.Mobile.touched || submitted) && f.Mobile.invalid}">
+              </ngx-intl-tel-input>
+              <!-- <input formControlName="Mobile" class="form-control"
+                  [ngClass]="{'is-invalid': (f.Mobile.touched || submitted) && f.Mobile.invalid}" type="text"
+                  (blur)="trimInputValue(f.Mobile)"> -->
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+            <div *ngIf="!editId" class="col-sm-6 mb-3">
+              <label class="required">Gender</label>
+              <select formControlName="Gender" class="form-control"
+                [ngClass]="{'is-invalid': (f.Gender.touched || submitted) && f.Gender.invalid}">
+                <option value="">-- Select Gender --</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+            <div *ngIf="!editId" class="col-sm-6 mb-3">
+              <label class="required">Age</label>
+              <input formControlName="Age" class="form-control" min="0" max="100"
+                [ngClass]="{'is-invalid': (f.Age.touched || submitted) && f.Age.invalid}" type="number">
+              <div class="invalid-feedback">
+                <ng-conainer *ngIf="f.Age.errors?.required">This field is required</ng-conainer>
+                <ng-conainer *ngIf="f.Age.errors?.min || f.Age.errors?.max">Age should be between 0 to 100</ng-conainer>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div *ngIf="f.type.value == 'camp'" class="row">
+          <label class="required">Select Camp</label>
+          <div class="col-md-12" *ngFor="let camp of campList">
+            <label class="p-3 ps-5 d-block mb-3 campLabel">
+              <input type="radio" formControlName="campCollectionId" [value]="camp._id" class="form-check-input">
+              <span class="d-block app-text-primary fs-18 mb-2 title">{{camp.title}}</span>
+              <span class="row">
+                <span class="col-sm-6">
+                  <span class="d-block text-muted fs-14 campDetailLabel">DATE & TIME</span>
+                  <span class="d-block campDetailData">{{camp.dateTime | date:'MMM d, y, h:mm a'}}</span>
+                </span>
+                <span class="col-sm-6">
+                  <span class="d-block text-muted campDetailLabel">LOCATION</span>
+                  <span class="d-block campDetailData">{{camp.venue}}</span>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <ng-container *ngIf="!editId && f.type.value == 'home' && isPincodeServiceable === 1" formGroupName="home">
+          <div class="mb-3">
+            <label class="required">Address</label>
+            <textarea formControlName="Address" class="form-control"
+              [ngClass]="{'is-invalid': (f.home.get('Address').touched || submitted) && f.home.get('Address').invalid}"
+              rows="3" (blur)="trimInputValue(f.home.get('Address'))"></textarea>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+        </ng-container>
+        <app-no-data-found *ngIf="f.type.value == 'camp' && !campList.length"
+          heading="No upcoming camp to show. You can opt for home collection too." icon="dripicons-medical">
+        </app-no-data-found>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+  </div>
+</div>

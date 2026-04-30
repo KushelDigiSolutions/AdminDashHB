@@ -1,0 +1,160 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title [title]="editId? 'Update Appointment':'Create Appointment'" [breadcrumbItems]="breadCrumbItems">
+  </app-page-title>
+  <!-- end page title -->
+
+  <div class="card">
+    <div class="card-body">
+      <div class="p-4">
+        <ngb-alert *ngIf="!queryParams.healthPackageBuyId && patient && patient.createdBy == user._id"
+          [dismissible]="true" type="info" class="custom-alert">
+          As this patient is created by you, we are assuming that you have received the consultation fee.
+        </ngb-alert>
+        <ngb-alert *ngIf="!queryParams.healthPackageBuyId && patient && patient.createdBy != user._id"
+          [dismissible]="true" type="info" class="custom-alert">
+          As this patient is not created by you, Email with the payment link will be sent to the patient on creating the
+          appointment.
+        </ngb-alert>
+        <form [formGroup]="form" (submit)="bookAppointment()">
+          <div class="row">
+            <div class="col-12 col-lg-4 mb-3">
+              <label class="required">Select Date</label>
+              <input formControlName="date" type="date" class="form-control"
+                [ngClass]="{'is-invalid': (f.date.touched || submit) &&  f.date.invalid}" (change)="onChangeApptDate()" [min]="minDate">
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+            <div class="col-12 col-lg-4 mb-3">
+              <label class="required">Select Slot</label>
+              <select formControlName="primaryTimeSlot" class="form-control"
+                [ngClass]="{'is-invalid': (f.primaryTimeSlot.touched || submit) &&  f.primaryTimeSlot.invalid}">
+                <option value="">--Select Slot--</option>
+                <option [value]="slot.startTime+' - '+slot.endTime" *ngFor="let slot of slots">
+                  {{slot.startTime12}} - {{slot.endTime12}}</option>
+              </select>
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+            <div class="col-12 col-lg-4 mb-3"></div>
+            <div class="col-12 col-lg-4 mb-3">
+              <label class="required">Appointment Mode</label>
+              <div>
+                <div class="form-check mb-3 me-3 p-0 d-inline-block">
+                  <label *ngIf="selectedConsultant?.appointmentMode?.isAudio" class="form-check-label">
+                    <input name="appointmentMode" formControlName="appointmentMode" value="audio" type="radio" z
+                      gclass="form-check-input">
+                    Audio Call </label>
+                </div>
+                <div class="form-check mb-3 me-3 p-0 d-inline-block">
+                  <label *ngIf="selectedConsultant?.appointmentMode?.isVideo" class="form-check-label">
+                    <input name="appointmentMode" formControlName="appointmentMode" value="video" type="radio" z
+                      gclass="form-check-input">
+                    Video Call </label>
+                </div>
+                <div class="form-check mb-3 me-3 p-0 d-inline-block">
+                  <label *ngIf="selectedConsultant?.appointmentMode?.isChat" class="form-check-label">
+                    <input name="appointmentMode" formControlName="appointmentMode" value="chat" type="radio" z
+                      gclass="form-check-input">
+                      Messaging </label>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-12 col-lg-4 mb-3">
+              <div class="mb-3">
+                <label class="form-label" for="status">Appointment Status</label>
+                <ng-select id="concerns" name="status" class="select2" formControlName="status"
+                  placeholder="Select Status" [multiple]="false">
+                  <ng-option disabled value="">
+                    Select Status
+                  </ng-option>
+                  <ng-option *ngFor="let item of appointmentStatus" [value]="item">
+                    {{ item | titlecase }}
+                  </ng-option>
+                </ng-select>
+              </div>
+            </div> -->
+          </div>
+          <!--  -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mt-4 mb-3">
+                <!-- <div class="mb-3">
+                  <label>Select Payment Type</label>
+                  <div>
+                    <div *ngIf="patient?.createdBy == user._id" class="form-check d-inline-block me-2">
+                      <input type="radio" formControlName="adminPaymentStatus" value="prepaid" id="paymentType1" checked
+                        class="form-check-input" (change)="onChangePaymentType()" />
+                      <label for="paymentType1" class="form-check-label">
+                        Prepaid
+                      </label>
+                    </div>
+                    <div *ngIf="patient?.createdBy != user._id" class="form-check d-inline-block me-2">
+                      <input type="radio" formControlName="adminPaymentStatus" value="paymentLink" id="paymentType3"
+                        class="form-check-input" (change)="onChangePaymentType()" />
+                      <label for="paymentType3" class="form-check-label">
+                        Link Payment
+                      </label>
+                    </div>
+                  </div>
+                </div> -->
+                <ng-container *ngIf="f.adminPaymentStatus.value =='prepaid'">
+                  <div class="row mb-3">
+                    <div class="col-md-4">
+                      <label class="required">Payment Method</label>
+                      <select formControlName="paymentMethod" class="form-control">
+                        <option value="">
+                          -- Select Method --
+                        </option>
+                        <option *ngFor="let item of paymentMethod" [value]="item">
+                          {{ item }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <label>Payment Date</label>
+                      <input formControlName="paymentDate" type="date" class="form-control"
+                        placeholder="Transaction Date" [max]="minDate" />
+                    </div>
+                  </div>
+                </ng-container>
+
+                <!-- <div *ngIf="patient && patient.createdBy == user._id" class="row mb-3">
+                  <div class="col-md-4">
+                    <label for="fee" class="required">Appointment Fee (₹)</label>
+                    <input formControlName="fee" type="number" min="0" class="form-control"
+                      [ngClass]="{'is-invalid': (f.fee.touched || submit) &&  f.fee.invalid}"
+                      placeholder="Appointment fee" />
+                    <div *ngIf="f.fee.errors?.required" class="invalid-feedback">This field is required</div>
+                    <div *ngIf="f.fee.errors?.min" class="invalid-feedback">Please enter valid fee</div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+            {{ editId ? "Update" : "Create" }} Appointment
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- container-fluid -->
+<ng-template #paymentLinkModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Payment Link</h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body py-5">
+    <div class="input-group">
+      <input class="form-control" type="text" [value]="appointmentDetails?.paymentLink" readonly>
+      <div class="input-group-append">
+        <button (click)="copyToClipboard(appointmentDetails?.paymentLink)" class="btn btn-primary" title="Copy Link"><i
+            class="mdi mdi-content-copy"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

@@ -1,0 +1,6 @@
+.checkoutTableCont {
+    border: 1px solid #888;
+    tr:not(:first-of-type) {
+        border-color: #888;
+    }
+}

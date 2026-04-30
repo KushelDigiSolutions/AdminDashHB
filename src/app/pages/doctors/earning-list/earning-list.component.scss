@@ -1,0 +1,35 @@
+ngb-accordion {
+    display: block;
+    margin: -12px 0px 0px;
+    ::ng-deep {
+      .card-header {
+        background-color: #fff;
+        button {
+          font-size: 16px;
+          padding: 0;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          &[aria-expanded="true"] {
+            i {
+              transform: rotate(180deg);
+            }
+          }
+        }
+        i {
+          font-size: 24px;
+          transform: rotate(0deg);
+          transition: transform 0.3s linear;
+        }
+      }
+      .card-body {
+        border-top: 1px solid #ccc;
+      }
+    }
+  }
+  .hideAction {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+  }

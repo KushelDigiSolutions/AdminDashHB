@@ -1,0 +1,171 @@
+<div class="container-fluid">
+  <app-page-title title="Create Subscription" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="required"> Phone Number <small>(Without Country Code)</small></label>
+            <ng-select formControlName="userId" [items]="userList" bindLabel="phone" bindValue="_id"
+              placeholder="Enter 10 digit phone number" (input)="search($event, 'user')"
+              [ngClass]="{'is-invalid': (f.userId.touched || submitted) &&  f.userId.invalid}">
+            </ng-select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="required">Health Package</label>
+            <ng-select formControlName="healthPackageId" [items]="HealthPackageList" bindLabel="name" bindValue="_id"
+              placeholder="Search Health Package" (input)="search($event, 'healthPackage')"
+              (change)="onChangeHealthPackage()"
+              [ngClass]="{'is-invalid': (f.healthPackageId.touched || submitted) &&  f.healthPackageId.invalid}">
+            </ng-select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="required">Duration</label>
+            <ng-select formControlName="variationId" [items]="variations" bindLabel="duration.label" bindValue="_id"
+              placeholder="Select duration"
+              [ngClass]="{'is-invalid': (f.healthPackageId.touched || submitted) &&  f.healthPackageId.invalid}"
+              (change)="onChangeVariation()">
+            </ng-select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="required">Consultant</label>
+            <ng-select formControlName="consultant" [items]="consultants" placeholder="Select consultant"
+              bindLabel="name" bindValue="_id"
+              [ngClass]="{'is-invalid': (f.healthPackageId.touched || submitted) &&  f.healthPackageId.invalid}">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="b-5">{{ item.firstName + " " + (item.lastName || "") }}</div>
+                <div>{{item.consultantTypes}}</div>
+              </ng-template>
+            </ng-select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="required">Lab Tests</label>
+            <ng-select formControlName="testsId" [items]="labTests" placeholder="Select lab tests" bindLabel="name"
+              bindValue="_id" [ngClass]="{'is-invalid': (f.testsId.touched || submitted) &&  f.testsId.invalid}"
+              multiple="true" (change)="onChangeLabTests()">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div class="b-5">{{ item.name }} </div>
+                <div>TESTS INCLUDED: {{item.childs.length || 1}}</div>
+              </ng-template>
+            </ng-select>
+            <div class="invalid-feedback">This field is required</div>
+          </div>
+          <div *ngIf="$any(form.value).testsId?.length" class="col-md-4 mb-3">
+            <label class="required">Check Service Availability</label>
+            <div class="d-flex">
+              <div class="flex-grow-1 me-3">
+                <input formControlName="pincode" type="text" class="form-control" placeholder="Enter pincode"
+                  (input)="onChangePincode()">
+              </div>
+              <button type="button" class="btn btn-primary" (click)="checkPincode()"><i class="uil-search"></i></button>
+            </div>
+            <div *ngIf="submitted && isPincodeServiceable === -1" class="invalid-feedback d-block">This field is
+              required</div>
+            <div *ngIf="f.pincode.valid && isPincodeServiceable === 1" class="text-success">Yes! We
+              serve this pincode</div>
+            <div *ngIf="f.pincode.valid && isPincodeServiceable === 0" class="text-danger">No!
+              We don't serve this pincode</div>
+          </div>
+          <div *ngIf="f.adminPaymentStatus.value != 'free'" class="col-md-4 mb-3">
+            <label>Health Package Selling Price</label>
+            <input formControlName="healthPackagePrice" type="number" min="0" class="form-control"
+              [ngClass]="{'is-invalid': (f.healthPackagePrice.touched || submitted) &&  f.healthPackagePrice.invalid}"
+              placeholder="Price" />
+            <div *ngIf="f.healthPackagePrice.errors?.required" class="invalid-feedback">This field is required</div>
+            <div *ngIf="f.healthPackagePrice.errors?.min" class="invalid-feedback">Please enter a valid price</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="mt-4 mb-3">
+              <div class="mb-3">
+                <label>Select Payment Type</label>
+                <div>
+                  <div class="form-check d-inline-block me-3">
+                    <input type="radio" formControlName="adminPaymentStatus" value="prepaid" id="paymentType1" checked
+                      class="form-check-input" (change)="onChangePaymentType()" />
+                    <label for="paymentType1" class="form-check-label">
+                      Prepaid
+                    </label>
+                  </div>
+                  <div class="form-check d-inline-block">
+                    <input type="radio" formControlName="adminPaymentStatus" value="paymentLink" id="paymentType3"
+                      class="form-check-input" (change)="onChangePaymentType()" />
+                    <label for="paymentType3" class="form-check-label">
+                      Link Payment
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="f.adminPaymentStatus.value == 'prepaid'" class="row mb-3">
+                <div class="col-md-4">
+                  <label class="required">Payment Method</label>
+                  <select formControlName="paymentMethod" class="form-control" [ngClass]="{'is-invalid': (f.paymentMethod.touched || submitted) &&  f.paymentMethod.invalid}">
+                    <option value="">
+                      -- Select Method --
+                    </option>
+                    <option *ngFor="let item of paymentMethod" [value]="item">
+                      {{ item }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">This field is required</div>
+                </div>
+                <div *ngIf="f.adminPaymentStatus.value != 'postpaid'" class="col-md-4">
+                  <label>Transaction ID</label>
+                  <input formControlName="txnId" type="text" class="form-control" placeholder="Transaction ID" />
+                </div>
+                <div class="col-md-4">
+                  <label>Payment Date</label>
+                  <input formControlName="paymentDate" type="date" class="form-control" placeholder="Transaction ID" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <div class="checkoutTableCont">
+              <table class="table table-sm mb-0 checkoutTable">
+                <tbody>
+                  <tr>
+                    <th>MRP</th>
+                    <td>
+                      ₹ {{selectedVariation.price?.mrp}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Selling Price</th>
+                    <td>
+                      ₹ {{f.healthPackagePrice.value}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Lab Tests</th>
+                    <td>
+                      ₹ {{labTestsSP}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Grand Total</th>
+                    <td>
+                      ₹ {{f.healthPackagePrice.value + labTestsSP}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,159 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 p-3">
+      <h3 class="mb-5">{{ editId ? "Update" : "Add New" }} Payout</h3>
+
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-lg-4 mt-3">
+            <label class="control-label required">Choose Consultant</label>
+            <ng-select
+              class="select2"
+              [ngClass]="{'is-invalid': f.userId.touched && f.userId.invalid}"
+              bindLabel="parent"
+              placeholder="Choose Consultant"
+              formControlName="userId"
+              [multiple]="false"
+            >
+              <ng-option disabled value="">Choose Consultant</ng-option>
+              <ng-option
+                *ngFor="let item of consultantArray"
+                [value]="item?._id"
+              >
+                {{ item | consultant: "fullname"  }}
+              </ng-option>
+            </ng-select>
+            <div *ngIf="f.userId.errors?.required" class="invalid-feedback">This field is required</div>
+          </div>
+
+          <div class="col-lg-4 mt-3">
+            <label class="required">Amount Paid (₹)</label>
+            <input formControlName="txnAmount" type="number" min="0" class="form-control" [ngClass]="{'is-invalid': f.txnAmount.touched && f.txnAmount.invalid}" placeholder="e.g. 1000"/>
+            <div *ngIf="f.txnAmount.errors?.required" class="invalid-feedback">This field is required</div>
+            <div *ngIf="f.txnAmount.errors?.min" class="invalid-feedback">Please enter a valid amount</div>
+          </div>
+          <div class="col-lg-4 mt-3">
+            <label class="required">HB Commission (₹)</label>
+            <input formControlName="hbCommission" type="number" min="0" class="form-control" [ngClass]="{'is-invalid': f.txnAmount.touched && f.txnAmount.invalid}" placeholder="e.g. 200"/>
+            <div *ngIf="f.hbCommission.errors?.required" class="invalid-feedback">This field is required</div>
+            <div *ngIf="f.hbCommission.errors?.min" class="invalid-feedback">Please enter a valid amount</div>
+          </div>
+          <div class="col-lg-4 mt-3">
+            <label for="thirdPartyCommission">Payment From</label>
+
+            <input
+              type="date"
+              class="form-control"
+              formControlName="startDate"
+              [max]="maxDate"
+            />
+          </div>
+          <div class="col-lg-4 mt-3">
+            <label for="thirdPartyCommission">Payment To</label>
+
+            <input
+              type="date"
+              class="form-control"
+              formControlName="endDate"
+              [max]="maxDate"
+            />
+          </div>
+          <!-- <div class="col-lg-4 mt-3">
+            <label for="totalEarning">Amount Paid</label>
+
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Amount Paid"
+              formControlName="hbCommission"
+            />
+          </div> -->
+
+          <!-- <div class="col-lg-4 mt-3">
+            <label for="hbCommission">Hb Commission</label>
+
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Hb Commission"
+              formControlName="hbCommission"
+            />
+          </div> -->
+          <div class="col-lg-4 mt-3">
+            <label>Payment Mode</label>
+
+            <input
+              type="text"
+              class="form-control"
+              placeholder="UPI/Net Banking"
+              formControlName="paymentMode"
+            />
+          </div>
+
+          <!-- <div class="col-lg-4 mt-3">
+            <label for="Payment Id">Payment Id</label>
+
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Payment Id"
+              formControlName="paymentId"
+            />
+          </div> -->
+
+          <div class="col-lg-4 mt-3">
+            <label for="thirdPartyCommission">Transaction Id</label>
+
+            <input
+              type="text"
+              class="form-control"
+              placeholder="eg: 12251gd4"
+              formControlName="txnId"
+            />
+          </div>
+
+          <div class="col-lg-4 mt-3">
+            <label for="thirdPartyCommission">Transaction Date</label>
+
+            <input
+              type="date"
+              class="form-control"
+              placeholder="21-08-2021"
+              formControlName="txnDate"
+              [max]="maxDate"
+            />
+          </div>
+
+          <div class="col-lg-4 mt-3">
+            <label class="control-label">Status</label>
+            <ng-select
+              class="select2"
+              bindLabel="parent"
+              placeholder="Status"
+              formControlName="resultStatus"
+              [multiple]="false"
+            >
+              <ng-option disabled value="">Status</ng-option>
+              <ng-option
+                *ngFor="let item of statusArray"
+                [value]="item?.name"
+              >
+                {{ item?.name }}
+              </ng-option>
+            </ng-select>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary mt-2"
+          [disabled]="form.invalid"
+          (click)="addPayout()"
+        >
+          {{ editId ? "Update" : "Add" }} Payout
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

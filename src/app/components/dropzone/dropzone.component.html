@@ -1,0 +1,18 @@
+<ngx-dropzone (change)="onChange($event)" [multiple]="multiple" [accept]="accept" (click)="onTouched(true)">
+  <ngx-dropzone-label><b>Choose a file</b> or drag it here.</ngx-dropzone-label>
+  <ng-container *ngFor="let f of files; index as i">
+
+    <ngx-dropzone-preview *ngIf="!uploadService.instanceOfFile(f)" class="oldImagePreview" [removable]="true"
+      (removed)="onRemove({index: i, file: f})">
+      <ngx-dropzone-label *ngIf="isImage(f.savedName)"><img [src]="s3Base + f.savedName" /></ngx-dropzone-label>
+      <ngx-dropzone-label *ngIf="!isImage(f.savedName)">{{f.originalName || (getFileExtension(f.savedName) | uppercase)}}</ngx-dropzone-label>
+    </ngx-dropzone-preview>
+    
+    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngIf="uploadService.instanceOfFile(f) && isFileImage(f)" [file]="f"
+      [removable]="true" (removed)="onRemove({index: i, file: f})">
+    </ngx-dropzone-image-preview>
+    <ngx-dropzone-preview *ngIf="uploadService.instanceOfFile(f) && !isFileImage(f)" [removable]="true" (removed)="onRemove({index: i, file: f})">
+      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+    </ngx-dropzone-preview>
+  </ng-container>
+</ngx-dropzone>

@@ -1,0 +1,170 @@
+<div class="container-fluid">
+  <h3 class="mb-3">{{this.editId?'Edit':'Add'}} Coupon</h3>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-lg-6 mb-3">
+            <label class="required" for="code">Coupon Code</label>
+            <input type="text" class="form-control" id="code" formControlName="code" placeholder="Coupon Code"
+              (input)="onChangeCoupon()" />
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label for="code">Title</label>
+            <input type="text" class="form-control" id="code" formControlName="title" placeholder="Coupon Title" />
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label class="control-label">Category</label>
+            <select formControlName="category" class="form-control">
+              <option value="shop">Shop</option>
+              <option value="consultation">Consultation</option>
+            </select>
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label class="control-label">Coupon Type</label>
+            <ng-select class="select2" name="parent" bindLabel="parent" placeholder="Choose Parent"
+              formControlName="couponType" (change)="couponTypeChanged($event)" [multiple]="false">
+              <ng-option *ngFor="let item of typeList" [value]="item?.value">
+                {{ item?.name }}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <!-- <div *ngIf="show && userSpecificCoupon" class="col-lg-3 mb-3">
+            <label class="control-label">Reusability</label>
+            <input type="number" min="1" class="form-control" name="reusablity" formControlName="reusability"
+              placeholder="Reusability" />
+          </div> -->
+
+          <div *ngIf="show" class="col-lg-3 mb-3" [ngClass]="{'col-lg-12':(userSpecificCoupon || brandSpecificCoupon)
+                         }">
+            <label class="control-label">
+              Choose
+              {{
+              userSpecificCoupon
+              ? "User"
+              : userSpecificTypeCoupon
+              ? "User Type"
+              : brandSpecificCoupon
+              ? "Brand"
+              : ''
+              }}
+            </label>
+            <ng-select class="select2" name="parent" bindLabel="parent" [placeholder]="
+                    'Choose ' + 
+                      (userSpecificCoupon
+                      ? 'User'
+                      : userSpecificTypeCoupon
+                      ? 'User Type'
+                      : brandSpecificCoupon
+                      ? 'Brand'
+                      : '')
+                  " [formControlName]="
+                    userSpecificCoupon
+                      ? 'usedByNumber'
+                      : userSpecificTypeCoupon
+                      ? 'userType'
+                      : brandSpecificCoupon
+                      ? 'brandId'
+                      : ''
+                  " [multiple]="true">
+              <ng-option *ngFor="let item of dataList" [value]="item?.value?item.value:item._id">
+                {{ item?.name
+                ? item.name
+                : item.phone }}
+              </ng-option>
+            </ng-select>
+          </div>
+          <div *ngIf="f.couponType.value == 'corporateSpecific'" class="col-lg-12 mb-3">
+            <label>Companies</label>
+            <ng-select class="select2" bindLabel="parent" placeholder="Choose Parent" formControlName="companyId"
+              [multiple]="true">
+              <ng-option *ngFor="let item of companyList" [value]="item._id">
+                {{ item.name }}
+              </ng-option>
+            </ng-select>
+          </div>
+          <div class="col-lg-4 mb-3">
+            <label for="metaDescription">Validity</label>
+            <ng-template #t let-date let-focused="focused">
+              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                (mouseleave)="hoveredDate = null">
+                {{ date.day }}
+              </span>
+            </ng-template>
+
+            <input type="text" class="form-control date" (click)="hidden = !hidden" name="daterange" autocomplete="off"
+              formControlName="date" />
+
+            <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+              outsideDays="hidden" [hidden]="hidden">
+            </ngb-datepicker>
+          </div>
+          <div class="col-lg-2 mb-3">
+            <label>Reusability</label>
+            <input type="number" min="0" class="form-control" name="reusablity" formControlName="noOfUsage"
+              placeholder="Reusability" />
+          </div>
+
+          <div class="col-lg-2 mb-3">
+            <label class="control-label">Discount Type</label>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="radio" name="isPercent" formControlName="isPercent" value="false"
+                id="formRadios1" />
+              <label class="form-check-label" for="formRadios1">
+                Price Discount
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="isPercent" formControlName="isPercent" value="true"
+                id="formRadios2" />
+              <label class="form-check-label" for="formRadios2">
+                Percentage Discount
+              </label>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mb-3">
+            <label class="control-label">Discount Value</label>
+
+            <input type="text" class="form-control" name="discount" formControlName="discount"
+              placeholder="Coupon Value" />
+          </div>
+
+          <div class="col-lg-3 mb-3">
+            <label class="control-label">Maximun Discount</label>
+
+            <input type="text" class="form-control" name="maxDiscount" formControlName="maxDiscount"
+              placeholder="Maximum Discount" />
+          </div>
+
+          <div class="col-lg-3 mb-3">
+            <label class="control-label">Minimum Spending</label>
+
+            <input type="text" class="form-control" name="minSpending" formControlName="minSpending"
+              placeholder="Minimum Spending" />
+          </div>
+
+          <div class="col-lg-6 mb-3">
+            <div class="mb-3 mb-0">
+              <label for="productdesc">Terms and Conditions</label>
+              <ckeditor [editor]="Editor" formControlName="TnC"></ckeditor>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 mb-3">
+          <div class="form-check mb-3">
+            <label class="form-check-label">
+              <input formControlName="active" type="checkbox" class="form-check-input"> Active
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid" (click)="addCoupon()">
+          {{ editId ? "Update" : "Add" }} Coupon
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

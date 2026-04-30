@@ -1,0 +1,174 @@
+@import "src/app/components/select-product/select-product.component.scss";
+
+.prescriptions {
+  li {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+  }
+  .srNo {
+    min-width: 30px;
+    height: 30px;
+    background-color: #5b73e8;
+    color: #fff;
+    border-radius: 23px;
+    margin-right: 10px;
+  }
+}
+.borderLessTable > :not(caption) > * > * {
+  border: 0;
+}
+.tableDivider {
+  span {
+    border-bottom: 2px solid #d2d2d2;
+    display: block;
+  }
+  > *,
+  & + tr > * {
+    border: 0;
+  }
+}
+ckeditor {
+  ::ng-deep {
+    .ck-editor {
+      border: 1px solid #ced4da !important;
+    }
+  }
+}
+.medicineGroup {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+.addMore {
+  font-weight: 500;
+}
+.variationQty {
+  span {
+    display: inline-block;
+  }
+}
+.avatar {
+  img {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+}
+.resPres {
+  overflow: auto;
+}
+$presLeftPadding: 20px;
+$presRightPadding: 20px;
+.pres {
+  margin: auto;
+  font-size: 14px;
+  width: 780px;
+  min-height: 1000px;
+  position: relative;
+  padding: 10px $presRightPadding 20px $presLeftPadding;
+  * {
+    color: #111;
+  }
+  .logoCont {
+    img {
+      width: 110px;
+    }
+    p {
+      font-size: 10px;
+    }
+  }
+  .reach {
+    li {
+      margin-bottom: 4px;
+      a {
+        color: #111;
+        font-size: 14px;
+      }
+    }
+    i {
+      margin-right: 10px;
+    }
+  }
+  .docInfo {
+    border-top: 2px solid #ccc;
+  }
+  .divider {
+    padding: 0;
+    div {
+      border-top: 2px solid #ccc !important;
+    }
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .presFooter {
+    padding: 10px;
+    background-color: #303030;
+    color: #f4f4f4;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - #{$presRightPadding} - #{$presLeftPadding});
+  }
+}
+ul {
+  list-style: none;
+}
+.showDropdown {
+  background-color: #fff;
+  color: #000;
+  position: absolute;
+  z-index: 9999;
+  right: 20px;
+  box-shadow: 0px 4px 2px rgb(0, 0, 0, 0.25), 0px 4px 2px rgb(0, 0, 0, 0.25);
+}
+
+.list-items {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.vitalsList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  li {
+    white-space: nowrap;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .name {
+    font-weight: 500;
+  }
+  .value {
+    display: inline-block;
+    min-width: 40px;
+    > div {
+      border-bottom: 1px solid #555;
+    }
+  }
+}
+.vitalTestsCol {
+  border-right: 2px solid #ccc !important;
+  padding-right: 8px;
+}
+.medicineTable {
+  th,
+  td {
+    font-size: 13px;
+  }
+}
+.note {
+  > * {
+    margin-bottom: 0;
+  }
+}
+.signature {
+  max-width: 130px;
+  max-height: 50px;
+}
+.prescriptionIframe {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+}

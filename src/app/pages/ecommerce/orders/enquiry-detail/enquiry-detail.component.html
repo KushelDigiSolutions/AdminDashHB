@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <app-page-title title="Enquiry Details" [breadcrumbItems]="[{label: 'Ecommerce'},{label: 'Enquiries', link: '/ecommerce/orders/enquiries'},{label: 'Detail', active: true}]"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- <button class="btn btn-secondary mb-3" (click)="back()">Back</button> -->
+          <div *ngIf="enquiry; else noData">
+            <div class="d-flex flex-wrap header-fields mb-3">
+              <div class="enq-field me-4 mb-3">
+                <h6 class="enq-heading">Enquiry ID</h6>
+                <div class="enq-value">{{ enquiry.enquiryId }}</div>
+              </div>
+              <div class="enq-field me-4 mb-3">
+                <h6 class="enq-heading">Product</h6>
+                <div class="enq-value">{{ enquiry.productName || '—' }}</div>
+              </div>
+              <div class="enq-field me-4 mb-3">
+                <h6 class="enq-heading">Name</h6>
+                <div class="enq-value">{{ enquiry.name }}</div>
+              </div>
+              <div class="enq-field me-4 mb-3">
+                <h6 class="enq-heading">Phone</h6>
+                <div class="enq-value"><a [href]="'tel:'+enquiry.mobile">{{ enquiry.mobile }}</a></div>
+              </div>
+              <div class="enq-field me-4 mb-3">
+                <h6 class="enq-heading">Quantity</h6>
+                <div class="enq-value">{{ enquiry.quantity }}</div>
+              </div>
+              <div class="enq-field me-4 mb-3">
+                <h6 class="enq-heading">Wgt.</h6>
+                <div class="enq-value">{{ enquiry.weight }}</div>
+              </div>
+              <div class="enq-field me-4 mb-3">
+                <h6 class="enq-heading">Created</h6>
+                <div class="enq-value">{{ enquiry.createdAt | date:'medium' }}</div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="enq-field">
+                  <h6 class="enq-heading">Comment</h6>
+                  <div class="enq-value">{{ enquiry.comment || '—' }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noData>
+            <p>No details available</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

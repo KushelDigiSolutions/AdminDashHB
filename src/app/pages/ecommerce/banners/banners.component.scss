@@ -1,0 +1,12 @@
+th::before{
+    display: none;
+}
+th::after{
+    display: none;
+}
+img{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    object-position: center;
+}

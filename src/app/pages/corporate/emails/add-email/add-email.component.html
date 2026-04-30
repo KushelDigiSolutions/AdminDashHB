@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <app-page-title [title]="this.editId? 'Update Email': 'Create Email'" [breadcrumbItems]="breadcrumb">
+  </app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-lg-12 mb-3">
+            <label class="required">Email Subject</label>
+            <input formControlName="subject" type="text" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || form.get('subject').touched) && form.get('subject').invalid}"
+              placeholder="Subject" />
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="required">Button Text</label>
+            <input formControlName="buttonText" type="text" class="form-control" [ngClass]="{'is-invalid': (submitted || form.get('buttonText').touched) && form.get('buttonText').invalid}">
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="required">Button Link</label>
+            <input formControlName="buttonLink" type="text" class="form-control" [ngClass]="{'is-invalid': (submitted || form.get('buttonLink').touched) && form.get('buttonLink').invalid}">
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label class="required">Body Text</label>
+            <textarea  formControlName="bodyText" class="form-control" rows="3" [ngClass]="{'is-invalid': (submitted || form.get('bodyText').touched) && form.get('bodyText').invalid}"></textarea>
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label class="required">Body Image</label>
+            <app-dropzone formControlName="image" [multiple]="false" accept="image/png,image/jpg,image/jpeg"
+              [ngClass]="{'is-invalid': (submitted || form.get('image').touched) && form.get('image').invalid}">
+            </app-dropzone>
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{{this.editId?'Update':'Submit'}}</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <app-page-title [title]="this.editId? 'Update Company': 'Create Company'" [breadcrumbItems]="breadcrumb"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-lg-6 mb-3">
+            <label class="required">Company Name</label>
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || form.get('name').touched) && form.get('name').invalid}"
+              formControlName="name" placeholder="Name" (blur)="trimInput(form.get('name'))"/>
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label class="required">Company Domain <i class="uil-info-circle" placement="top"
+              ngbTooltip="Enter all letters in lower case and don't use http://, https://, and www infront of the domain."></i></label>
+            <input formControlName="domain" type="text" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || form.get('domain').touched) && form.get('domain').invalid}"
+              placeholder="e.g. example.com" (blur)="trimInput(form.get('domain'))" />
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label>Phone</label>
+            <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="intlTelInput.preferredCountries"
+              [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+              [searchCountryField]="intlTelInput.searchCountryField" [selectFirstCountry]="false"
+              [selectedCountryISO]="intlTelInput.selectedCountryISO" [maxLength]="15" [phoneValidation]="true"
+              [separateDialCode]="intlTelInput.separateDialCode"
+              [numberFormat]="intlTelInput.PhoneNumberFormat.National" formControlName="phone"
+              [ngClass]="{'is-invalid': (form.get('phone').touched || submitted) && form.get('phone').invalid}">
+            </ngx-intl-tel-input>
+            <!-- <input formControlName="phone" type="text" class="form-control"
+              [ngClass]="{'is-invalid': form.get('phone').touched && form.get('phone').invalid}" placeholder="" /> -->
+            <div class="invalid-feedback">
+              <span *ngIf="form.get('phone').errors?.validatePhoneNumber?.valid === false">Please enter valid number</span>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label>Email</label>
+            <input formControlName="email" type="text" class="form-control"
+              [ngClass]="{'is-invalid': form.get('email').touched && form.get('email').invalid}" placeholder="" />
+            <div class="invalid-feedback">
+              <span *ngIf="form.get('email').errors?.email">Please enter valid email</span>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label>No. of Employees</label>
+            <input formControlName="noOfEmployee" mask="0*" type="text" class="form-control"
+              [ngClass]="{'is-invalid': form.get('noOfEmployee').touched && form.get('noOfEmployee').invalid}"
+              placeholder="" />
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-lg-12 mb-3">
+            <label>Address</label>
+            <textarea formControlName="address" class="form-control"
+              rows="3"></textarea>
+          </div>
+          <div class="col-lg-12 mb-3">
+            <label>Description</label>
+            <textarea formControlName="description" class="form-control"
+              rows="3"></textarea>
+          </div>
+          <div class="col-lg-12 mb-3">
+            <div class="form-check form-switch mb-3" dir="ltr">
+              <input formControlName="isActive" type="checkbox" class="form-check-input" id="ActiveSwitch1">
+              <label class="form-check-label" for="ActiveSwitch1"> Active</label>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{{this.editId?'Update':'Submit'}}</button>
+      </form>
+    </div>
+  </div>
+</div>

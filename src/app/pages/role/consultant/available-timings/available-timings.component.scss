@@ -1,0 +1,95 @@
+.card-body {
+  min-height: 270px;
+}
+.input-group-text {
+  padding: 0.23rem 0.6rem;
+}
+.mdi-calendar {
+  font-size: 20px;
+}
+:host {
+  ::ng-deep {
+    ngb-datepicker {
+      padding-top: 5px !important;
+    }
+    ngb-datepicker-navigation-select {
+      > .custom-select {
+        border: 1px solid #888;
+      }
+    }
+  }
+}
+.visit-btns {
+  position: relative;
+  color: #272b41;
+  background-color: #fff;
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  outline: unset;
+  cursor: pointer;
+  input.form-check-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    visibility: hidden;
+    margin-left: 0;
+  }
+  span.visit-rsn {
+    text-align: center;
+    border: 0;
+    border-radius: 5px;
+    padding: 13px 5px;
+    background: #f3f9ff;
+    min-width: 133px;
+    display: inline-block;
+    width: 100%;
+  }
+  span.visit-rsn:before {
+    font-family: unicons-line;
+    font-style: normal;
+    font-weight: 400;
+    speak: none;
+    color: #5b73e8;
+    background-color: #fff;
+    content: "\e9c3";
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    border-radius: 50px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    opacity: 0;
+  }
+  input:checked {
+    & ~ .visit-rsn {
+      background-color: #5b73e8;
+      color: #fff;
+      border-radius: 4px;
+    }
+    & ~ .visit-rsn:before {
+      opacity: 1;
+    }
+  }
+}
+.visit-btns-disabled {
+  cursor: default;
+  span {
+    background: #ffd3d3 !important;
+    color: #272b41 !important;
+    &::before{
+      opacity: 0 !important;
+    }
+  }
+}

@@ -1,0 +1,100 @@
+.card {
+    min-height: calc(100vh - 215px);
+}
+.mr-3 {
+    margin-right: 1rem;
+}
+.disableTabs {
+    pointer-events: none;
+}
+.prodDetail {
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: scale-down;
+    }
+    .brand {
+        font-weight: 500;
+    }
+    .price {
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .mrp {
+        text-decoration: line-through;
+        font-size: 16px;
+        margin-left: 10px;
+        color: #888;
+        font-weight: 400;
+    }
+    .notActiveSizeClass {
+        border: 1px solid #e5e5e5;
+        color: #000000;
+        font-weight: 600;
+        padding: 5px 8px;
+        text-align: center;
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 15px;
+    }
+    .group {
+        padding: 6px 14px;
+        > span {
+            display: inline-block;
+            color: rgba(#000, 0.65);
+            text-align: left;
+            font-size: 12px;
+            font-weight: 400;
+            font-family: "Poppins";
+            &:not(:last-child) {
+                margin-right: 20px;
+            }
+            b {
+                color: #058f46;
+            }
+        }
+    }
+    .activeSizeClass {
+        border: 1px solid #058f46;
+        color: #058f46;
+    }
+    .expand {
+        color: #058f46;
+    }
+}
+.qtyCont {
+    font-size: 18px;
+    i {
+        font-size: 24px;
+    }
+}
+.address {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 15px 15px 15px 60px;
+    position: relative;
+    i {
+        position: absolute;
+        top: 5px;
+        left: 13px;
+        font-size: 28px;
+        color: #ccc;
+    }
+    &:hover {
+        i {
+            color: green;
+        }
+    }
+    &.active {
+        border-color: green;
+        i {
+            color: green;
+        }
+    }
+}
+.checkoutTableCont {
+    border: 1px solid #888;
+    tr:not(:first-of-type) {
+        border-color: #888;
+    }
+}

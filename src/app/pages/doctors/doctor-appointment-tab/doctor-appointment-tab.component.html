@@ -1,0 +1,156 @@
+<table class="table table-centered table-nowrap mb-0 align-middle">
+    <thead>
+      <tr>
+        <th scope="col" style="width: 50px">
+          <div class="form-check font-size-16">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="contacusercheck"
+            />
+            <label
+              class="form-check-label"
+              for="contacusercheck"
+            ></label>
+          </div>
+        </th>
+        <th scope="col">Appointment Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Appointment Date</th>
+        <th scope="col">Primary Slot</th>
+        <th scope="col">Secondary Slot</th>
+        <th scope="col">Status</th>
+        <th scope="col" style="width: 200px">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of appointments;let index = index">
+        <td>
+          <div class="form-check font-size-16">
+            <input
+              id="contacusercheck{{ index }}"
+              type="checkbox"
+              class="form-check-input"
+            />
+            <label
+              class="form-check-label"
+              for="contacusercheck{{ index }}"
+              >&nbsp;</label
+            >
+          </div>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="data.appointmentId"
+          ></ngb-highlight>
+      </td>
+        <td>
+            <ngb-highlight
+              [result]="(data.firstName + ' ' + data?.lastName)"
+            ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="data.gender|titlecase"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="data.phone?data.phone:'---'"
+          ></ngb-highlight>
+        </td>
+        <td>
+            <ngb-highlight
+              [result]="data.date"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="data.primaryTimeSlot"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="data?.secondaryTimeSlot"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="data?.status"
+            ></ngb-highlight>
+          </td>
+        <td>
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item">
+              <a
+                href="javascript:void(0);"
+                class="px-2 text-primary"
+                ngbTooltip="Cancel"
+                (click)="cancelAppointment(data._id)"
+                ><i class="uil uil-multiply font-size-18"></i
+              ></a>
+            </li>
+            <li class="list-inline-item">
+              <a
+                [routerLink]="['/consultation/appointment/edit',data._id]"
+                href="javascript:void(0);"
+                class="px-2 text-primary"
+                ngbTooltip="Edit"
+                ><i class="uil uil-pen font-size-18"></i
+              ></a>
+            </li>
+            <li class="list-inline-item">
+              <a
+                (click)="removeAppointment(data._id)"
+                href="javascript:void(0);"
+                class="px-2 text-danger"
+                ngbTooltip="Delete"
+                ><i class="uil uil-trash-alt font-size-18"></i
+              ></a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<div class="row mt-4">
+  <div class="col-sm-12">
+    <div class="float-end">
+      <ngb-pagination 
+      [collectionSize]="total$"
+      [(page)]="page" 
+      [boundaryLinks]="true"
+      (pageChange)="pageChanged()">
+        <ng-template ngbPaginationPages let-page let-pages="pages">
+            <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                <div class="form-group d-flex flex-nowrap px-2">
+                  <label
+                      id="paginationInputLabel"
+                      for="paginationInput"
+                      class="col-form-label mr-2 ml-1"
+                  >Page</label>
+                  <input #i
+                      type="text"
+                      inputmode="numeric"
+                      pattern="[0-9]*"
+                      class="form-control custom-pages-input"
+                      id="paginationInput"
+                      [value]="page"
+                      (keyup.enter)="selectPage(i.value)"
+                      (blur)="selectPage(i.value)"
+                      (input)="formatInput($any($event).target)"
+                      aria-labelledby="paginationInputLabel paginationDescription"
+                      style="width: 4rem"
+                  />
+                  <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                      of {{pages.length}}</span>
+                </div>
+            </li>
+        </ng-template>
+    </ngb-pagination>
+    </div>
+  </div>
+</div>

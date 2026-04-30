@@ -1,0 +1,716 @@
+<div class="container-fluid">
+  <app-page-title title="Doctors" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row mb-4">
+    <div class="col-xl-12">
+      <div class="card mb-0">
+        <!-- Nav tabs -->
+        <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav nav-tabs nav-justified nav-tabs-custom">
+          <li [ngbNavItem]="1" class="nav-item">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-user-circle font-size-20"></i>
+              <span class="d-none d-sm-block">About</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabContentAbout"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2" class="nav-item">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-clipboard-notes font-size-20"></i>
+              <span class="d-none d-sm-block">Qualifications</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabQualifications"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3" class="nav-item" *ngIf="editId">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-meeting-board font-size-20"></i>
+              <span class="d-none d-sm-block">Slots</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabSlots"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="8" class="nav-item" *ngIf="editId && show">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-chat-bubble-user font-size-20"></i>
+              <span class="d-none d-sm-block">Appointments</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabAppointments"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="4" class="nav-item">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-money-bill font-size-20"></i>
+              <span class="d-none d-sm-block">Account Info</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabAccountInfo"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="5" class="nav-item">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-chat-bubble-user font-size-20"></i>
+              <span class="d-none d-sm-block">Address Info</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabAdrressInfo"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="6" class="nav-item" *ngIf="editId">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-chat-bubble-user font-size-20"></i>
+              <span class="d-none d-sm-block">Reviews</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabReviews"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="7" class="nav-item" *ngIf="editId">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-chat-bubble-user font-size-20"></i>
+              <span class="d-none d-sm-block">SEO</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabSEO"></ng-template>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="justifiednav"></div>
+      </div>
+
+      <!-- Tab content -->
+      <ng-template #TabContentAbout>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div>
+              <div>
+                <form [formGroup]="form" autocomplete="off">
+                  <div class="row">
+                    <div class="col-lg-12 mb-3">
+                      <label>Doctor Image<span class="mandatory">*</span></label>
+                      <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png"
+                        [multiple]="false">
+                        <ngx-dropzone-label>Drop files here or click to
+                          upload.</ngx-dropzone-label>
+                        <ngx-dropzone-preview class="oldImagePreview" *ngFor="let f of oldFiles; index as i"
+                          [removable]="true" (removed)="onRemoveOldFile(i)">
+                          <ngx-dropzone-label><img [src]="s3Base + f.savedName" /></ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                          *ngFor="let f of files; index as i" [file]="f" [removable]="true" (removed)="onRemove(i)">
+                        </ngx-dropzone-image-preview>
+                      </ngx-dropzone>
+                      <div class="text-danger" *ngIf="
+                          (isSubmitted || form.get('profilePhoto').touched) &&
+                          form.get('profilePhoto').invalid
+                        ">
+                        This field is required
+                      </div>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="firstName">First Name
+                        <span class="mandatory">*</span>
+                      </label>
+                      <input id="firstName" type="text" class="form-control" [ngClass]="{
+                          'is-invalid':
+                          (isSubmitted || form.get('firstName').touched) &&
+                            form.get('firstName').invalid
+                        }" formControlName="firstName" />
+                      <div class="text-danger" *ngIf="
+                        (isSubmitted || form.get('firstName').touched) &&
+                          form.get('firstName').invalid
+                        ">
+                        This field is required
+                      </div>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="lastName">Last Name</label>
+                      <input id="lastName" type="text" class="form-control" formControlName="lastName" />
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="email">Email <span class="mandatory">*</span></label>
+                      <input id="email" type="email" class="form-control" [ngClass]="{
+                          'is-invalid':
+                          (isSubmitted || form.get('email').touched) &&
+                            form.get('email').invalid
+                        }" formControlName="email" />
+                      <div class="text-danger" *ngIf="
+                        (isSubmitted || form.get('email').touched) && form.get('email').invalid
+                        ">
+                        This field is required
+                      </div>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="phone">Phone <span class="mandatory">*</span></label>
+                      <input id="phone" type="text" class="form-control" maxlength="10" [ngClass]="{
+                          'is-invalid':
+                          (isSubmitted || form.get('phone').touched) &&
+                            form.get('phone').invalid
+                        }" formControlName="phone" />
+                      <div class="invalid-feedback" *ngIf="form.get('phone').errors?.required">
+                        This field is required
+                      </div>
+                      <div class="invalid-feedback mt-2" *ngIf="
+                          !form.get('phone').errors?.required &&
+                          form.get('phone').errors?.pattern
+                        ">
+                        Please enter valid number
+                      </div>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label w-100" for="consultantType">Type
+                        <span class="float-end text-success font-size-14 pointer" (click)="addType()">Add New</span>
+                      </label>
+                      <ng-select id="consultantType" class="select2" formControlName="consultantType"
+                        placeholder="Doctor Type" [multiple]="true">
+                        <ng-option value="" disabled>Type of the Doctor</ng-option>
+                        <ng-option *ngFor="let item of doctorTypes" [value]="item._id">{{ item.name }}</ng-option>
+                      </ng-select>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="DOB">DOB</label>
+                      <input id="DOB" type="date" class="form-control" formControlName="DOB" />
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="experience">Experience (yr)</label>
+                      <input id="experience" type="number" class="form-control" placeholder="for e.g: 5"
+                        formControlName="experience" [ngClass]="{
+                          'is-invalid':
+                          (isSubmitted || form.get('experience').touched) &&
+                            form.get('experience').invalid
+                        }" />
+                      <div class="invalid-feedback mt-2" *ngIf="form.get('experience').errors?.pattern">
+                        Please enter value between 0-99
+                      </div>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="experienceInMonths">Experience (months)</label>
+                      <input id="experienceInMonths" type="number" class="form-control" placeholder="for e.g: 5"
+                        formControlName="experienceInMonths" [ngClass]="{
+                          'is-invalid':
+                            form.get('experienceInMonths').touched &&
+                            form.get('experienceInMonths').invalid
+                        }" />
+                      <div class="invalid-feedback mt-2" *ngIf="form.get('experienceInMonths').errors?.pattern">
+                        Please enter value between 0-11
+                      </div>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label required" for="fee">Per Consultation Charge (in &#8377;)</label>
+                      <input id="fee" type="text" class="form-control"
+                        [ngClass]="{'is-invalid':(isSubmitted || form.get('fee').touched) && form.get('fee').invalid}"
+                        formControlName="fee" />
+                      <div class="invalid-feedback" *ngIf="form.get('fee').errors?.pattern">
+                        Please enter a valid number
+                      </div>
+                      <div class="invalid-feedback" *ngIf="form.get('fee').errors?.required">
+                        This field is required
+                      </div>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="language">Languages</label>
+                      <input id="language" type="text" class="form-control" formControlName="language" />
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="designation">Designation</label>
+                      <input id="designation" type="text" class="form-control" formControlName="designation" />
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="speciality">Health Concerns</label>
+                      <ng-select id="speciality" class="select2" formControlName="speciality"
+                        placeholder="Health Concerns" [multiple]="true">
+                        <ng-option value="" disabled>Health Concerns</ng-option>
+                        <ng-option *ngFor="let item of healthConcern" [value]="item._id">{{ item.name }}</ng-option>
+                      </ng-select>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label" for="Specialization">Specializations</label>
+                      <ng-select id="speciality" class="select2" formControlName="specialization"
+                        placeholder="Specializations" [multiple]="true">
+                        <ng-option value="" disabled>Specialization</ng-option>
+                        <ng-option *ngFor="let item of specializationList" [value]="item._id">{{ item.name }}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+
+                    <div class="col-4 col-lg-4 mb-3" *ngIf="showRole == checkUser()">
+                      <label class="form-label" for="role">Role<span class="mandatory">*</span></label>
+                      <ng-select id="role" class="select2" formControlName="role" placeholder="Role" [multiple]="true"
+                        [ngClass]="{
+                          'is-invalid':
+                          (isSubmitted || form.get('role').touched) &&
+                            form.get('role').invalid
+                        }">
+                        <ng-option value="" disabled>Role Doctor</ng-option>
+                        <ng-option *ngFor="let item of roles" [value]="item.role">{{ item.role }}</ng-option>
+                      </ng-select>
+                      <div class="text-danger" *ngIf="
+                        (isSubmitted || form.get('role').touched) && form.get('role').invalid
+                        ">
+                        This field is required
+                      </div>
+                    </div>
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label">In House Consultant</label>
+                      <select formControlName="inHouse" class="form-control">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                      </select>
+                    </div>
+                    <div formGroupName="consultant" class="col-4 col-lg-4 mb-3">
+                      <label class="form-label">HB Commission (%)</label>
+                      <input formControlName="hbCommission" class="form-control"
+                        [ngClass]="{'is-invalid': form.get('consultant').get('hbCommission').touched && form.get('consultant').get('hbCommission').invalid}"
+                        type="number" min="0" max="0" placeholder="e.g. 10">
+                      <div class="invalid-feedback mt-2">
+                        Please enter valid number
+                      </div>
+                    </div>
+                    <div class="col-4 col-lg-4 mb-3">
+                      <label class="form-label required">Appointment Mode</label>
+                      <div formGroupName="appointmentMode" class="row mt-2">
+                        <div class="col">
+                          <div dir="ltr" class="form-check form-switch form-switch-md mb-3">
+                            <input type="checkbox" id="isVideo" formControlName="isVideo" class="form-check-input">
+                            <label for="isVideo" class="form-check-label">Video Call</label>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div dir="ltr" class="form-check form-switch form-switch-md mb-3">
+                            <input type="checkbox" id="isAudio" formControlName="isAudio" class="form-check-input">
+                            <label for="isAudio" class="form-check-label">Audio Call</label>
+                          </div>
+                        </div>
+                        <!-- <div class="col">
+                          <div dir="ltr" class="form-check form-switch form-switch-md mb-3">
+                            <input type="checkbox" id="isChat" formControlName="isChat" class="form-check-input">
+                            <label for="isChat" class="form-check-label">Messaging</label>
+                          </div>
+                        </div> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-lg-12 mb-3">
+                      <label class="form-label" for="description">Description</label>
+                      <textarea id="description" type="text" class="form-control h-100"
+                        formControlName="description"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 mt-3 pt-3">
+                      <label>Current City</label>
+                    </div>
+
+                    <div formGroupName="currentAddress">
+                      <div class="col-12 col-lg-12">
+                        <div class="row">
+                          <div class="col-4 col-lg-4 mb-3">
+                            <label class="form-label" for="pincode">Pincode</label>
+                            <input id="pincode" type="number" class="form-control" formControlName="pinCode"
+                              (change)="getUserCurrentAddressArea()" />
+                          </div>
+
+                          <div class="col-4 col-lg-4 mb-3">
+                            <label class="form-label" for="city">City</label>
+                            <input id="city" type="text" class="form-control" formControlName="city" />
+                          </div>
+
+                          <div class="col-4 col-lg-4 mb-3">
+                            <label class="form-label" for="state">State</label>
+                            <input id="city" type="text" class="form-control" readonly formControlName="state" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabQualifications>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="card" [formGroup]="form">
+              <div class="card-body">
+                <h3 class="card-title mt-0 mb-3">Education</h3>
+                <div *ngIf="!form.value.qualification.length" class="text-center pb-4" (click)="addMoreEdu()">
+                  <p class="text-muted">No Education Added Yet!</p>
+                  <button type="button" class="btn btn-primary">
+                    <i class="uil uil-plus-circle me-2"></i> Add Education
+                  </button>
+                </div>
+                <ng-container formArrayName="qualification">
+                  <div class="d-flex" *ngFor="
+                      let control of form.get('qualification')['controls'];
+                      let i = index
+                    " [formGroupName]="i">
+                    <div class="row flex-grow-1 me-2">
+                      <div class="col-sm-4 mb-3">
+                        <label class="required">Degree</label>
+                        <input formControlName="degree" class="form-control" [ngClass]="{
+                            'is-invalid':
+                            (isSubmitted || control.get('degree').touched) &&
+                              control.get('degree').invalid
+                          }" type="text" (blur)="onBlur(control.get('degree'))" />
+                        <div class="invalid-feedback">
+                          This field is required
+                        </div>
+                      </div>
+                      <div class="col-sm-4 mb-3">
+                        <label class="required">College/Institute</label>
+                        <input formControlName="college" class="form-control" [ngClass]="{
+                            'is-invalid':
+                            (isSubmitted || control.get('college').touched) &&
+                              control.get('degree').invalid
+                          }" type="text" (blur)="onBlur(control.get('college'))" />
+                        <div class="invalid-feedback">
+                          This field is required
+                        </div>
+                      </div>
+                      <div class="col-sm-4 mb-3">
+                        <label class="required">Year of Completion</label>
+                        <input formControlName="passingYear" class="form-control" [ngClass]="{
+                            'is-invalid':
+                            (isSubmitted || control.get('passingYear').touched) &&
+                              control.get('passingYear').invalid
+                          }" type="text" mask="0000" (blur)="onBlur(control.get('passingYear'))" />
+                        <div class="invalid-feedback">
+                          This field is required
+                        </div>
+                      </div>
+                      <div class="col-sm-12 mb-3">
+                        <label>Upload Degree (optional)
+                          <i class="uil-info-circle" placement="top"
+                            ngbTooltip="We will use degree proof to verify your qualification."></i></label>
+                        <app-dropzone formControlName="certificate"
+                          accept="image/jpeg,image/jpg,image/png,application/pdf" [multiple]="false"></app-dropzone>
+                        <small>Accepted Formats: JPG, JPEG, PNG, PDF</small>
+                        <div class="d-flex mt-3" *ngIf="editId">
+                          <div *ngIf="control.value.certificate">
+                            <i class="btn btn-primary uil-eye font-size-18"
+                              (click)="viewDegree(control.value.certificate)"></i>
+                          </div>
+                          <div class="ms-2" *ngIf="control.value.certificate">
+                            <a [href]="s3Base + control.value.certificate" target="blank" download>
+                              <i class="
+                                  btn btn-warning
+                                  uil-download-alt
+                                  font-size-18
+                                "></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-shrink-0">
+                      <label>&nbsp;</label> <br />
+                      <i class="btn btn-danger bx uil-trash removeEdu" (click)="removeEdu(i)"></i>
+                    </div>
+                  </div>
+                </ng-container>
+                <span *ngIf="form.value.qualification.length" class="btn text-primary addMore" (click)="addMoreEdu()"><i
+                    class="bx uil-plus-circle"></i> Add More</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabSlots>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="table-responsive mb-4">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <div class="card">
+                  <div class="card-body">
+                    <form [formGroup]="form">
+                      <div class="mb-3">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label>Timing Slot Duration</label>
+                            <select formControlName="slotDuration" class="form-control">
+                              <option value="00:15">15 mins</option>
+                              <option value="00:30">30 mins</option>
+                              <option value="00:45">45 mins</option>
+                              <option value="01:00">1 Hour</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="schedule-widget">
+                        <ul formArrayName="timeSlots" class="nav nav-pills nav-justified mb-4">
+                          <li class="nav-item" *ngFor="let timeSlot of form.get('timeSlots')['controls'];let i = index;"
+                            [formGroupName]="i">
+                            <a href="javascript:void(0);" class="nav-link"
+                              [ngClass]="{active: activeDay == timeSlot.value.day, navLinkDanger: activeDay != timeSlot.value.day && timeSlot.invalid}"
+                              (click)="onChangeDay(timeSlot.value.day)">
+                              {{timeSlot.value.day}} <span *ngIf="activeDay != timeSlot.value.day && timeSlot.invalid"
+                                class="uil-info-circle text-danger"></span>
+                            </a>
+                          </li>
+                        </ul>
+
+                        <ng-container formArrayName="timeSlots">
+                          <ng-container *ngFor="let timeSlot of form.get('timeSlots')['controls'];let i = index;"
+                            [formGroupName]="i">
+
+                            <ng-container *ngIf="timeSlot.value.day == activeDay" formArrayName="availableTime">
+                              <h4 class="card-title d-flex justify-content-between">
+                                <span>Available Time</span>
+                                <a class="edit-link" href="javascript:void(0);" (click)="addTimeSlot(timeSlot)"><i
+                                    class="fa fa-plus-circle mr-1"></i>
+                                  Add
+                                  Time</a>
+                              </h4>
+                              <span *ngIf="!timeSlot.get('availableTime').length" class="text-muted mb-0">Not
+                                Available</span>
+                              <div class="row mb-3"
+                                *ngFor="let availableTimeSlot of timeSlot.get('availableTime')['controls'];let j = index;"
+                                [formGroupName]="j">
+                                <div class="col-12 col-md-10">
+                                  <div class="row">
+                                    <div class="col-12 col-md-5">
+                                      <label class="required">Start Time</label>
+                                      <input formControlName="startTime" type="time" min="06:00" max="22:00"
+                                        class="form-control"
+                                        [ngClass]="{'is-invalid': availableTimeSlot.get('startTime').touched && availableTimeSlot.get('startTime').invalid}"
+                                        (change)="onChangeStartTime(availableTimeSlot)">
+                                      <div class="invalid-feedback">
+                                        <span *ngIf="availableTimeSlot.get('startTime').errors?.required">This field is
+                                          required</span>
+                                        <span *ngIf="availableTimeSlot.get('startTime').errors?.startTime">Start time
+                                          should be less than start Time</span>
+                                        <span
+                                          *ngIf="!availableTimeSlot.get('startTime').errors?.startTime && availableTimeSlot.get('startTime').errors?.timeIntersect">Selected
+                                          time is intersecting with another time</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                      <label class="required">End Time</label>
+                                      <input formControlName="endTime" type="time" min="06:00" max="22:00"
+                                        class="form-control"
+                                        [ngClass]="{'is-invalid': availableTimeSlot.get('endTime').touched && availableTimeSlot.get('endTime').invalid}">
+                                      <div class="invalid-feedback">
+                                        <span *ngIf="availableTimeSlot.get('endTime').errors?.required">This field is
+                                          required</span>
+                                        <span *ngIf="availableTimeSlot.get('endTime').errors?.endTime">End time should
+                                          be greater than start Time</span>
+                                        <span
+                                          *ngIf="!availableTimeSlot.get('endTime').errors?.endTime && availableTimeSlot.get('endTime').errors?.timeIntersect">Selected
+                                          time is intersecting with another time</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-12 col-md-2 text-end">
+                                  <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                                  <button type="button" class="btn btn-danger trash"
+                                    (click)="removeTimeSlot(timeSlot,j)"><i class="far fa-trash-alt"></i></button>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+
+                        </ng-container>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabAppointments *ngIf="editId && show">
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="table-responsive mb-4">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                <app-doctor-appointment-tab [consultantId]="editId"></app-doctor-appointment-tab>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabReviews>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <app-doctor-review></app-doctor-review>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabAccountInfo>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <form [formGroup]="form">
+              <div class="row" formGroupName="accountInfo">
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="account_name">Account Holder Name</label>
+                  <input id="account_name" type="text" class="form-control" formControlName="account_name" />
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="account_type">Account Type</label>
+                  <ng-select id="account_type" class="select2" formControlName="account_type" placeholder="Account Type"
+                    [multiple]="false">
+                    <ng-option value="" disabled>Type of the Account</ng-option>
+                    <ng-option *ngFor="let item of accountType" [value]="item">{{ item }}</ng-option>
+                  </ng-select>
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="account_number">Account Number</label>
+                  <input id="account_number" type="text" class="form-control" formControlName="account_number" />
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="bank_name">Bank Name</label>
+                  <input id="bank_name" type="text" class="form-control" formControlName="bank_name" />
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="bank_branch">Bank Branch</label>
+                  <input id="bank_branch" type="text" class="form-control" formControlName="bank_branch" />
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="bank_ifsc">Bank Ifsc</label>
+                  <input id="bank_ifsc" type="text" class="form-control" formControlName="bank_ifsc" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabAdrressInfo>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <form [formGroup]="form">
+              <div class="row" formGroupName="address">
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="name">Name</label>
+                  <input id="name" type="text" class="form-control" formControlName="name" />
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="lastName">Phone</label>
+                  <input id="phone" type="text" class="form-control" maxlength="10" [ngClass]="{
+                      'is-invalid':
+                        form.get('address').get('phoneNo').touched &&
+                        form.get('address').get('phoneNo').invalid
+                    }" formControlName="phoneNo" />
+                  <div class="invalid-feedback mt-2" *ngIf="form.get('address').get('phoneNo').errors?.pattern">
+                    Please enter valid number
+                  </div>
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="pinCode">Pincode</label>
+                  <input id="pinCode" type="text" class="form-control" maxlength="6" [ngClass]="{
+                      'is-invalid':
+                        form.get('address').get('pinCode').touched &&
+                        form.get('address').get('pinCode').invalid
+                    }" formControlName="pinCode" (change)="getUserAddressArea()" />
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="city">City</label>
+                  <input id="city" type="text" class="form-control" formControlName="city" />
+                </div>
+
+                <div class="col-4 col-lg-4 mb-3">
+                  <label class="form-label" for="bank_name">State</label>
+                  <input id="state" type="text" class="form-control" formControlName="state" readonly />
+                </div>
+
+                <div class="col-12 col-lg-12 mb-3">
+                  <label class="form-label" for="line1">Address</label>
+                  <textarea style="resize: none" class="form-control" formControlName="line1"
+                    placeholder="ABC Colony,XYZ street"></textarea>
+                </div>
+
+                <!-- <div class="col-md-12 mt-2">
+                  <input
+                    class="pointer"
+                    type="checkbox"
+                    [checked]="currentChecked"
+                    (click)="checkboxClicked()"
+                  />
+                  <label class="pl-3"
+                    >*Current address same as Permanent Address</label
+                  >
+                </div> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabSEO>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <form [formGroup]="form">
+              <div formGroupName="consultant">
+                <div class="mb-3">
+                  <label class="form-label">Meta Title</label>
+                  <input formControlName="metaTitle" class="form-control" type="text" placeholder="Enter meta title">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Meta Description</label>
+                  <textarea formControlName="metaDescription" class="form-control" placeholder="Enter meta description"
+                    rows="5"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <ng-container>
+    <form [formGroup]="form">
+      <div class="my-3">
+        <div class="mb-3">
+          <label class="label mr-3">Approved</label>
+          <app-hb-switch class="ms-3" formControlName="activate" color="#f46a6a">
+          </app-hb-switch>
+        </div>
+      </div>
+    </form>
+
+    <div class="my-3">
+      <button class="btn btn-primary px-4 me-3" (click)="addDoctor()">
+        Save
+      </button>
+      <button class="btn btn-primary px-4" (click)="addDoctor(true)">
+        Save &amp; Go Back
+      </button>
+    </div>
+  </ng-container>
+  <!-- end row -->
+</div>

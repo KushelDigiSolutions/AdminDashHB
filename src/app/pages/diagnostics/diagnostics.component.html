@@ -1,0 +1,210 @@
+<div class="container-fluid">
+  <app-page-title title="Diagnostics List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="float-end">
+        <form #typeForm="ngForm" class="d-inline-flex mb-3">
+          <label class="form-check-label my-2 me-2" style="white-space: nowrap;" for="order-selectinput">Product
+            Type</label>
+          <select name="type" #type="ngModel" ngModel class="form-select" id="order-selectinput"
+            (change)="onChangeType(type)">
+            <option value="">All</option>
+            <option value="OFFER">Offer</option>
+            <option value="POP">POP</option>
+            <option value="PROFILE">Profile</option>
+            <option value="TEST">Test</option>
+          </select>
+        </form>
+      </div>
+      <!-- <a routerLink="/diagnostics/bookings" type="button" class="btn btn-success mb-3">
+                <i class="mdi mdi-plus me-1"></i> Add New
+            </a> -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-md-6">
+              Results Found: <b>{{total}}</b>
+              <!-- <div class="mb-3">
+                <a routerLink="create" class="btn btn-success waves-effect waves-light"><i
+                    class="mdi mdi-plus me-2"></i> Add New</a>
+              </div> -->
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-inline float-md-end mb-3">
+                <div class="search-box ms-2">
+                  <div class="position-relative">
+                    <form #search="ngForm" (submit)="onSearch(search)">
+                      <app-rxjs-input classes="form-control rounded bg-light border-0" name="searchTerm" ngModel
+                        (debounceinput)="onSearch(search)" placeholder="Search..."></app-rxjs-input>
+                      <!-- <input class="form-control rounded bg-light border-0" type="text" name="searchTerm" ngModel
+                        placeholder="Search..." /> -->
+                      <i class="mdi mdi-magnify search-icon"></i>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive mb-4">
+            <table class="table table-centered mb-0 align-middle">
+              <thead>
+                <tr>
+                  <th scope="col">S.no.</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Included Tests</th>
+                  <th scope="col">Rate (B2C)</th>
+                  <th scope="col">Rate (Offer)</th>
+                  <!-- <th scope="col">HB Discount</th> -->
+                  <th scope="col">Featured Offer</th>
+                  <th scope="col">Featured Product</th>
+
+                  <th scope="col" style="width: 110px" class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of list;let index = index">
+                  <td>
+                    <ngb-highlight [result]="(pageSize * (page - 1)) + index + 1"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.name"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.type | titlecase"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.category"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.childs.length || 1"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="'₹ ' + data.rate.b2C"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="'₹ ' + data.rate.offerRate"></ngb-highlight>
+                  </td>
+                  <!-- <td>
+                    <ngb-highlight *ngIf="data.hbDiscount" [result]="(data.hbDiscount)+'%'"></ngb-highlight>
+                  </td> -->
+                  <td>
+                    <app-hb-switch color="#34c38f"
+                      [isLoading]="data.toggleFeaturedOfferLoading || false"
+                      [beforeChange]="toggleFxn(data,'isFeaturedOffer')" [checked]="data?.isFeaturedOffer">
+                    </app-hb-switch>
+                  </td>
+                  <td>
+                    <app-hb-switch color="#34c38f"
+                      [isLoading]="data.toggleFeaturedProductLoading || false"
+                      [beforeChange]="toggleFxn(data,'isFeaturedProduct')" [checked]="data?.isFeaturedProduct">
+                    </app-hb-switch>
+                  </td>
+                  <td class="text-end">
+                    <ul class="list-inline mb-0 text-end">
+                      <li class="list-inline-item">
+                        <a (click)="onView(modalRef,data)" href="javascript:void(0);" class="px-2 text-primary"
+                          ngbTooltip="View Details"><i class="uil uil-eye font-size-18"></i></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a [routerLink]="['edit', data._id]" class="px-2 text-primary"
+                          ngbTooltip="Edit Details"><i class="uil uil-pen font-size-18"></i></a>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <div class="float-end">
+                <ngb-pagination [collectionSize]="total" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"
+                  (pageChange)="pageChanged()">
+                  <ng-template ngbPaginationPages let-page let-pages="pages">
+                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                      <div class="form-group d-flex flex-nowrap px-2">
+                        <label id="paginationInputLabel" for="paginationInput"
+                          class="col-form-label mr-2 ml-1">Page</label>
+                        <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                          class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                          (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                          (input)="formatInput($any($event).target)"
+                          aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                        <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                          of {{pages.length}}</span>
+                      </div>
+                    </li>
+                  </ng-template>
+                </ngb-pagination>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+<!-- container-fluid -->
+<ng-template #modalRef role="document" let-modal>
+  <ng-container *ngIf="modalData">
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Diagnostic Details</h5>
+      <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <h5>{{modalData.name}}</h5>
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <tbody>
+            <tr>
+              <th scope="row">Included Tests</th>
+              <td>
+                <p *ngFor="let childGroup of modalData.childsGroup"><b>{{childGroup.groupName}}</b>: <ng-container *ngFor="let child of childGroup.childs;last as last;index as ii"><b>{{ii+1}}.</b> {{child.name}} <ng-container *ngIf="!last">, </ng-container></ng-container></p>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Type</th>
+              <td>{{modalData.type}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Category</th>
+              <td>{{modalData.category}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Rate</th>
+              <td>₹ {{modalData.rate.b2C}}(B2C), ₹ {{modalData.rate.b2B}}(B2B), ₹ {{modalData.rate.offerRate}}(Offer
+                Rate)</td>
+            </tr>
+            <tr>
+              <th scope="row">Margin</th>
+              <td>₹ {{modalData.margin}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Updated At</th>
+              <td>{{modalData.updatedAt | date:'MMM d, yyy, hh:mm a'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <pre>{{modalData | json}}</pre>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-container>
+</ng-template>

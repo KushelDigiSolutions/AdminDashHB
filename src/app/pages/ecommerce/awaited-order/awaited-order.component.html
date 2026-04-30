@@ -1,0 +1,655 @@
+  <!-- <div>
+    <div ngbAccordion  [closeOthers]="true">
+      <div ngbAccordionItem="static-1" >
+        <h2 ngbAccordionHeader><button ngbAccordionButton>
+          <h6 class="mb-0">
+            Total Orders: {{ ordersData.count }} | Download Records
+          </h6>
+          <i class="mdi mdi-chevron-down"></i>
+        </button></h2>
+        <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+          <div class="row">
+            <div class="col-md-6">
+              <form (ngSubmit)="filterOrders()" [formGroup]="filterFG"
+                class="row row-cols-lg-auto gx-3 gy-2 align-items-center">
+                <div class="col-12">
+                  <input class="form-control" type="text" placeholder="Order Id" formControlName="orderId" />
+                </div>
+                <div class="col-12">
+                  <input class="form-control" type="text" placeholder="User Name" formControlName="user" />
+                </div>
+                <div class="col-12">
+                  <ng-select class="select2" formControlName="orderStatus">
+                    <ng-option disabled value="">Order Status</ng-option>
+                    <ng-option *ngFor="let item of orderStatus" value="{{ item }}">{{ item | titlecase }}</ng-option>
+                  </ng-select>
+                </div>
+                <div class="col-12">
+                  <ng-select class="select2" formControlName="paymentStatus">
+                    <ng-option disabled value="">Payment Status</ng-option>
+                    <ng-option *ngFor="let item of paymentStatus" value="{{ item }}">{{ item | titlecase }}</ng-option>
+                  </ng-select>
+                </div>
+  
+                <div class="col-12 col-lg-12">
+                  <div class="row d-flex">
+                    <div class="col-6">
+                      <label for="startDate">Start Date</label>
+                      <input class="form-control" type="date" formControlName="startDate" placeholder="Start Date" />
+                    </div>
+                    <div class="col-6">
+                      <label for="endDate">End Date</label>
+                      <input class="form-control" type="date" formControlName="endDate" [max]="maxDate"
+                        placeholder="End Date" />
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-12 w-100">
+                  <button class="btn btn-primary" type="submit">Apply</button>
+                  <button class="btn btn-primary ms-3" (click)="resetFilters()">Clear</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+              <form [formGroup]="recordsFG" (submit)="getRecords()"
+                class="row row-cols-lg-auto gx-3 gy-2 align-items-center">
+                <div class="col-12">
+                  <input class="form-control" [ngClass]="{
+                      'is-invalid':
+                        recordsFG.get('startDate').touched &&
+                        recordsFG.get('startDate').invalid
+                    }" type="date" formControlName="startDate" placeholder="Start Date" />
+                </div>
+                <div class="col-12">
+                  <input class="form-control" type="date" formControlName="endDate" [max]="maxDate"
+                    placeholder="End Date" />
+                </div>
+                <div class="col-12 w-25">
+                  <ng-select class="select2" formControlName="type">
+                    <ng-option value="slips" selected>Packaging Slips</ng-option>
+                    <ng-option value="invoices">Invoices</ng-option>
+                    <ng-option value="gstInvoice">GST Invoice</ng-option>
+                  </ng-select>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary" [disabled]="recordsFG.invalid">
+                    View Records
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </ng-template></div></div>
+      </div>
+    </div>
+  </div> -->
+  <div class="container-fluid">
+    <app-page-title title="Awaited Orders" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <div class="float-end">
+            <form class="d-inline-flex mb-3">
+              <label class="form-check-label my-2 me-2" for="order-selectinput">Orders</label>
+              <select class="form-select" id="order-selectinput">
+                <option selected>All</option>
+                <option value="1">Active</option>
+                <option value="2">Unpaid</option>
+              </select>
+            </form>
+          </div>
+         
+        </div>
+        <div class="row mb-md-2">
+          <div class="col-sm-12 col-md-6">
+            <div class="dataTables_length">
+              <label class="d-inline-flex align-items-center">Show<select name="pageSize" [(ngModel)]="pageSize"
+                  (change)="changeValue(pageSize, 'limit')" class="
+                    custom-select custom-select-sm
+                    form-control form-control-sm form-select form-select-sm
+                  ">
+                  <option [ngValue]="10">10</option>
+                  <option [ngValue]="25">25</option>
+                  <option [ngValue]="50">50</option>
+                  <option [ngValue]="100">100</option>
+                </select>
+                entries</label>
+            </div>
+          </div>
+          <!-- Search -->
+          <div class="col-sm-12 col-md-6">
+            <!-- <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+              <label class="d-inline-flex align-items-center">Search:
+                <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                  aria-controls="tickets-table" [(ngModel)]="service.searchTerm" /></label>
+            </div> -->
+  
+            <!-- <app-bulk-export *ngIf="orders.length" [data]="orders" type="order"></app-bulk-export> -->
+          </div>
+          <!-- End search -->
+        </div>
+        <div class="table-responsive mb-4 w-100">
+          <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <form>
+              <table class="
+                  table table-centered
+                  datatables
+                  dt-responsive
+                  nowrap
+                  table-card-list
+                " style="border-spacing: 0 12px; width: 100%">
+                <thead>
+                  <tr class="bg-transparent">
+                    <!-- <th style="width: 24px">
+                      <div class="form-check text-center font-size-16">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="ordercheck"
+                        />
+                        <label class="form-check-label" for="ordercheck"></label>
+                      </div>
+                    </th> -->
+                    <th scope="col">
+                      {{ "Order.orderId" | translate }}
+                    </th>
+                    <th scope="col" sortable="date" (sort)="onSort($event)">
+                      {{ "Order.date" | translate }}
+                    </th>
+                    <th scope="col">
+                      {{ "Order.shippingName" | translate }}
+                    </th>
+                    <th scope="col">
+                      {{ "Order.pinCode" | translate }}
+                    </th>
+                    <th scope="col">
+                      {{ "Order.products" | translate }}
+                    </th>
+                    <th scope="col">
+                      {{ "Order.total" | translate }}
+                    </th>
+                    <th scope="col">
+                      {{ "Order.paymentMethod" | translate }}
+                    </th>
+                    <th scope="col">
+                      {{ "Order.paymentStatus" | translate }}
+                    </th>
+                    <th scope="col">
+                      {{ "Order.orderStatus" | translate }}
+                    </th>
+                    <th style="width: 170px; text-align: right">
+                      {{ "Order.action" | translate }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of orders; let i = index" class="odd">
+                    <!-- <td>
+                      <div class="form-check text-center">
+                        <input
+                          id="ordercheck{{ i }}"
+                          type="checkbox"
+                          class="form-check-input"
+                        />
+                        <label class="form-check-label" for="ordercheck{{ i }}"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td> -->
+                    <td>
+                      <ngb-highlight [result]="data.orderId" [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.createdAt | date: 'MMM d, y, h:mm a'" [term]="service.searchTerm">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="
+                          data.shippingInfo.firstName + ' ' +
+                          (data.shippingInfo.lastName || '')
+                        " [term]="service.searchTerm"></ngb-highlight> <br>
+                      <a *ngIf="data.shippingInfo.phone"
+                        [href]="'tel:'+data.shippingInfo.countryCode+data.shippingInfo.phone">{{data.shippingInfo.countryCode+data.shippingInfo.phone}}</a>
+                      <a *ngIf="!data.shippingInfo.phone && data.shippingInfo.email"
+                        [href]="'mailto:'+data.shippingInfo.email">{{data.shippingInfo.email}}</a>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.shippingInfo.address.pinCode" [term]="service.searchTerm">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <!-- <ngb-highlight 
+                      *ngFor="let product of data.products"
+                        [result]="product.productName + ', '"
+                        [term]="service.searchTerm"
+                      ></ngb-highlight> -->
+                      <span *ngFor="let product of data.products; let last = last">
+                        {{ product.productName || product.productId?.name }} <b><small>[{{product.seller}}]</small></b>
+                        {{ last ? "" : "," }}
+                      </span>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.totalPayableAmount.toFixed(2)" [term]="service.searchTerm">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.paymentMethod? (data.paymentMethod == 'cod'?'COD':'Prepaid'):''"
+                        [term]="service.searchTerm"></ngb-highlight>
+                    </td>
+                    <td>
+                      <span class="badge rounded-pill bg-soft-success font-size-12" [ngClass]="{
+                          'status-warning':
+                            data.paymentStatus == 'paymentAwaited' ||
+                            data.paymentStatus == 'awaited'
+                        }">{{ data.paymentStatus }}</span>
+                    </td>
+                    <td>
+                      <span class="badge rounded-pill font-size-12" [ngClass]="{
+                          'bg-soft-danger': data.status === 'Chargeback',
+                          'bg-soft-warning': data.status === 'Unpaid',
+                          orderPlaced: data.currentStatus === 'placed',
+                          orderProcessing: data.currentStatus === 'processing',
+                          paymentAwaited: data.currentStatus === 'paymentAwaited',
+                          'status-warning ':
+                            data.currentStatus == 'hold' ||
+                            data.currentStatus == 'outForDelivery',
+                          'status-danger':
+                            data.currentStatus == 'cancelled' ||
+                            data.currentStatus == 'refundInitiated' ||
+                            data.currentStatus == 'failed',
+                          'status-success':
+                            data.currentStatus == 'completed' ||
+                            data.currentStatus == 'dispatched' ||
+                            data.currentStatus == 'delivered'
+                        }">{{ data.currentStatus | titlecase }}</span>
+                    </td>
+                    <td style="text-align: right">
+                      <a href="javascript:void(0);" class="px-2 text-warning" [ngClass]="{
+                          hideAction: !cancelableStatus.includes(
+                            data.currentStatus
+                          )
+                        }" placement="top" ngbTooltip="Cancel Order" (click)="onCancelOrder(data, i)">
+                        <i class="mdi mdi-cart-remove font-size-18"></i>
+                      </a>
+                      <a *ngIf="
+                          data.isRefundable && data.paymentStatus == 'accepted'
+                        " href="javascript:void(0);" class="px-2 text-success" placement="top" ngbTooltip="Refund"
+                        (click)="refundOrder(data)">
+                        <i class="mdi mdi-credit-card-refund font-size-18"></i>
+                      </a>
+                      <a [routerLink]="'order-detail/' + data._id" class="px-2 text-primary" placement="top"
+                        ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                      <a (click)="deleteOrder(data,data._id)" href="javascript:void(0);" class="px-2 text-danger"
+                        placement="top" ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                      <a (click)="openInvoiceModal(data)" href="javascript:void(0);" class="px-2 text-success"
+                        placement="top" ngbTooltip="Invoice"><i class="uil uil-clipboard-notes font-size-18"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+  
+              <div class="float-end" *ngIf="ordersData.count">
+                <ngb-pagination [collectionSize]="ordersData.count" [(page)]="page" [pageSize]="pageSize" [boundaryLinks]="true"
+                  (pageChange)="change()">
+                  <ng-template ngbPaginationPages let-page let-pages="pages">
+                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                      <div class="form-group d-flex flex-nowrap px-2">
+                        <label id="paginationInputLabel" for="paginationInput"
+                          class="col-form-label mr-2 ml-1">Page</label>
+                        <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                          id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)"
+                          (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                          aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                        <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                          of {{ pages.length }}</span>
+                      </div>
+                    </li>
+                  </ng-template>
+                </ngb-pagination>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="recordsSec" [ngClass]="{ show: recordsList.length }">
+    <div class="backdrop" (click)="closeRecords()"></div>
+    <div class="recordsCont">
+      <!-- <div class="text-center mb-4 head">
+        <button class="btn btn-primary" (click)="onDownloadRecords()">
+          DOWNLOAD ORDERS <i class="mdi mdi-download"></i>
+        </button>
+        <i class="mdi mdi-close float-end pointer p-2 recordsClose" (click)="closeRecords()"></i>
+      </div> -->
+      <div class="recordsList" style="
+          padding: 15px 15px 30px;
+          font-size: 12px;
+          color: #000;
+          font-weight: 500;
+        ">
+        <div class="row mx-0 record" style="border: 1px solid #888; margin-bottom: 15px"
+          *ngFor="let record of recordsList">
+          <div class="col-6 py-2" style="border-right: 1px solid #888">
+            <p class="mb-2">HEALTHYBAZAR ORDER ID #{{ record.orderId }}</p>
+            <p class="m-0">
+              Ship To:<br />
+              {{ record.shippingInfo.fullName }}<br />
+              {{ record.shippingInfo.fullAddress }}<br />
+              Tel: {{ record.shippingInfo.countryCode }}
+              {{ record.shippingInfo.phone }}
+            </p>
+          </div>
+          <div class="col-6 py-2">
+            <div class="row m-0">
+              <div class="col-7 p-0">
+                <p class="mb-1">
+                  HEALTHYBAZAR ORDER ID #{{ record.orderId }} <br />
+                  Date: {{ record.createdAt | date: "dd-MMM-yy" }} <br />
+                  {{ record.shippingInfo.firstName }} {{ record.shippingInfo.lastName}}<br />
+                </p>
+              </div>
+              <div class="col-5 p-0 text-end">
+                <p class="mb-1 d-inline-block">
+                  <span>Payment Status: {{ record.paymentStatus }}</span> <br />
+                  <span>Payment Method: {{ record.paymentMethod == 'cod'?"COD": record.paymentMethod }}</span> <br />
+                  <span>Shipping Charges Paid: {{ record.shippingCharges }}</span> <br />
+                </p>
+              </div>
+            </div>
+            <table class="table table-sm table-hover mb-0">
+              <thead>
+                <tr>
+                  <th style="color: #000">Brand Name</th>
+                  <th style="color: #000">Product Name</th>
+                  <th style="color: #000">Size</th>
+                  <th style="color: #000">Qty</th>
+                  <th style="color: #000">Product Price</th>
+                  <th style="color: #000">Shipping Price</th>
+                  <th style="color: #000">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of record.products">
+                  <td style="color: #111; font-weight: 500">
+                    {{ product.seller }}
+                  </td>
+                  <td style="color: #111; font-weight: 500">
+                    {{ product.productName }}
+                  </td>
+                  <td style="color: #111; font-weight: 500">
+                    {{ product.label.join(" | ") }}
+                  </td>
+                  <td style="color: #111; font-weight: 500">
+                    {{ product.quantity }}
+                  </td>
+                  <td style="color: #111; font-weight: 500">
+                    {{ product.productPrice }}
+                  </td>
+                  <td style="color: #111; font-weight: 500">
+                    {{ product.shippingCharges }}
+                  </td>
+                  <td style="color: #111; font-weight: 500">
+                    {{ product.productPrice + product.shippingCharges }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #invoiceModal role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Invoice</h5>
+      <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div *ngIf="invoice" class="modal-body py-3">
+      <div class="text-center mb-4">
+        <button class="btn btn-primary" (click)="downloadInvoice(invoice.invoiceId)">
+          Download
+        </button>
+      </div>
+      <div class="invoiceCont" style="background-color: #fff; padding: 15px">
+        <div style="padding: 15px; background-color: #fff">
+          <table cellpadding="0" cellspacing="0" style="border: 1px solid #ccc; width: 100%; background-color: #fff">
+            <tbody>
+              <tr>
+                <td style="padding: 15px">
+                  <img
+                    src="data:image/png;base64,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" />
+                </td>
+                <td style="
+                    padding: 15px;
+                    font-size: 24px;
+                    font-weight: 700;
+                    text-align: right;
+                    color: #222;
+                  ">
+                  TAX INVOICE
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 15px; border: 1px solid #ccc">
+                  <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 12px">
+                    <tbody>
+                      <tr>
+                        <td>Order ID:</td>
+                        <th>{{ invoice.orderId }}</th>
+                      </tr>
+                      <tr>
+                        <td>Order Date:</td>
+                        <th>{{ invoice.createdAt | date: "dd-MM-YYYY" }}</th>
+                      </tr>
+                      <tr>
+                        <td>Invoice Date:</td>
+                        <th>{{ invoice.invoiceDate | date: "dd-MM-YYYY" }}</th>
+                      </tr>
+                      <tr>
+                        <td>Invoice Number:</td>
+                        <th>{{ invoice.invoiceId }}</th>
+                      </tr>
+                      <tr>
+                        <td>Payment Method:</td>
+                        <th>{{ invoice.paymentMethod == 'cod'?"COD": invoice.paymentMethod + (invoice.paymentMethod?'
+                          (Prepaid)':'') }}</th>
+                      </tr>
+  
+                    </tbody>
+                  </table>
+                </td>
+                <td style="padding: 15px; font-size: 12px; border: 1px solid #ccc">
+                  <b>Tatvamasmi Consulting Services Pvt. Ltd.</b> <br />
+                  Hapur, Uttar Pradesh,<br />
+                  245101 <br />
+                  <b>GSTIN</b> 09AAICT3465B1ZC
+                </td>
+              </tr>
+              <tr>
+                <td style="
+                    border: 1px solid #ccc;
+                    background-color: #ededed;
+                    padding: 8px 15px;
+                    font-size: 12px;
+                  ">
+                  <b>Bill To</b>
+                </td>
+                <td style="
+                    border: 1px solid #ccc;
+                    background-color: #ededed;
+                    padding: 8px 15px;
+                    font-size: 12px;
+                  ">
+                  <b>Ship To</b>
+                </td>
+              </tr>
+              <tr>
+                <td style="
+                    font-size: 12px;
+                    padding: 8px 15px;
+                    border: 1px solid #ccc;
+                  ">
+                  <b>{{ invoice.billingInfo.fullName }}</b> <br>
+                  {{invoice.billingInfo.fullAddress}}<br />
+                  Tel: {{ invoice.billingInfo.countryCode }}{{ invoice.billingInfo.phone }}
+  
+                </td>
+                <td style="
+                    font-size: 12px;
+                    padding: 8px 15px;
+                    border: 1px solid #ccc;
+                  ">
+                  <b>{{ invoice.shippingInfo.fullName }}</b> <br>
+                  {{ invoice.shippingInfo.fullAddress }} <br>
+                  Tel: {{ invoice.billingInfo.countryCode }}{{ invoice.billingInfo.phone }}
+                  <!-- {{ invoice.shippingInfo.address.houseNumber }},
+                  {{ invoice.shippingInfo.address.line1 }},<br />
+                  {{ invoice.shippingInfo.address.city }},
+                  {{ invoice.shippingInfo.address.state }} -
+                  {{ invoice.shippingInfo.address.pinCode }} -->
+                </td>
+              </tr>
+              <tr>
+                <td style="
+                    border: 1px solid #ccc;
+                    padding: 5px 15px;
+                    background-color: #f8f8f8;
+                  ">
+                  <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 12px; text-align: center">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Products</th>
+                        <th>Qty</th>
+                        <th style="text-align: right">Unit Price &#8377;</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of invoice.products; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>
+                          {{ product.productName || product.productId?.name }}
+                        </td>
+                        <td>{{ product.quantity }}</td>
+                        <td style="text-align: right">
+                          {{ product.mrp }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="
+                    border: 1px solid #ccc;
+                    padding: 5px 15px;
+                    background-color: #f8f8f8;
+                  ">
+                  <table cellpadding="0" cellspacing="0" style="width: 100%; font-size: 12px; text-align: center">
+                    <thead>
+                      <tr>
+                        <th>Discount</th>
+                        <th>Tax</th>
+                        <th style="text-align: right">Total Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of invoice.products">
+                        <td>{{ product.discount }}</td>
+                        <td>Inclusive</td>
+                        <td style="text-align: right">
+                          &#8377; {{ product.productPrice }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="border-bottom: 1px solid #ccc;">
+                  <span style="
+                      padding: 4px 15px;
+                      display: inline-block;
+                      font-size: 12px;
+                    ">Shipping Charges</span>
+                </td>
+                <td style="text-align: right; font-size: 12px;border-bottom: 1px solid #ccc;">
+                  <span style="
+                      display: inline-block;
+                      padding: 4px 15px;
+                    ">
+                    &#8377; {{ invoice.shippingCharges }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <span style="
+                      padding: 4px 15px;
+                      display: inline-block;
+                      font-size: 12px;
+                    ">Grand Total</span>
+                </th>
+                <th style="text-align: right; font-size: 12px">
+                  <span style="
+                      background-color: #ededed;
+                      display: inline-block;
+                      padding: 4px 15px;
+                    ">
+                    &#8377; {{ invoice.totalPayableAmount }}
+                  </span>
+                </th>
+              </tr>
+  
+              <tr>
+                <td style="border-top: 1px solid #b7b6b6">
+                  <table style="border-bottom: 10px solid transparent">
+                    <tbody>
+                      <tr>
+                        <td style="
+                            font-size: 12px;
+                            border-left: 10px solid transparent;
+                            border-top: 10px solid transparent;
+                            font-weight: 700;
+                            color: #000;
+                          ">
+                          Amount in Words:
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="
+                            font-size: 12px;
+                            border-left: 10px solid transparent;
+                            color: #000;
+                          ">
+                          {{ invoice.amountInWords }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="
+                    border-bottom: 1px solid #b7b6b6;
+                    border-top: 1px solid #b7b6b6;
+                  "></td>
+              </tr>
+  
+              <tr>
+                <td colspan="2" style="text-align: right; border: 1px solid #ccc">
+                  <span style="
+                      display: inline-block;
+                      font-size: 12px;
+                      padding: 50px 15px 3px;
+                      border-left: 1px solid #ccc;
+                      width: 400px;
+                    ">Authorised Signatory</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-template>

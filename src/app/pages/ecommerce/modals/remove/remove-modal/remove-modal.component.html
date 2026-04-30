@@ -1,0 +1,14 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 pt-4 pb-2 align-center">
+        <h2>Are you sure you want to {{data?.type=='blog'?'remove':'cancel'}} this {{data.value}}</h2>
+      </div>
+      <div class="col-md-12 py-3 align-center">
+        <button class="mx-xl-3 py-2 px-5 no-outline border-0 yes-button"
+        (click)="cancel('yes')">Yes</button>
+        <button class="py-2 px-5 no-outline border-0 no-button"
+        (click)="cancel('no')">No</button>
+      </div>
+    </div>
+  </div>
+  

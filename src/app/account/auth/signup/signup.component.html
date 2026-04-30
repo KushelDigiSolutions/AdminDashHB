@@ -1,0 +1,127 @@
+<div class="account-pages mt-5 mb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="text-center">
+          <a href="/" class="mb-5 d-block auth-logo">
+            <img src="assets/images/logo.png" alt="" class="logo">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card overflow-hidden">
+
+          <div class="card-body p-4">
+            <div class="text-center mt-2">
+              <h5 class="text-primary">Welcome !</h5>
+              <p class="text-muted">Sign up to continue to HealthyBazar</p>
+            </div>
+            <div class="p-2 mt-4">
+              <form *ngIf="!otpScreen" [formGroup]="signupForm" (submit)="checkUser()">
+
+                <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+                <div class="row">
+                  <div class="col-sm-6 mb-3">
+                    <label class="required">First Name</label>
+                    <input formControlName="firstName" type="text" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted.reg && f.firstName.errors }">
+                    <div *ngIf="submitted.reg && f.firstName.errors" class="invalid-feedback">
+                      <div *ngIf="f.firstName.errors.required">First name is required</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <label>Last Name</label>
+                    <input formControlName="lastName" type="text" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted.reg && f.lastName.errors }">
+                    <div *ngIf="submitted.reg && f.lastName.errors" class="invalid-feedback">
+                      <div *ngIf="f.lastName.errors.required">Last name is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="required">Corporate Email</label>
+                  <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email"
+                    [ngClass]="{ 'is-invalid': submitted.reg && f.email.errors }" />
+                  <div *ngIf="submitted.reg && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                  </div>
+                </div>
+                <!-- <div class="mb-3">
+                  <label class="required">Phone</label>
+                  <ngx-intl-tel-input formControlName="phone" required [cssClass]="'custom'"
+                    [preferredCountries]="intlTelInput.preferredCountries" [enableAutoCountrySelect]="true"
+                    [enablePlaceholder]="true" [searchCountryFlag]="true"
+                    [searchCountryField]="intlTelInput.searchCountryField" [selectFirstCountry]="false"
+                    [selectedCountryISO]="intlTelInput.selectedCountryISO" [maxLength]="15" [phoneValidation]="true"
+                    [separateDialCode]="intlTelInput.separateDialCode"
+                    [numberFormat]="intlTelInput.PhoneNumberFormat.National"
+                    [ngClass]="{'is-invalid': submitted.reg && f.phone.invalid}">
+                  </ngx-intl-tel-input>
+
+                  <div *ngIf="submitted.reg && f.phone.errors" class="invalid-feedback">
+                    <div *ngIf="f.phone.errors.required">Phone is required</div>
+                    <span *ngIf="f.phone.errors.validatePhoneNumber?.valid === false">Please enter valid number</span>
+                  </div>
+                </div> -->
+                <div class="mb-3">
+                  <label for="password">Password</label>
+                  <div class="pwdField" [ngClass]="{ 'is-invalid': submitted.reg && f.password.errors }">
+                    <input [type]="showPwd?'text': 'password'" formControlName="password" class="form-control"
+                      id="password" [ngClass]="{ 'is-invalid': submitted.reg && f.password.errors }"
+                      placeholder="Password" />
+                    <i class="mid pointer togglePwd" [ngClass]="{'uil-eye-slash': !showPwd, 'uil-eye': showPwd}"
+                      (click)="showPwd = !showPwd"></i>
+                  </div>
+                  <div *ngIf="submitted.reg && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.minlength">password must have at least
+                      {{f.password.errors.minlength.requiredLength}} characters</div>
+                  </div>
+                </div>
+
+                <div class="mt-3 text-end">
+                  <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Sign Up</button>
+                </div>
+              </form>
+              <form *ngIf="otpScreen" [formGroup]="otpForm" (submit)="onSubmit()">
+                <ngb-alert type="success" *ngIf="success" [dismissible]="false"><span [innerHTML]="success"></span> <b class="pointer" (click)="changeEmail()"> [Change Email]</b></ngb-alert>
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <label class="required">Email OTP</label>
+                    <app-countdown *ngIf="!counterFinished" seconds="5" (finished)="onCounterFinished()"></app-countdown>
+                    <div *ngIf="counterFinished" class="mb-1 pointer b-5 text-primary p-1" (click)="resendOtp()">Resend</div>
+                  </div>
+                  <input type="email" formControlName="otp" class="form-control" placeholder="Enter OTP"
+                    [ngClass]="{ 'is-invalid': submitted.otp && otpF.otp.errors }" />
+                  <div *ngIf="submitted.otp && otpF.otp.errors" class="invalid-feedback">
+                    <div *ngIf="otpF.otp.errors.required">Email is required</div>
+                    <div *ngIf="otpF.otp.errors.email">Email must be a valid email address</div>
+                  </div>
+                </div>
+                <!-- <div class="mb-3">
+                  <label class="required">Phone OTP</label>
+                  <input type="email" formControlName="phoneOtp" class="form-control" placeholder="Enter OTP"
+                    [ngClass]="{ 'is-invalid': submitted && otpF.phoneOtp.errors }" />
+                  <div *ngIf="submitted && otpF.phoneOtp.errors" class="invalid-feedback">
+                    <div *ngIf="otpF.phoneOtp.errors.required">Email is required</div>
+                    <div *ngIf="otpF.phoneOtp.errors.email">Email must be a valid email address</div>
+                  </div>
+                </div> -->
+                <button class="btn btn-primary w-100" type="submit">Submit OTP</button>
+              </form>
+            </div>
+            <p class="text-center mt-3">Already have an account? <a routerLink="../login"><u>Log In</u></a></p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- end container -->
+</div>
+<!-- end page -->

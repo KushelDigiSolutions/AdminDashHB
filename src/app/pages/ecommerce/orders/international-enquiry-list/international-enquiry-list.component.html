@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <app-page-title title="International Enquiries" [breadcrumbItems]="[{label: 'Ecommerce'},{label: 'International Enquiries', active: true}]"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive mb-4">
+        <table class="table table-centered datatables dt-responsive nowrap table-card-list" style="border-spacing: 0 12px; width: 100%">
+          <thead>
+            <tr class="bg-transparent">
+              <th>Enquiry ID</th>
+              <th>Date</th>
+              <th>Product Name</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Comment</th>
+              <th>Qty</th>
+              <th style="text-align: right">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of enquiries; let i = index" class="odd">
+              <td>{{ e.enquiryId }}</td>
+              <td>{{ e.createdAt | date: 'medium' }}</td>
+              <td>{{ e.productName}}</td>
+              <td>{{ e.name }}</td>
+              <td><a [href]="'mailto:'+e.email">{{ e.email }}</a></td>
+              <td [title]="e.comment">
+                {{ e.comment && e.comment.length > 20 ? (e.comment | slice:0:20) + '...' : e.comment }}
+              </td>
+              <td>{{ e.quantity }}</td>
+              <td style="text-align: right">
+                <!-- reuse existing enquiry detail route -->
+                <a [routerLink]="['/ecommerce/orders/international-enquiries', e.enquiryId]" class="px-2 text-primary" title="View"><i class="uil uil-eye font-size-18"></i></a>
+                <a (click)="deleteEnquiry(e)" href="javascript:void(0);" class="px-2 text-danger" title="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="float-end mt-2" *ngIf="enquiriesData.count">
+          <ngb-pagination [collectionSize]="enquiriesData.count" [(page)]="page" [pageSize]="pageSize" [boundaryLinks]="true" (pageChange)="onPageChange($event)">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

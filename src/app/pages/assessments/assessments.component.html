@@ -1,0 +1,151 @@
+<div class="container-fluid">
+    <app-page-title title="Assessments" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <div class="float-end">
+                    <!-- <form class="d-inline-flex mb-3">
+              <label class="form-check-label my-2 me-2" for="product-selectinput"
+                >Doctors</label
+              >
+              <select class="form-select" id="product-selectinput">
+                <option selected>All</option>
+                <option value="1">Active</option>
+                <option value="2">Unactive</option>
+              </select>
+            </form> -->
+                </div>
+                <button type="button" class="btn btn-success mb-3" [routerLink]="'/assessments/create'">
+                    <i class="mdi mdi-plus me-1"></i> Add Assessment
+                </button>
+            </div>
+            <div class="row mb-md-2">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length">
+                        <label class="d-inline-flex align-items-center">Show<select name="pageSize"
+                                [(ngModel)]="pageSize"
+                                class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"
+                                (change)="changeValue()">
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="25">25</option>
+                                <option [ngValue]="50">50</option>
+                                <option [ngValue]="100">100</option>
+                            </select>
+                            entries</label>
+                    </div>
+                </div>
+                <!-- Search -->
+                <div class="col-sm-12 col-md-6">
+                    <!-- <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+              <form #search="ngForm" (submit)="onSearch(search)">
+                <label class="d-inline-flex align-items-center"
+                >Search:
+                  <input
+                    type="text"
+                    name="searchTerm"
+                    class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table"
+                    ngModel
+                /></label>
+              </form>
+            </div> -->
+                </div>
+                <!-- End search -->
+            </div>
+
+            <div class="table-responsive mb-4">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <form>
+                        <table class="table table-centered datatables dt-responsive nowrap table-card-list"
+                            style="border-spacing: 0 12px; width: 100%">
+                            <thead>
+                                <tr class="bg-transparent">
+                                    <th style="width: 24px">
+                                        <div class="form-check text-center font-size-16">
+                                            <input type="checkbox" class="form-check-input" id="ordercheck" />
+                                            <label class="form-check-label" for="ordercheck"></label>
+                                        </div>
+                                    </th>
+                                    <th scope="col" sortable="name">
+                                        Name
+                                    </th>
+                                    <th scope="col" sortable="name">
+                                        Created Date & Time
+                                    </th>
+                                    <th scope="col" sortable="amount">
+                                        Total Responses
+                                    </th>
+                                    <th scope="col" sortable="amount">
+                                        Active
+                                    </th>
+                                    <th style="width: 170px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of list;let i = index" class="odd">
+                                    <td>
+                                        <div class="form-check text-center">
+                                            <input id="productcheck{{ i }}" type="checkbox" class="form-check-input" />
+                                            <label class="form-check-label" for="productcheck{{ i }}">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.name">
+                                        </ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.createdAt | date:'medium'"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.responses"></ngb-highlight>
+                                    </td>
+
+                                    <td>
+                                        <div>
+                                            <app-hb-switch defaultBoColor="#dfdfdf" size="small" color="#f46a6a"
+                                                name="statusButton" [checked]="data?.active"
+                                                [loading]="data.toggleActiveLoading || false"
+                                                [beforeChange]="toggleFxn(data)">
+                                            </app-hb-switch>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a [routerLink]="['edit',data._id]" href="javascript:void(0);"
+                                            class="px-3 text-primary" placement="top" ngbTooltip="Edit"><i
+                                                class="uil uil-pen font-size-18"></i></a>
+                                        <a (click)="onDelete(data,i)" href="javascript:void(0);"
+                                            class="px-3 text-danger" placement="top" ngbTooltip="Delete"><i
+                                                class="uil uil-trash-alt font-size-18"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="float-end">
+                            <ngb-pagination [collectionSize]="count" [(page)]="page" [boundaryLinks]="true"
+                                (pageChange)="change()">
+                                <ng-template ngbPaginationPages let-page let-pages="pages">
+                                    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                        <div class="form-group d-flex flex-nowrap px-2">
+                                            <label id="paginationInputLabel" for="paginationInput"
+                                                class="col-form-label mr-2 ml-1">Page</label>
+                                            <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                                class="form-control custom-pages-input" id="paginationInput"
+                                                [value]="page" (keyup.enter)="selectPage(i.value)"
+                                                (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                                                aria-labelledby="paginationInputLabel paginationDescription"
+                                                style="width: 4rem" />
+                                            <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                                                of {{pages.length}}</span>
+                                        </div>
+                                    </li>
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

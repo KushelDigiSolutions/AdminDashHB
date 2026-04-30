@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <app-page-title [title]="this.editId? 'Update Camp Collection': 'Create Camp Collection'" [breadcrumbItems]="breadcrumb">
+  </app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-lg-12 mb-3">
+            <label class="required">Title</label>
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || form.get('title').touched) && form.get('title').invalid}"
+              formControlName="title" placeholder="Title" (blur)="trimValue(form.get('title'))" />
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <!-- <div class="col-lg-12 mb-3">
+            <label class="required">Choose Tests <i class="uil-info-circle" placement="top"
+                ngbTooltip="You can choose multiple tests"></i></label>
+            <ng-select formControlName="testsId" [items]="testList" bindLabel="testNames" bindValue="_id"
+              placeholder="Search Product" (input)="onSearchProducts($event)" [multiple]="true"
+              [ngClass]="{'is-invalid': (submitted || form.get('testsId').touched) && form.get('testsId').invalid}">
+              <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                <div>
+                  <span>{{ item.testNames }}</span>
+                </div>
+                <small><b>Test Included: {{ item.childs.length }}</b></small>
+              </ng-template>
+            </ng-select>
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+
+          </div> -->
+          <div class="col-lg-6 mb-3">
+            <label class="required">Date</label>
+            <input formControlName="date" type="date" [min]="minDate" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || form.get('date').touched) && form.get('date').invalid}"
+              placeholder="e.g. example.com" />
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-3">
+            <label class="required">Time</label>
+            <input formControlName="time" type="time" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || form.get('time').touched) && form.get('time').invalid}"
+              placeholder="e.g. example.com" />
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+          <div class="col-lg-12 mb-3">
+            <label class="required">Venue</label>
+            <textarea type="text" class="form-control" rows="3"
+              [ngClass]="{'is-invalid': (submitted || form.get('venue').touched) && form.get('venue').invalid}"
+              formControlName="venue" placeholder="Venue" (blur)="trimValue(form.get('venue'))"></textarea>
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mb-3">
+            <label>Description</label>
+            <ckeditor #editor [config]="config" [editor]="Editor" name="editor" formControlName="description"
+              (ready)="onReadyEditor($event)"></ckeditor>
+          </div>
+
+          <!-- <div class="col-lg-12 mb-3">
+            <div class="form-check form-switch mb-3" dir="ltr">
+              <input formControlName="isActive" type="checkbox" class="form-check-input" id="ActiveSwitch1">
+              <label class="form-check-label" for="ActiveSwitch1"> Active</label>
+            </div>
+          </div> -->
+        </div>
+        <button type="submit" class="btn btn-primary">{{editId?'Update':'Submit'}}</button>
+      </form>
+    </div>
+  </div>
+</div>

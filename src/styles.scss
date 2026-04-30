@@ -1,0 +1,185 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+// @import "bootstrap/scss/bootstrap";
+
+// @import "bootstrap/scss/functions";
+// @import "bootstrap/scss/variables";
+// @import "bootstrap/scss/mixins";
+
+@import "ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+@import "ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+@import "swiper/swiper-bundle";
+
+body {
+    .fs-12 {
+        font-size: 12px;
+    }
+    .fs-13 {
+        font-size: 13px;
+    }
+    .fs-14 {
+        font-size: 14px;
+    }
+    .fs-16 {
+        font-size: 16px;
+    }
+    .fs-18 {
+        font-size: 18px;
+    }
+    .b-4 {
+        font-weight: 400;
+    }
+    .fw-500,
+    .b-5 {
+        font-weight: 500;
+    }
+    .b-6 {
+        font-weight: 600;
+    }
+    .b-7 {
+        font-weight: 700;
+    }
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.oneLine,
+.twoLines,
+.threeLines {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.oneLine {
+    -webkit-line-clamp: 1;
+}
+.threeLines {
+    -webkit-line-clamp: 3;
+}
+.min-h-100 {
+    min-height: 100%;
+    &.card {
+        min-height: calc(100% - 1.25rem);
+    }
+}
+.oldImagePreview ngx-dropzone-label img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.8;
+}
+.oldImagePreview:hover ngx-dropzone-label img {
+    opacity: 0.7;
+}
+.oldImagePreview ngx-dropzone-remove-badge {
+    position: absolute;
+    z-index: 12;
+}
+ngx-dropzone-image-preview {
+    flex-shrink: 0;
+    overflow: hidden;
+}
+ngx-dropzone-image-preview img {
+    width: 160px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+hr {
+    color: rgba(#000, 0.75) !important;
+}
+.pointer {
+    cursor: pointer;
+}
+label.required {
+    &::after {
+        content: "*";
+        color: red;
+        margin-left: 5px;
+    }
+}
+.table td{
+    word-break: break-word;
+}
+.table-borderless tbody + tbody,
+.table-borderless td,
+.table-borderless th,
+.table-borderless thead th {
+    border: 0;
+}
+[class*="avatar-"] {
+    object-fit: cover;
+}
+ngb-datepicker-navigation-select > .custom-select {
+    border-top: 1px solid #333;
+}
+.no-spin::-webkit-outer-spin-button,
+.no-spin::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    margin: 0;
+}
+ngx-intl-tel-input {
+    display: block;
+    > div {
+        width: 100%;
+    }
+    input {
+        height: 38px;
+        width: 100%;
+        border: 2px solid #ced4da;
+    }
+}
+.pwdField {
+    position: relative;
+    .togglePwd {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 4px 6px;
+        font-size: 20px;
+    }
+}
+.ng-select .ng-dropdown-panel .ng-option.ng-option-marked {
+    background-color: #5b73e8 !important;
+    color: #fff !important;
+}
+body .ck.ck-editor__main > .ck-editor__editable {
+    border-color: #bbb !important;
+}
+.datatables {
+    thead tr th:not([sortable]) {
+        &::after,
+        &::before {
+            display: none;
+        }
+    }
+}
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+}
+.custom-day.focused {
+    background-color: #e6e6e6;
+}
+.custom-day.range,
+.custom-day:hover {
+    background-color: #5b73e8;
+    color: white;
+}
+.custom-day.faded {
+    background-color: #5b73e8;
+}

@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row p-4">
+        <div class="col-md-12">
+            <input 
+            class="form-control" 
+            type="text" 
+            placeholder="{{'Products.variationName'|translate}}"
+            [(ngModel)]="variationTitle"
+            />
+        </div>
+        <div class="col-md-12 mt-3">
+            <button class="btn btn-outline-primary btn-lg"
+            (click)="addVariation()">
+                Save
+            </button>
+        </div>
+    </div>
+</div>

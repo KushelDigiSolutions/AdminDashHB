@@ -1,0 +1,22 @@
+@import "src/assets/scss/fullcalendar.scss";
+
+.notiImg {
+  object-fit: cover;
+}
+.notiTab {
+  min-height: 230px;
+}
+.notiCal {
+  width: calc(234px + 30px);
+}
+.notiTL {
+  width: calc(100% - 234px - 30px);
+}
+.avatar {
+  img {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+}

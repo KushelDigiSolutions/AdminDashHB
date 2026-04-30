@@ -1,0 +1,62 @@
+@import 'src/assets/scss/fullcalendar.scss';
+
+.apptSortWidget {
+  display: inline-block;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 1px 0 1px 14px;
+  label {
+  }
+  .dropdown {
+    display: inline-block;
+  }
+  .dropdown-toggle {
+    font-weight: 500;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .dropdown-menu.show {
+    top: calc(100% + 10px) !important;
+  }
+}
+.btn-group {
+  button {
+    &.btn-light {
+      border-color: #ccc;
+      &:first-child {
+        border-right-color: #fff;
+      }
+      &:last-child {
+        border-left-color: #fff;
+      }
+    }
+  }
+}
+.btn-light {
+  background-color: #fff;
+}
+.card-body {
+  min-height: 200px;
+}
+
+.confirmedAppointment {
+  background-color: rgb(186, 85, 211, 0.1);
+  color: rgb(186, 85, 211);
+}
+
+.completedAppointment {
+  background-color: rgb(5, 143, 70, 0.1);
+  color: rgb(5, 143, 70);
+}
+
+.awaitedPayment {
+  background-color: rgb(255, 166, 0, 0.1);
+  color: rgb(255, 166, 0);
+}
+
+.cancelledAppointment {
+  background-color: rgb(239, 105, 85, 0.1) !important;
+  color: rgb(239, 105, 85);
+}

@@ -1,0 +1,907 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title
+    title="Create Order"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <!-- end page title -->
+  <div class="card mb-0">
+    <!-- Nav tabs -->
+    <ul
+      ngbNav
+      #justifiednav="ngbNav"
+      [(activeId)]="activeTab"
+      class="nav nav-tabs nav-justified nav-tabs-custom"
+    >
+      <li [ngbNavItem]="1" class="nav-item">
+        <a ngbNavLink class="nav-link">
+          <span class="font-size-20">1</span>
+          <span class="d-none d-sm-block">Products</span>
+        </a>
+        <ng-template ngbNavContent>
+          <ng-template [ngTemplateOutlet]="TabContentProducts"></ng-template>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2" class="nav-item">
+        <a ngbNavLink class="nav-link">
+          <span class="font-size-20">2</span>
+          <span class="d-none d-sm-block">User Details</span>
+        </a>
+        <ng-template ngbNavContent>
+          <ng-template [ngTemplateOutlet]="TabContentUserDetails"></ng-template>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3" class="nav-item">
+        <a ngbNavLink class="nav-link">
+          <span class="font-size-20">3</span>
+          <span class="d-none d-sm-block">Checkout</span>
+        </a>
+        <ng-template ngbNavContent>
+          <ng-template [ngTemplateOutlet]="TabContentCheckout"></ng-template>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="justifiednav"></div>
+  </div>
+  <!-- Tab content -->
+  <ng-template #TabContentProducts>
+    <div class="tab-content p-4">
+      <div class="tab-pane active">
+        <div>
+          <form [formGroup]="orderFormGroup">
+            <div class="mb-3">
+              <div class="form-check d-inline-block">
+                <input
+                  type="radio"
+                  name="orderType"
+                  formControlName="orderType"
+                  value="newOrder"
+                  id="orderType1"
+                  checked
+                  class="form-check-input"
+                  (change)="onChangeOrderType()"
+                />
+                <label for="orderType1" class="form-check-label">
+                  New Order
+                </label>
+              </div>
+              <div class="form-check d-inline-block mx-4">
+                <input
+                  type="radio"
+                  name="orderType"
+                  formControlName="orderType"
+                  value="subOrder"
+                  id="orderType2"
+                  class="form-check-input"
+                  (change)="onChangeOrderType()"
+                />
+                <label for="orderType2" class="form-check-label">
+                  Sub Order
+                </label>
+              </div>
+              <button *ngIf="selectedProducts.length" [disabled]="orderFormGroup.invalid"
+                (click)="next(2)" class="btn btn-primary px-3 float-end">Next</button>
+            </div>
+            <div
+              *ngIf="orderFormGroup.get('orderType').value == 'subOrder'"
+              class="mb-3"
+            >
+              <label>Order ID *</label>
+              <input
+                type="text"
+                formControlName="parentOrderId"
+                class="form-control"
+                placeholder="Enter order ID"
+              />
+            </div>
+            <div class="mb-3">
+              <label>Select Products *</label>
+              <ng-select
+                name="product"
+                [items]="productList"
+                bindLabel="name"
+                autofocus
+                bindValue="_id"
+                placeholder="Search Product"
+                (change)="onSelectProduct($event)"
+                (input)="searchProducts($event)"
+              >
+                <ng-template
+                  ng-option-tmp
+                  let-item="item"
+                  let-search="searchTerm"
+                >
+                  <div>
+                    <span>{{ item.name }}</span>
+                  </div>
+                  <small
+                    ><b>{{ item.brandId.name }}</b></small
+                  >
+                </ng-template>
+              </ng-select>
+            </div>
+          </form>
+          <hr *ngIf="selectedProduct" />
+          <div *ngIf="selectedProduct" class="prodDetail">
+            <div class="row">
+              <div class="col-md-3">
+                <img [src]="imageUrl + selectedProduct.thumbnail.savedName" />
+              </div>
+              <div class="col-md-8">
+                <p class="brand mb-2">{{ selectedProduct.brandId.name }}</p>
+                <h3 class="title">{{ selectedProduct.name }}</h3>
+                <div class="price mb-3">
+                  <span class="selling"
+                    >₹{{
+                      selectedProduct.price.minPrice ||
+                        selectedProduct.price.mrp
+                    }}</span
+                  >
+                  <span
+                    *ngIf="
+                      selectedProduct.price.minPrice !=
+                      selectedProduct.price.mrp
+                    "
+                    class="mrp"
+                    >₹{{ selectedProduct.price.mrp }}</span
+                  >
+                </div>
+                <div
+                  class="mb-3 variations"
+                  *ngIf="selectedProduct.variations.length"
+                >
+                  <div
+                    *ngIf="selectedProduct.variationsStructureType == 'single'"
+                  >
+                    <div
+                      class="row"
+                      *ngFor="let variation of selectedProduct.mainVariations"
+                    >
+                      <div class="col-lg-1 col-md-2 pr-md-0">
+                        <p class="gray-text">
+                          {{ variation.variationId.title }}
+                        </p>
+                      </div>
+                      <div class="col-md-10">
+                        <ul class="list-unstyled m-0">
+                          <li
+                            class="pr-3 pointer notActiveSizeClass"
+                            *ngFor="
+                              let value of variation.values;
+                              let i = index
+                            "
+                            [ngClass]="{
+                              activeSizeClass: variation.selectedIndex == i
+                            }"
+                            (click)="
+                              selectVariation(selectedProduct, variation, i)
+                            "
+                          >
+                            {{ value }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="selectedProduct.variationsStructureType == 'group'"
+                  >
+                    <ul class="list-unstyled m-0">
+                      <li
+                        class="pr-3 pointer notActiveSizeClass group"
+                        *ngFor="
+                          let variation of selectedProduct.variations;
+                          let i = index
+                        "
+                        [ngClass]="{ activeSizeClass: variation.isSelected }"
+                        (click)="selectVariation(selectedProduct, variation)"
+                      >
+                        <span
+                          class="d-inline-block"
+                          *ngFor="let label of variation.label; let i2 = index"
+                          >{{ variation.title[i2]
+                          }}<b class="d-block">{{ label }}</b></span
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="mb-3 d-inline-flex align-items-center qtyCont">
+                  <i
+                    class="mdi mdi-minus-circle-outline pointer"
+                    (click)="changeQty('minus')"
+                  ></i>
+                  <span class="px-3">{{ qty }}</span>
+                  <i
+                    class="mdi mdi-plus-circle-outline pointer"
+                    (click)="changeQty('plus')"
+                  ></i>
+                </div>
+                <div class="mb-3">
+                  <button class="btn btn-primary" (click)="addProduct()">
+                    Add Product
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedProducts.length" class="table-responsive mt-5">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Product Id</th>
+                  <th>Brand</th>
+                  <th>Product</th>
+                  <th>Variation</th>
+                  <th>Qty</th>
+                  <th>MRP</th>
+                  <th>Selling Price</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let prod of selectedProducts; index as i">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ prod.productId }}</td>
+                  <td>{{ prod.product.brandId.name }}</td>
+                  <td>{{ prod.product.name }}</td>
+                  <td>
+                    <ng-container *ngIf="prod.product.selectedVariation">
+                      <ng-container
+                        *ngFor="
+                          let label of prod.product.selectedVariation.label;
+                          index as ii
+                        "
+                      >
+                        <span class="mr-3"
+                          ><b
+                            >{{ prod.product.selectedVariation.title[ii] }}:</b
+                          >
+                          {{ label }}</span
+                        >
+                        <br />
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                  <td>{{ prod.qty }}</td>
+                  <td>{{ prod.product.price.mrp }}</td>
+                  <td>{{ prod.product.price.minPrice }}</td>
+                  <td>
+                    <i
+                      class="mdi mdi-trash-can-outline pointer h4"
+                      (click)="deleteProduct(i)"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center">
+              <button
+                class="btn btn-primary px-5 mt-4"
+                [disabled]="orderFormGroup.invalid"
+                (click)="next(2)"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #TabContentUserDetails>
+    <div class="tab-content p-4">
+      <div class="tab-pane active">
+        <div>
+          <form [formGroup]="userFormGroup">
+            <div class="mb-5">
+              <div class="form-check d-inline-block">
+                <input
+                  type="radio"
+                  name="userType"
+                  formControlName="userType"
+                  value="guest"
+                  id="userType1"
+                  class="form-check-input"
+                  (change)="onChangeUserType()"
+                />
+                <label for="userType1" class="form-check-label">
+                  New User
+                </label>
+              </div>
+              <div class="form-check d-inline-block mx-4">
+                <input
+                  type="radio"
+                  name="userType"
+                  formControlName="userType"
+                  value="regsUser"
+                  id="userType2"
+                  class="form-check-input"
+                  (change)="onChangeUserType()"
+                />
+                <label for="userType2" class="form-check-label">
+                  Registered User
+                </label>
+              </div>
+            </div>
+            <div
+              formGroupName="regsUser"
+              *ngIf="userFormGroup.get('userType').value == 'regsUser'"
+            >
+              <div class="mb-3">
+                <label> Phone Number *</label>
+                <ng-select
+                  formControlName="phone"
+                  [items]="userList"
+                  bindLabel="phone"
+                  bindValue="phone"
+                  placeholder="Enter 10 digit phone number"
+                  (input)="searchUsers($event)"
+                  (change)="onSelectUser($event)"
+                >
+                </ng-select>
+              </div>
+              <div *ngIf="selectedUser" class="mb-3 mt-4">
+                <hr />
+                <h5>User Address:</h5>
+                <div *ngIf="!newAddress" class="row mb-3">
+                  <div
+                    class="col-md-6"
+                    *ngFor="
+                      let address of selectedUser.address;
+                      index as aIndex
+                    "
+                  >
+                    <div
+                      class="pointer mb-3 address"
+                      [ngClass]="{ active: selectedAddress == aIndex }"
+                      (click)="selectedAddress = aIndex"
+                    >
+                      <i class="mdi mdi-check-circle-outline"></i>
+                      <h5>{{ address.name }}</h5>
+                      <p class="m-0">
+                        {{ address.fullAddress }} - {{ address.pinCode }}
+                      </p>
+                      <p>{{ address.phoneNo }}</p>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  *ngIf="!newAddress"
+                  class="btn btn-primary"
+                  (click)="addNewAddress()"
+                >
+                  <i class="mdi mdi-plus"></i> Add New Address
+                </button>
+              </div>
+            </div>
+            <!--  -->
+            <div
+              class="row"
+              formGroupName="guestUser"
+              *ngIf="
+                userFormGroup.get('userType').value == 'guest' || newAddress
+              "
+            >
+              <div class="col-md-6 mb-3">
+                <label class="form-label">First name *</label>
+                <input
+                  type="text"
+                  formControlName="firstName"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('firstName').invalid &&
+                      guestUserFormGroup.get('firstName').touched
+                  }"
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('firstName').touched &&
+                    guestUserFormGroup.get('firstName').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Last name</label>
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email Address</label>
+                <input
+                  type="text"
+                  formControlName="email"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Phone Number *</label>
+                <input
+                  type="text"
+                  formControlName="phone"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('phone').invalid &&
+                      guestUserFormGroup.get('phone').touched
+                  }"
+                  pattern="^\d{10}$"
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('phone').touched &&
+                    guestUserFormGroup.get('phone').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span *ngIf="guestUserFormGroup.get('phone').errors?.required"
+                    >This field is required</span
+                  >
+                  <span *ngIf="guestUserFormGroup.get('phone').errors?.pattern"
+                    >Please enter 10 digit number</span
+                  >
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Flat, House Number *</label>
+                <input
+                  type="text"
+                  formControlName="houseNumber"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('houseNumber').invalid &&
+                      guestUserFormGroup.get('houseNumber').touched
+                  }"
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('houseNumber').touched &&
+                    guestUserFormGroup.get('houseNumber').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Area, Colony, Street *</label>
+                <input
+                  type="text"
+                  formControlName="line1"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('line1').invalid &&
+                      guestUserFormGroup.get('line1').touched
+                  }"
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('line1').touched &&
+                    guestUserFormGroup.get('line1').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Pincode *</label>
+                <input
+                  type="text"
+                  formControlName="pinCode"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('pinCode').invalid &&
+                      guestUserFormGroup.get('pinCode').touched
+                  }"
+                  (change)="getUserAddressArea()"
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('pinCode').touched &&
+                    guestUserFormGroup.get('pinCode').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Country *</label>
+                <input
+                  type="text"
+                  formControlName="country"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('country').invalid &&
+                      guestUserFormGroup.get('country').touched
+                  }"
+                  readonly
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('country').touched &&
+                    guestUserFormGroup.get('country').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">State *</label>
+                <input
+                  type="text"
+                  formControlName="state"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('state').invalid &&
+                      guestUserFormGroup.get('state').touched
+                  }"
+                  readonly
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('state').touched &&
+                    guestUserFormGroup.get('state').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">City *</label>
+                <input
+                  type="text"
+                  formControlName="city"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid':
+                      guestUserFormGroup.get('city').invalid &&
+                      guestUserFormGroup.get('city').touched
+                  }"
+                />
+                <div
+                  *ngIf="
+                    guestUserFormGroup.get('city').touched &&
+                    guestUserFormGroup.get('city').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <span>This field is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Landmark</label>
+                <input
+                  type="text"
+                  formControlName="landmark"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-md-12 mb-3">
+                <div class="form-check d-inline-block mr-3">
+                  <input
+                    type="radio"
+                    name="addressType"
+                    formControlName="addressType"
+                    value="home"
+                    id="addressType1"
+                    class="form-check-input"
+                  />
+                  <label for="addressType1" class="form-check-label">
+                    Home
+                  </label>
+                </div>
+                <div class="form-check d-inline-block mr-3">
+                  <input
+                    type="radio"
+                    name="addressType"
+                    formControlName="addressType"
+                    value="work"
+                    id="addressType2"
+                    class="form-check-input"
+                  />
+                  <label for="addressType2" class="form-check-label">
+                    Work
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <button class="btn btn-primary mr-3" (click)="next(1)">
+                Previous
+              </button>
+              <button
+                class="btn btn-primary"
+                [disabled]="
+                  userFormGroup.invalid ||
+                  (userFormGroup.get('userType').value == 'regsUser' &&
+                    selectedAddress == -1 &&
+                    !newAddress)
+                "
+                (click)="next(3)"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #TabContentCheckout>
+    <div class="tab-content p-4">
+      <div class="tab-pane active">
+        <div>
+          <div *ngIf="selectedProducts.length" class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Product Id</th>
+                  <th>Brand</th>
+                  <th>Product</th>
+                  <th>Variation</th>
+                  <th>Qty</th>
+                  <th>MRP</th>
+                  <th>Selling Price</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let prod of selectedProducts; index as i">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ prod.productId }}</td>
+                  <td>{{ prod.product.brandId.name }}</td>
+                  <td>{{ prod.product.name }}</td>
+                  <td>
+                    <ng-container *ngIf="prod.product.selectedVariation">
+                      <ng-container
+                        *ngFor="
+                          let label of prod.product.selectedVariation.label;
+                          index as ii
+                        "
+                      >
+                        <span class="mr-3"
+                          ><b
+                            >{{ prod.product.selectedVariation.title[ii] }}:</b
+                          >
+                          {{ label }}</span
+                        >
+                        <br />
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                  <td>{{ prod.qty }}</td>
+                  <td>{{ prod.product.price.mrp }}</td>
+                  <td>{{ prod.product.price.minPrice }}</td>
+                  <td>
+                    <i
+                      class="mdi mdi-trash-can-outline pointer h4"
+                      (click)="deleteProduct(i)"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr />
+          <div class="mt-4 mb-3">
+            <form [formGroup]="paymentFormGroup">
+              <div class="mb-3">
+                <label>Select Payment Type</label>
+                <div>
+                  <div class="form-check d-inline-block">
+                    <input
+                      type="radio"
+                      name="paymentType"
+                      formControlName="paymentType"
+                      value="prepaid"
+                      id="paymentType1"
+                      checked
+                      class="form-check-input"
+                      (change)="onChangePaymentType()"
+                    />
+                    <label for="paymentType1" class="form-check-label">
+                      Prepaid
+                    </label>
+                  </div>
+                  <div class="form-check d-inline-block mx-4">
+                    <input
+                      type="radio"
+                      name="paymentType"
+                      formControlName="paymentType"
+                      value="cash"
+                      id="paymentType2"
+                      class="form-check-input"
+                      (change)="onChangePaymentType()"
+                    />
+                    <label for="paymentType2" class="form-check-label">
+                      COD
+                    </label>
+                  </div>
+                  <div class="form-check d-inline-block">
+                    <input
+                      type="radio"
+                      name="paymentType"
+                      formControlName="paymentType"
+                      value="paymentLink"
+                      id="paymentType3"
+                      class="form-check-input"
+                      (change)="onChangePaymentType()"
+                    />
+                    <label for="paymentType3" class="form-check-label">
+                      Link Payment
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div
+                *ngIf="paymentFormGroup.get('paymentType').value == 'prepaid'"
+                formGroupName="paymentDetails"
+                class="row mb-3"
+              >
+                <div class="col-md-4">
+                  <select formControlName="paymentMethod" class="form-control" (change)="onChangePaymentMethod()">
+                    <option value="">-- Select Method --</option>
+                    <option value="cod">COD/Cash</option>
+                    <option value="payZapp">PayZapp</option>
+                    <option value="freeRecharge">FreeRecharge</option>
+                    <option value="card">Card</option>
+                    <option value="netBanking">Net Banking</option>
+                    <option value="upi">UPI</option>
+                    <option value="paytm">PayTm</option>
+                    <option value="phonePe">PhonePe</option>
+                    <option value="freecharge">FreeCharge</option>
+                    <option value="olaMoney">OlaMoney</option>
+                    <option value="airtel">Airtel</option>
+                    <option value="oxigen">Oxigen</option>
+                  </select>
+                </div>
+                <div
+                  *ngIf="
+                    paymentFormGroup.get('paymentDetails').get('paymentMethod')
+                      .value != 'Cash'
+                  "
+                  class="col-md-4"
+                >
+                  <input
+                    formControlName="txnId"
+                    type="text"
+                    class="form-control"
+                    placeholder="Transaction ID"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <input
+                    formControlName="paymentDate"
+                    type="date"
+                    class="form-control"
+                    placeholder="Transaction ID"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="mt-4 mb-3">
+            <div class="row">
+              <div class="col-md-4">
+                <div *ngIf="checkoutData" class="mb-3 checkoutTableCont">
+                  <table class="table table-sm mb-0 checkoutTable">
+                    <tbody>
+                      <tr>
+                        <th>Total Amount</th>
+                        <td>
+                          ₹
+                          {{
+                            (
+                              checkoutData.totalAmount - checkoutData.gst
+                            ).toFixed(2)
+                          }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>GST</th>
+                        <td>₹ {{ checkoutData.gst.toFixed(2) }}</td>
+                      </tr>
+                      <tr>
+                        <th>Discount</th>
+                        <td>₹ {{ checkoutData.discount.toFixed(2) }}</td>
+                      </tr>
+                      <tr>
+                        <th>Coupon Discount</th>
+                        <td>₹ {{ appliedCoupon.discount.toFixed(2) }}</td>
+                      </tr>
+                      <tr>
+                        <th>Shipping & Handling Fee</th>
+                        <td>₹ {{ checkoutData.shippingCharge.toFixed(2) }}</td>
+                      </tr>
+                      <tr>
+                        <th>Order Value</th>
+                        <td>
+                          ₹
+                          {{
+                            appliedCoupon.code ? 
+                            getCeilValue(appliedCoupon.totalPayableAmount) :
+                            checkoutData.totalPayableAmt
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                </div>
+                <div>
+                  <form
+                    *ngIf="checkoutData && !appliedCoupon.code"
+                    #couponForm="ngForm"
+                    (submit)="onCouponApply(couponForm)"
+                  >
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        name="code"
+                        #code="ngModel"
+                        ngModel
+                        class="form-control"
+                        placeholder="Coupon Code"
+                        required
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-success"
+                          type="submit"
+                          [disabled]="couponForm.invalid"
+                        >
+                          Apply
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="d-flex mb-3 justify-content-between align-items-center" *ngIf="appliedCoupon.code">
+                    <span class="mr-3"
+                      ><b>Coupon Applied</b>: {{ appliedCoupon.code }}
+                    </span>
+                    <span class="btn btn-danger pointer" (click)="removeCoupon()"
+                      >Remove</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <button class="btn btn-primary mr-3" (click)="next(2)">
+                    Previous
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    (click)="onCreateOrder()"
+                    [disabled]="paymentFormGroup.invalid"
+                  >
+                    Create Order
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

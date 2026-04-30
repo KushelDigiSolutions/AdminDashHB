@@ -1,0 +1,391 @@
+<div *ngIf="false" class="row">
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="float-end">
+          <button class="btn btn-sm btn-outline-primary" (click)="openNotificationModal(notificationModal)"><i
+              class="bx uil-plus"></i></button>
+        </div>
+        <div class="float-end mt-1 me-2">
+          <div class="dropdown" ngbDropdown>
+            <a class=" dropdown-toggle" href="javascript:void(0);" id="dropdownMenuButton2" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+              <span class="text-muted">All<i class="mdi mdi-chevron-down ms-1"></i></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2" ngbDropdownMenu>
+              <a class="dropdown-item" href="javascript:void(0);">All</a>
+              <a class="dropdown-item" href="javascript:void(0);">Reminder</a>
+              <a class="dropdown-item" href="javascript:void(0);">Survey</a>
+            </div>
+          </div>
+        </div>
+        <h4 class="card-title mb-4">Notifications</h4>
+
+        <ngx-simplebar style="max-height: 336px;">
+          <div class="table-responsive">
+            <table class="table table-borderless table-centered">
+              <tbody id="external-events">
+                <tr [id]="notification._id" *ngFor="let notification of notifications">
+                  <td>
+                    <img [src]="notification.image" class="avatar-xs rounded-circle " alt="...">
+                  </td>
+                  <td>
+                    <h6 class="font-size-15 mb-1 font-weight-normal oneLine">{{notification.title}}</h6>
+                    <p class="text-muted font-size-13 mb-0 twoLines">{{notification.body}}</p>
+                  </td>
+                  <td class="pe-0">
+                    <button class="btn btn-sm btn-outline-light" (click)="openNotificationModal(notificationModal)"><i
+                        class="bx uil-eye"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ngx-simplebar>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    <div class="card">
+      <div class="card-body">
+        <full-calendar class="calendarView" #calendar [options]="calendarOptions"></full-calendar>
+      </div>
+    </div>
+    <div>
+      <ul class="list-unstyled mt-4 statusSwatch">
+        <li><span class="bg-success"></span> Reminder Notification</li>
+        <li><span class="bg-warning"></span> Survey Notifications</li>
+        <li><span class="bg-secondary"></span> Read-only</li>
+        <li><span class="bg-primary"></span> others</li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <app-page-title title="Notifications" [breadcrumbItems]="breadcrumb"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <a routerLink="/notifications/create"
+              [queryParams]="{healthPackageBuyId: healthPackageBuyId,healthPackageId: healthPackageId,redir: url}"
+              class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i> Create New</a>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-inline float-md-end mb-3">
+            <div class="search-box ms-2">
+              <!-- <div class="position-relative">
+                    <input
+                      class="form-control rounded bg-light border-0"
+                      type="text"
+                      name="searchTerm"
+                      placeholder="Search..."
+                    />
+                    <i class="mdi mdi-magnify search-icon"></i>
+                  </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive mb-4">
+        <table class="table table-centered mb-0 align-middle">
+          <thead>
+            <tr>
+              <!-- <th scope="col" style="width: 50px">
+                <div class="form-check font-size-16">
+                  <input type="checkbox" class="form-check-input" id="contacusercheck" />
+                  <label class="form-check-label" for="contacusercheck"></label>
+                </div>
+              </th> -->
+              <th scope="col">Image</th>
+              <th scope="col">Title</th>
+              <th scope="col">Body</th>
+              <th scope="col">Type</th>
+              <th scope="col">Time</th>
+              <th scope="col">Disable</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of notifications;let index = index">
+              <!-- <td>
+                <div class="form-check font-size-16">
+                  <input id="contacusercheck{{ index }}" type="checkbox" class="form-check-input" />
+                  <label class="form-check-label" for="contacusercheck{{ index }}">&nbsp;</label>
+                </div>
+              </td> -->
+              <td>
+                <img class="avatar-sm" *ngIf="data.templateId?.image?.savedName"
+                  [src]="imageBase + data.templateId.image.savedName">
+                <img class="avatar-sm" *ngIf="!data.templateId?.image?.savedName"
+                  src="/assets/images/notification-img.png">
+
+              </td>
+              <td>
+                <ngb-highlight [result]="data.templateId?.title">
+                </ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight [result]="data.templateId?.message">
+                </ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight [result]="typesObj[data.notificationType]">
+                </ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight [result]="data.time">
+                </ngb-highlight>
+              </td>
+              <td>
+                <app-hb-switch defaultBoColor="#dfdfdf" size="small" color="#34c38f"
+                  [loading]="data.toggleDisableLoading || false" [beforeChange]="toggleFxn(data,'disable')"
+                  [checked]="data?.disabled"
+                  [disabled]="checkDisableNotification(data)">
+                  <i class="fa fa-spinner fa-pulse" *ngIf="data.toggleDisableLoading || false"></i>
+                </app-hb-switch>
+              </td>
+              <td>
+                <ul class="list-inline mb-0 text-end">
+                  <li class="list-inline-item" [ngClass]="{'disabled visually-hidden': !data.canEdit }">
+                    <!-- <a [routerLink]="['/notifications/', data._id]"
+                      [queryParams]="{healthPackageId: healthPackageId, healthPackageBuyId: healthPackageBuyId, redir: url}" class="px-2 text-primary"
+                      ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a> -->
+                    <a href="javascript:void(0)" (click)="openEditNotificationModal(updateNotificationModal,data)"
+                      class="px-2 text-primary" ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                  </li>
+                  <li class="list-inline-item" [ngClass]="{'disabled visually-hidden': !data.canDelete }">
+                    <a (click)="onDelete(data,index)" href="javascript:void(0);" class="px-2 text-danger"
+                      ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-sm-12">
+          <div *ngIf="total" class="float-end">
+            <ngb-pagination [collectionSize]="total" [(page)]="page" [pageSize]="limit" [boundaryLinks]="true"
+              (pageChange)="pageChanged()">
+              <ng-template ngbPaginationPages let-page let-pages="pages">
+                <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                  <div class="form-group d-flex flex-nowrap px-2">
+                    <label id="paginationInputLabel" for="paginationInput" class="col-form-label mr-2 ml-1">Page</label>
+                    <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                      id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)"
+                      (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                      aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                    <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                      of {{pages.length}}</span>
+                  </div>
+                </li>
+              </ng-template>
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template [ngIf]="false" #notificationModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Notification</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="notificationForm" (submit)="onSubmitMedicalRecord()">
+      <div class="mb-3">
+        <label>Type</label>
+        <select formControlName="type" name="type" class="form-control"
+          [ngClass]="{'is-invalid':notificationForm.get('type').invalid && notificationForm.get('type').touched}">
+          <option value="reminder">Reminder</option>
+          <option value="survey">Survey</option>
+        </select>
+
+        <div class="invalid-feedback">This field is required</div>
+      </div>
+      <div class="mb-3">
+        <label class="required">Title</label>
+        <input formControlName="title" type="text" class="form-control"
+          [ngClass]="{'is-invalid':notificationForm.get('title').invalid && notificationForm.get('title').touched}">
+      </div>
+      <div class="mb-3">
+        <label>Body</label>
+        <textarea formControlName="body" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="mb-3">
+        <label>Link Type</label>
+        <select formControlName="linkType" class="form-control"
+          [ngClass]="{'is-invalid':notificationForm.get('linkType').invalid && notificationForm.get('linkType').touched}">
+          <option value="internal">Internal</option>
+          <option value="external">External</option>
+        </select>
+
+        <div class="invalid-feedback">This field is required</div>
+      </div>
+      <div class="mb-3">
+        <label class="required">link</label>
+        <input formControlName="link" type="text" class="form-control"
+          [ngClass]="{'is-invalid':notificationForm.get('link').invalid && notificationForm.get('link').touched}">
+      </div>
+
+      <div class="mb-3">
+        <label>Image</label>
+        <ngx-dropzone (change)="onSelectImage($event)" [multiple]="false" accept="image/jpeg,image/jpg,image/png">
+          <ngx-dropzone-label><b>Choose a file</b> or drag it here.</ngx-dropzone-label>
+          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+            [removable]="true" (removed)="onRemoveImage(f)">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          </ngx-dropzone-image-preview>
+        </ngx-dropzone>
+      </div>
+      <div class="mb-3">
+        <button type="submit" [disabled]="notificationForm.invalid" class="btn btn-primary me-2">
+          Submit
+        </button>
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template [ngIf]="false" #eventModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Update Notification</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="notificationForm">
+      <div class="mb-3">
+        <label>Date/Time</label>
+        <div class="row">
+          <div class="col-sm-5 d-flex align-items-center">
+            <div class="clockpicker flex-grow-1 me-3">
+              <input formControlName="date" ngbDatepicker class="form-control" placeholder="yyyy-mm-dd"
+                #d="ngbDatepicker" (click)="d.open()">
+            </div>
+            <input type="time" formControlName="time" class="form-control timeInput">
+          </div>
+          <!-- <div class="col-sm-1 text-center align-self-center">TO</div>
+          <div class="col-sm-5 d-flex align-items-center">
+            <div class="clockpicker flex-grow-1 me-3">
+              <input ngbDatepicker class="form-control" placeholder="yyyy-mm-dd" #d2="ngbDatepicker">
+            </div>
+            <input type="time" formControlName="time" class="form-control timeInput">
+          </div> -->
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input formControlName="repeat" class="form-check-input" type="checkbox"> Repeat
+          </label>
+        </div>
+      </div>
+      <ng-templdate *ngIf="notificationForm.value.repeat">
+        <div formGroupName="repeatData">
+          <div class="mb-3 d-flex align-items-center">
+            <label class="me-3">Repeat</label>
+            <select formControlName="repeatType" class="form-control repeatSelect">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3 d-flex align-items-center">
+                <label>Every</label>
+                <input formControlName="every" class="form-control count no-spin mx-3" type="number">
+                {{notificationForm.value.repeatData.repeatType=='daily'? 'day':'weekly'}}(s) once
+              </div>
+            </div>
+            <div class="col-sm-6"></div>
+          </div>
+          <div *ngIf="notificationForm.value.repeatData.repeatType == 'weekly'" class="mb-3">
+            <label class="me-2 mb-0 d-inline-flex align-items-center day pointer"
+              *ngFor="let day of weekdays; index as i">
+              <input type="checkbox" [value]="i"><span> {{day[0]}}</span>
+            </label>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="me-3">Ends</label>
+            <select formControlName="endType" class="form-control me-3 endType">
+              <option value="never">Never</option>
+              <option value="date">By Date</option>
+            </select>
+            <input *ngIf="notificationForm.value.repeatData.endType == 'date'" formControlName="date" ngbDatepicker
+              class="form-control endDate" placeholder="yyyy-mm-dd" #endPicker="ngbDatepicker"
+              (click)="endPicker.open()">
+          </div>
+        </div>
+      </ng-templdate>
+      <div>
+        <button type="submit" class="btn btn-primary me-3">Save</button>
+        <button type="button" class="btn btn-light">Cancel</button>
+        <button type="button" class="btn btn-outline-danger float-end" (click)="deleteEvent()">Delete</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>
+<ng-template #updateNotificationModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Update Notification</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="updateNotificationForm" (submit)="onSubmitUpdateNotification()">
+      <div class="mb-3">
+        <label class="required">Title</label>
+        <input formControlName="title" type="text" class="form-control"
+          [ngClass]="{'is-invalid':updateNotificationForm.get('title').invalid && updateNotificationForm.get('title').touched}">
+      </div>
+      <div class="mb-3">
+        <label class="required">Message</label>
+        <textarea formControlName="message" class="form-control" rows="2"
+          [ngClass]="{'is-invalid':updateNotificationForm.get('message').invalid && updateNotificationForm.get('message').touched}"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="required">Time</label>
+        <select formControlName="time" class="form-control"
+          [ngClass]="{'is-invalid':updateNotificationForm.get('time').invalid && updateNotificationForm.get('time').touched}">
+          <option value="">Choose Time</option>
+          <option *ngFor="let slot of timeSlots" [value]="slot.value">{{slot.label}}</option>
+        </select>
+        <!-- <input formControlName="time" type="time" class="form-control"
+          [ngClass]="{'is-invalid':updateNotificationForm.get('time').invalid && updateNotificationForm.get('time').touched}"> -->
+      </div>
+
+      <div class="mb-3">
+        <label>Image</label>
+        <app-dropzone formControlName="image" [multiple]="false" accept="image/jpeg,image/jpg,image/png"></app-dropzone>
+      </div>
+      <div *ngIf="updateNotificationForm.get('isDefaultNotification').value" class="mb-3 form-check">
+        <label>
+          <input formControlName="disableDefaultNotification" type="checkbox" class="form-check-input">
+          Disable Default Notification
+        </label>
+      </div>
+      <div class="mb-3">
+        <button type="submit" [disabled]="updateNotificationForm.invalid" class="btn btn-primary me-2">
+          Submit
+        </button>
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

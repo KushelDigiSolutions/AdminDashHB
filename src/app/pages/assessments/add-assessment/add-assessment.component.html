@@ -1,0 +1,263 @@
+<div class="container-fluid">
+    <app-page-title [title]="this.editId? 'Update Package': 'Create Package'" [breadcrumbItems]="breadcrumb">
+    </app-page-title>
+    <div class="card">
+        <div class="card-body">
+            <ul ngbNav #justifiednav="ngbNav" [activeId]="activeTab" class="nav nav-tabs nav-justified nav-tabs-custom">
+                <li [ngbNavItem]="1" class="nav-item">
+                    <a ngbNavLink class="nav-link">
+                        <i class="uil uil-user-circle font-size-20"></i>
+                        <span class="d-none d-sm-block">Detials</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="Tab1"></ng-template>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2" class="nav-item" [disabled]="!editId">
+                    <a ngbNavLink class="nav-link">
+                        <i class="mdi mdi-lightbulb-outline font-size-20"></i>
+                        <span class="d-none d-sm-block">Instructions</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="Tab2"></ng-template>
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="3" class="nav-item" [disabled]="!editId">
+                    <a ngbNavLink class="nav-link">
+                        <i class="uil-question-circle font-size-20"></i>
+                        <span class="d-none d-sm-block">Questions</span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="Tab3"></ng-template>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="4" class="nav-item" [disabled]="!editId">
+                    <a ngbNavLink class="nav-link">
+                        <i class="uil-question-circle font-size-20"></i>
+                        <span class="d-none d-sm-block">Response <i>({{surveyResponse.length}})</i></span>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <ng-template [ngTemplateOutlet]="Tab4"></ng-template>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="justifiednav"></div>
+            <ng-template #Tab1>
+                <div class="tab-content p-4">
+                    <div class="tab-pane active">
+                        <form [formGroup]="form" (submit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-lg-12 mb-3">
+                                    <label class="required">Assessment name</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="{'is-invalid': (submitted || f.name.touched) && f.name.invalid}"
+                                        formControlName="name" placeholder="Name" />
+                                    <div class="invalid-feedback">
+                                        <span>This field is required.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 mb-3">
+                                    <label class="required">Time Limit (In minutes)</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="{'is-invalid': (submitted || f.time_limit.touched) && f.time_limit.invalid}"
+                                        formControlName="time_limit" placeholder="e.g. 10">
+                                </div>
+                                <div class="col-lg-12 mb-3">
+                                    <label class="required">Image <small class="text-muted">(310PX * 177PX or
+                                            1:0.570)</small></label>
+                                    <app-dropzone formControlName="image" accept="image/jpeg,image/png,image/svg+xml">
+                                    </app-dropzone>
+                                    <div class="invalid-feedback">
+                                        <span>This field is required.</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 mb-3">
+                                    <div class="form-check form-switch mb-3" dir="ltr">
+                                        <input formControlName="isActive" type="checkbox" class="form-check-input"
+                                            id="ActiveSwitch1">
+                                        <label class="form-check-label" for="ActiveSwitch1"> Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">{{this.editId?'Update':'Submit'}}</button>
+                        </form>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #Tab2>
+                <div class="tab-content p-4">
+                    <div class="tab-pane active">
+                        <form [formGroup]="instructionsForm" (submit)="onSubmitInstructions()">
+                            <div formArrayName="instructions">
+                                <div class="row" *ngFor="let control of iForm.instructions.controls; index as i"
+                                    [formGroupName]="i">
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <input formControlName="instruction" class="form-control"
+                                                [ngClass]="{'is-invalid': (instSubmitted || control.get('instruction').touched) && control.get('instruction').invalid}"
+                                                type="text" placeholder="Write Instruction..">
+                                            <div class="invalid-feedback">
+                                                This field is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="uil-trash pointer btn btn-outline-danger"
+                                            (click)="removeInstruction(i)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mb-3">
+                                <a href="javascript:void(0)" class="btn btn-success waves-effect waves-light"
+                                    (click)="addInstruction()"><i class="mdi mdi-plus me-2"></i>
+                                    Create New</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #Tab3>
+                <div class="tab-content p-4">
+                    <div class="tab-pane active">
+                        <form [formGroup]="questionsForm" (submit)="onSubmitQuestions()">
+                            <div formArrayName="questions">
+                                <div class="p-3 qGroup mb-3"
+                                    *ngFor="let control of qForm.questions.controls; index as i" [formGroupName]="i">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="required">Question</label>
+                                                <input formControlName="question" class="form-control"
+                                                    [ngClass]="{'is-invalid': (quesSubmitted || control.get('question').touched) && control.get('question').invalid}"
+                                                    type="text" placeholder="Write Question"
+                                                    (blur)="trimValue(control.get('question'))">
+                                                <div class="invalid-feedback">
+                                                    This field is required
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="required">Type</label>
+                                                <div class="d-flex">
+                                                    <div class="form-check me-4">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" value="single" type="radio"
+                                                                [name]="'type_' + i" [formControlName]="'type_' + i">
+                                                            Single Choice</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" value="multiple"
+                                                                type="radio" [name]="'type_' + i"
+                                                                [formControlName]="'type_' + i">
+                                                            Multi Choice</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="b-6 fs-16 mt-3">Answers Group::</label> <br>
+                                                <ng-container formArrayName="answer">
+                                                    <div class="row mt-3"
+                                                        *ngFor="let ansControl of control.get('answer').controls; index as ai"
+                                                        [formGroupName]="ai">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <label class="required">Title</label>
+                                                                    <input formControlName="title" class="form-control"
+                                                                        [ngClass]="{'is-invalid': (quesSubmitted || ansControl.get('title').touched) && ansControl.get('title').invalid}"
+                                                                        type="text"
+                                                                        (blur)="trimValue(ansControl.get('title'))">
+                                                                    <div class="invalid-feedback">This field is required
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label>Category</label>
+                                                                    <input formControlName="category"
+                                                                        class="form-control" type="text"
+                                                                        (blur)="trimValue(ansControl.get('category'))">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <label>&nbsp;</label> <br>
+                                                            <i class="uil-trash pointer btn btn-outline-danger"
+                                                                (click)="removeAnswerGroup(control,ai)"></i>
+                                                        </div>
+                                                    </div>
+
+                                                </ng-container>
+
+                                                <button type="button" class="btn btn-primary mt-3"
+                                                    (click)="addAnswerGroup(control)"><i class="mdi mdi-plus me-2"></i>
+                                                    Add Answer</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <label>&nbsp;</label> <br>
+                                            <i class="uil-trash pointer btn btn-outline-danger"
+                                                (click)="removeQuestionGroup(i)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="text-center mb-3">
+                                <a href="javascript:void(0)" class="btn btn-success waves-effect waves-light"
+                                    (click)="addQuestionGroup()"><i class="mdi mdi-plus me-2"></i>
+                                    Create New</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #Tab4>
+                <div class="tab-content p-4">
+                    <div class="tab-pane active">
+                        <table class="table table-centered datatables dt-responsive nowrap table-card-list"
+                            style="border-spacing: 0 12px; width: 100%">
+                            <thead>
+                                <tr class="bg-transparent">
+                                    <th scope="col" sortable="name">
+                                        Name
+                                    </th>
+                                    <th scope="col" sortable="name">
+                                        Email
+                                    </th>
+                                    <th scope="col" sortable="amount">
+                                        Phone
+                                    </th>
+                                    <th scope="col" sortable="amount">
+                                        Date & Time
+                                    </th>
+                                    <th scope="col" sortable="amount">
+                                        Result
+                                    </th>
+                                    <th style="width: 170px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of surveyResponse;let i = index" class="odd">
+                                    <td>{{data.firstName}} {{data.lastName}}</td>
+                                    <td>{{data.email}}</td>
+                                    <td>{{data.countryCode}} {{data.phone}}</td>
+                                    <td>{{data.createdAt | date:'medium'}}</td>
+                                    <td>{{data.analysis?.type}}</td>
+                                    <td>
+                                        <a [routerLink]="['/assessments/response', data._id]"
+                                            class="px-3 text-primary" placement="top" ngbTooltip="View Report"><i
+                                                class="uil uil-eye font-size-18"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

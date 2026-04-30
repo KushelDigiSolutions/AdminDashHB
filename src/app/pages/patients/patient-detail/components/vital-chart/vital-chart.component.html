@@ -1,0 +1,168 @@
+<div class="">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="float-end d-flex align-items-center" style="margin-top: -2px;">
+            <h4 class="title">LATEST READING</h4>
+            <div class="statsUpDown statsUp">
+              <ng-container *ngIf="heightChart?.series?.length && heightChart.series[0].data?.length">
+                {{heightChart.series[0].data[heightChart.series[0].data.length - 1]}} cms
+                <!-- <i class="bx bx-caret-up ms-1 align-middle"></i> -->
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="card-title mb-4">HEIGHT</h4>
+          <div *ngIf="heightChart" class="vital-chart">
+            <apx-chart class="apex-charts" dir="ltr" [series]="heightChart.series" [chart]="heightChart.chart"
+              [plotOptions]="heightChart.plotOptions" [yaxis]="heightChart.yaxis" [title]="heightChart.title"
+              [stroke]="heightChart.stroke" [dataLabels]="heightChart.dataLabels" [xaxis]="heightChart.xaxis"
+              [legend]="heightChart.legend" [colors]="heightChart.colors" [fill]="heightChart.fill">
+            </apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="float-end d-flex align-items-center" style="margin-top: -2px;">
+            <h4 class="title">LATEST READING</h4>
+            <div class="statsUpDown statsUp">
+              <ng-container *ngIf="weightChart?.series?.length && weightChart.series[0].data?.length">
+                {{weightChart.series[0].data[weightChart.series[0].data.length - 1]}} kgs
+                <!-- <i class="bx bx-caret-up ms-1 align-middle"></i> -->
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="card-title">WEIGHT</h4>
+          <div class="vital-chart">
+            <!-- Bar Chart -->
+            <apx-chart class="apex-charts" dir="ltr" [series]="weightChart.series" [chart]="weightChart.chart"
+              [plotOptions]="weightChart.plotOptions" [yaxis]="weightChart.yaxis" [title]="weightChart.title"
+              [stroke]="weightChart.stroke" [dataLabels]="weightChart.dataLabels" [xaxis]="weightChart.xaxis"
+              [legend]="weightChart.legend" [colors]="weightChart.colors" [fill]="weightChart.fill">
+            </apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body" dir="ltr">
+          <div class="float-end d-flex align-items-center" style="margin-top: -2px;">
+            <h4 class="title">LATEST READING</h4>
+            <div class="statsUpDown statsUp">
+              <ng-container *ngIf="pulseChart?.series?.length && pulseChart.series[0].data?.length">
+                {{pulseChart.series[0].data[pulseChart.series[0].data.length - 1]}} BPM
+                <!-- <i class="bx bx-caret-up ms-1 align-middle"></i> -->
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="card-title mb-4">PULSE</h4>
+          <!-- Simple line chart -->
+          <apx-chart class="apex-charts" dir="ltr" [series]="pulseChart.series" [chart]="pulseChart.chart"
+            [dataLabels]="pulseChart.dataLabels" [stroke]="pulseChart.stroke" [colors]="pulseChart.colors"
+            [xaxis]="pulseChart.xaxis" [grid]="pulseChart.grid" [markers]="pulseChart.markers"
+            [tooltip]="pulseChart.tooltip"></apx-chart>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body" dir="ltr">
+          <div class="float-end d-flex align-items-center" style="margin-top: -2px;">
+            <h4 class="title">LATEST READING</h4>
+            <div class="statsUpDown statsUp">
+              <ng-container *ngIf="bloodPressureChart?.series?.length && bloodPressureChart.series[0].data?.length && bloodPressureChart.series[1].data?.length">
+                {{bloodPressureChart.series[0].data[bloodPressureChart.series[0].data.length - 1]}}/{{bloodPressureChart.series[1].data[bloodPressureChart.series[1].data.length - 1]}} mm Hg
+                <!-- <i class="bx bx-caret-up ms-1 align-middle"></i> -->
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="card-title mb-4">BLOOD PRESSURE</h4>
+          <!-- Simple line chart -->
+          <apx-chart class="apex-charts" dir="ltr" [series]="bloodPressureChart.series"
+            [chart]="bloodPressureChart.chart" [dataLabels]="bloodPressureChart.dataLabels"
+            [stroke]="bloodPressureChart.stroke" [colors]="bloodPressureChart.colors" [xaxis]="bloodPressureChart.xaxis"
+            [grid]="bloodPressureChart.grid" [markers]="bloodPressureChart.markers"
+            [tooltip]="bloodPressureChart.tooltip"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body" dir="ltr">
+          <div class="float-end d-flex align-items-center" style="margin-top: -2px;">
+            <h4 class="title">LATEST READING</h4>
+            <div class="statsUpDown statsUp">
+              <ng-container *ngIf="temperatureChart?.series?.length && temperatureChart.series[0].data?.length">
+                {{temperatureChart.series[0].data[temperatureChart.series[0].data.length - 1]}} <sup class="zero">0</sup>F
+                <!-- <i class="bx bx-caret-up ms-1 align-middle"></i> -->
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="card-title mb-4">TEMPERATURE</h4>
+          <!-- Simple line chart -->
+          <apx-chart class="apex-charts" dir="ltr" [series]="temperatureChart.series" [chart]="temperatureChart.chart"
+            [dataLabels]="temperatureChart.dataLabels" [stroke]="temperatureChart.stroke"
+            [colors]="temperatureChart.colors" [xaxis]="temperatureChart.xaxis" [grid]="temperatureChart.grid"
+            [markers]="temperatureChart.markers" [tooltip]="temperatureChart.tooltip"></apx-chart>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body" dir="ltr">
+          <div class="float-end d-flex align-items-center" style="margin-top: -2px;">
+            <h4 class="title">LATEST READING</h4>
+            <div class="statsUpDown statsUp">
+              <ng-container *ngIf="respiratoryRateChart?.series?.length && respiratoryRateChart.series[0].data?.length">
+                {{respiratoryRateChart.series[0].data[respiratoryRateChart.series[0].data.length - 1]}} min
+                <!-- <i class="bx bx-caret-up ms-1 align-middle"></i> -->
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="card-title mb-4">RESPIRATORY RATE</h4>
+          <!-- Simple line chart -->
+          <apx-chart class="apex-charts" dir="ltr" [series]="respiratoryRateChart.series"
+            [chart]="respiratoryRateChart.chart" [dataLabels]="respiratoryRateChart.dataLabels"
+            [stroke]="respiratoryRateChart.stroke" [colors]="respiratoryRateChart.colors"
+            [xaxis]="respiratoryRateChart.xaxis" [grid]="respiratoryRateChart.grid"
+            [markers]="respiratoryRateChart.markers" [tooltip]="respiratoryRateChart.tooltip"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body" dir="ltr">
+          <div class="float-end d-flex align-items-center" style="margin-top: -2px;">
+            <h4 class="title">LATEST READING</h4>
+            <div class="statsUpDown statsUp">
+              <ng-container *ngIf="spoChart?.series?.length && spoChart.series[0].data?.length">
+                {{spoChart.series[0].data[spoChart.series[0].data.length - 1]}}%
+                <!-- <i class="bx bx-caret-up ms-1 align-middle"></i> -->
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="card-title mb-4">SPO2</h4>
+          <!-- Simple line chart -->
+          <apx-chart class="apex-charts" dir="ltr" [series]="spoChart.series" [chart]="spoChart.chart"
+            [dataLabels]="spoChart.dataLabels" [stroke]="spoChart.stroke" [colors]="spoChart.colors"
+            [xaxis]="spoChart.xaxis" [grid]="spoChart.grid" [markers]="spoChart.markers" [tooltip]="spoChart.tooltip">
+          </apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

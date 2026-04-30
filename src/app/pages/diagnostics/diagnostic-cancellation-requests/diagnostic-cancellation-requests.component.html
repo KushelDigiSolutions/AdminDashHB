@@ -1,0 +1,259 @@
+<div class="container-fluid">
+    <app-page-title title="Cancellation Requests" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div class="row">
+        <div class="col-12">
+            <!-- <div class="float-end">
+                <form #typeForm="ngForm" class="d-inline-flex mb-3">
+                    <label class="form-check-label my-2 me-2" style="white-space: nowrap;"
+                        for="order-selectinput">Booking Type</label>
+                    <select name="type" #type="ngModel" ngModel class="form-select" id="order-selectinput"
+                        (change)="onChangeType(type)">
+                        <option value="">All</option>
+                        <option value="camp">Camp</option>
+                        <option value="home">Home</option>
+                    </select>
+                </form>
+            </div> -->
+            <!-- <a routerLink="/diagnostics/bookings" type="button" class="btn btn-success mb-3">
+                    <i class="mdi mdi-plus me-1"></i> Add New
+                </a> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            Results Found: <b>({{total}})</b>
+                            <!-- <div class="mb-3">
+                                <a routerLink="/diagnostics/bookings"
+                                    class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i>
+                                    Add New</a>
+                            </div> -->
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-inline float-md-end mb-3">
+                                <div class="search-box ms-2">
+                                    <div class="position-relative">
+                                        <form #search="ngForm" (submit)="onSearch(search)">
+                                            <app-rxjs-input classes="form-control rounded bg-light border-0" name="searchTerm" ngModel (debounceinput)="onSearch(search)" placeholder="Search..."></app-rxjs-input>
+                                            <!-- <input class="form-control rounded bg-light border-0" type="text"
+                                                name="searchTerm" ngModel placeholder="Search..." /> -->
+                                            <i class="mdi mdi-magnify search-icon"></i>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive mb-4">
+                        <table class="table table-centered mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S.no.</th>
+                                    <th scope="col">Beneficiary</th>
+                                    <th scope="col">Phone/Email</th>
+                                    <th scope="col">Appointment Time</th>
+                                    <th scope="col">Created By</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Payment Status</th>
+                                    <th scope="col">Booking Status</th>
+                                    <th scope="col" style="width: 200px" class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of list;let index = index">
+                                    <td>
+                                        {{pageSize * page - pageSize + index + 1}}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" class="text-body">{{data.orderBy}}</a>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.mobile"></ngb-highlight> <br>
+                                        <ngb-highlight [result]="data.email"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.ApptDate | date:'MMM d, yyyy, hh:mm a'">
+                                        </ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]="(data.userId?.firstName || '') + ' ' + (data.userId?.lastName || '')">
+                                        </ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.type | titlecase">
+                                        </ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <span class="badge rounded-pill bg-soft-success font-size-12" [ngClass]="{
+                                            'status-warning':
+                                              data.paymentStatus == 'paymentAwaited' ||
+                                              data.paymentStatus == 'awaited'
+                                          }">{{ data.paymentStatus | titlecase }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge rounded-pill font-size-12" [ngClass]="{
+                                            'bg-soft-danger': data.status === 'Chargeback',
+                                            'bg-soft-warning': data.status === 'Unpaid',
+                                            orderPlaced: data.status === 'placed',
+                                            orderProcessing: data.status === 'processing' || data.status === 'Booked' || data.status === 'Confirmed',
+                                            paymentAwaited: data.status === 'Payment-Awaited',
+                                            'status-warning ':
+                                              data.status == 'hold' ||
+                                              data.status == 'outForDelivery',
+                                            'status-danger':
+                                              data.status == 'cancelled' ||
+                                              data.status == 'refundInitiated' ||
+                                              data.status == 'failed',
+                                            'status-success':
+                                              data.status == 'completed'
+                                          }">{{ data.status | titlecase }}</span>
+                                    </td>
+                                    
+                                    <td class="text-end">
+                                        <ul class="list-inline mb-0">
+                                            <!-- <li class="list-inline-item">
+                                                <a [routerLink]="['edit',data._id]" href="javascript:void(0);"
+                                                    class="px-2 text-primary" ngbTooltip="Edit"><i
+                                                        class="uil uil-pen font-size-18"></i></a>
+                                            </li> -->
+                                            <li class="list-inline-item">
+                                                <a (click)="onView(modalRef,data)" href="javascript:void(0);"
+                                                    class="px-2 text-primary" ngbTooltip="View Booking"><i
+                                                        class="uil uil-eye font-size-18"></i></a>
+                                            </li>
+                                            <!-- <li class="list-inline-item">
+                                                <a (click)="onCancel(data)" href="javascript:void(0);"
+                                                    class="px-2 text-warning" ngbTooltip="Cancel"><i
+                                                        class="mdi mdi-cart-remove font-size-18"></i></a>
+                                            </li> -->
+                                            <li class="list-inline-item">
+                                                <a (click)="onDelete(data,index)" href="javascript:void(0);"
+                                                    class="px-2 text-danger" [ngClass]="{disabled: data.type == 'home'}" ngbTooltip="Delete"><i
+                                                        class="uil uil-trash-alt font-size-18"></i></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-sm-12">
+                            <div class="float-end">
+                                <ngb-pagination [collectionSize]="total" [pageSize]="pageSize" [(page)]="page"
+                                    [boundaryLinks]="true" (pageChange)="pageChanged()">
+                                    <ng-template ngbPaginationPages let-page let-pages="pages">
+                                        <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                                            <div class="form-group d-flex flex-nowrap px-2">
+                                                <label id="paginationInputLabel" for="paginationInput"
+                                                    class="col-form-label mr-2 ml-1">Page</label>
+                                                <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                                                    class="form-control custom-pages-input" id="paginationInput"
+                                                    [value]="page" (keyup.enter)="selectPage(i.value)"
+                                                    (blur)="selectPage(i.value)"
+                                                    (input)="formatInput($any($event).target)"
+                                                    aria-labelledby="paginationInputLabel paginationDescription"
+                                                    style="width: 4rem" />
+                                                <span id="paginationDescription"
+                                                    class="col-form-label text-nowrap px-2">
+                                                    of {{pages.length}}</span>
+                                            </div>
+                                        </li>
+                                    </ng-template>
+                                </ngb-pagination>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- container-fluid -->
+
+<ng-template #modalRef role="document" let-modal>
+    <ng-container *ngIf="modalData">
+        <div class="modal-header">
+            <h5 class="modal-title mt-0">Booking Details</h5>
+            <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4 class="mb-4">Beneficiary Details</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Name</th>
+                                    <td>{{modalData.orderBy}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Mobile</th>
+                                    <td>{{modalData.mobile}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email</th>
+                                    <td>{{modalData.email}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Age</th>
+                                    <td>{{modalData.age}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <h4 class="mb-4">Booking Details</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Type</th>
+                                    <td>{{modalData.type | titlecase}}</td>
+                                </tr>
+                                <ng-container *ngIf="modalData.type == 'home'">
+                                    <tr>
+                                        <th>Appt. Date Time</th>
+                                        <td>{{modalData.ApptDate | date:"MMM d, yyyy, hh:mm a"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>{{modalData.address}} - {{modalData.pincode}}</td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="modalData.type == 'camp' && modalData.campCollectionId">
+                                    <tr>
+                                        <th>Camp Date Time</th>
+                                        <td>{{modalData.campCollectionId.dateTime | date:"MMM d, yyyy, hh:mm a"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Venue</th>
+                                        <td>{{modalData.campCollectionId.venue}}</td>
+                                    </tr>
+                                </ng-container>
+                                <tr>
+                                    <th>Test</th>
+                                    <td><ng-container *ngFor="let test of modalData.testsId; last as last">{{test.name}} <small>[Category: {{test.category}}]</small><ng-container *ngIf="!last">, </ng-container> </ng-container></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        </div>
+    </ng-container>
+</ng-template>

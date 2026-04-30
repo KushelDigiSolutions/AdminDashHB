@@ -1,0 +1,49 @@
+.taxClassesContainer {
+  background-color: #fff;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  border: 1px solid #e5e5e5;
+}
+.taxClass {
+  padding: 2% 1%;
+  border: 1px dashed #e5e5e5;
+  margin: 1% 0%;
+}
+.taxClassName {
+  font-weight: 700;
+  font-size: 20px;
+}
+.taxes {
+  margin-top: 1rem;
+}
+.form-control {
+  width: 25%;
+}
+.text-danger {
+  margin-top: 1rem;
+  float: left;
+  cursor: pointer;
+  padding: 0.5rem;
+  border: 1px dashed #ff0000;
+}
+.text-success {
+  margin-top: 1rem;
+  float: right;
+  cursor: pointer;
+  padding: 0.5rem;
+  border: 1px dashed #058f46;
+}
+.removeTaxClass {
+  background-color: #e5e5e5;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.uil-multiply {
+  position: absolute;
+  right: 0.7rem;
+  top: -0.2rem;
+}

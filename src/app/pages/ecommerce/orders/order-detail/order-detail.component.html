@@ -1,0 +1,1232 @@
+<div *ngIf="orderDetails" class="container-fluid">
+  <!-- start page title -->
+  <app-page-title
+    title="Order Details"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <!-- end page title -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="d-flex mb-2 p-2 sub-heading">
+        Order Id: {{ orderDetails?.orderId }}, Date:
+        {{ orderDetails?.createdAt | date: "medium" }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-0">
+    <!-- Nav tabs -->
+    <ul
+      ngbNav
+      #justifiednav="ngbNav"
+      [(activeId)]="activeTab"
+      class="nav nav-tabs nav-justified nav-tabs-custom"
+    >
+      <li [ngbNavItem]="1" class="nav-item">
+        <a ngbNavLink class="nav-link">
+          <span class="font-size-20">1</span>
+          <span class="d-none d-sm-block">Order Summary</span>
+        </a>
+        <ng-template ngbNavContent>
+          <ng-template [ngTemplateOutlet]="TabOrderDetails"></ng-template>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2" class="nav-item">
+        <a ngbNavLink class="nav-link">
+          <span class="font-size-20">2</span>
+          <span class="d-none d-sm-block">Customer Info</span>
+        </a>
+        <ng-template ngbNavContent>
+          <ng-template [ngTemplateOutlet]="TabContentUserDetails"></ng-template>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3" class="nav-item">
+        <a ngbNavLink class="nav-link">
+          <span class="font-size-20">3</span>
+          <span class="d-none d-sm-block"
+            >Shipment Info
+            <i>({{ orderDetails.shippingDetails.length }})</i></span
+          >
+        </a>
+        <ng-template ngbNavContent>
+          <ng-template [ngTemplateOutlet]="TabShipment"></ng-template>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="justifiednav"></div>
+  </div>
+
+  <!-- Tab content -->
+  <ng-template #TabOrderDetails>
+    <ng-container *ngIf="!cancelProducts">
+      <div class="d-flex align-items-center" *ngIf="orderDetails">
+        <div class="flex-1 overflow-hidden p-4">
+          <p class="text-muted text-truncate mb-0">
+            <span>Ordered Products: {{ products.length }}</span>
+            <span class="ms-5">
+              Payment Status: {{ orderDetails.paymentStatus }}
+            </span>
+            <span class="ms-5">
+              Order Status:
+              <b
+                class="p-2"
+                [ngClass]="{
+                  'status-warning ':
+                    orderDetails.currentStatus == 'placed' ||
+                    orderDetails.currentStatus == 'hold' ||
+                    orderDetails.currentStatus == 'processing' ||
+                    orderDetails.currentStatus == 'paymentAwaited',
+                  'status-danger':
+                    orderDetails.currentStatus == 'cancelled' ||
+                    orderDetails.currentStatus == 'failed',
+                  'status-success':
+                    orderDetails.currentStatus == 'completed' ||
+                    orderDetails.currentStatus == 'dispatched' ||
+                    orderDetails.currentStatus == 'delivered'
+                }"
+                >{{ orderDetails.currentStatus | titlecase }}</b
+              >
+            </span>
+            <span *ngIf="orderDetails.paymentLink" class="ms-5">
+              <a
+                class="btn-link fw-bold"
+                href="javascript:void(0)"
+                (click)="openLinkModal(paymentLinkModal)"
+                ><i class="uil uil-eye font-size-18"></i> Payment Link</a
+              >
+            </span>
+            <span class="ms-5">
+              <a
+                class="btn-link fw-medium btn-cancel"
+                href="javascript:void(0)"
+                (click)="showCancelProducts()"
+                ><i class="uil uil-edit-alt font-size-18"></i> Cancel
+                Product(s)</a
+              >
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="p-4 border-top">
+        <table
+          class="
+            table table-centered
+            datatables
+            dt-responsive
+            nowrap
+            table-card-list
+          "
+          style="border-spacing: 0 12px; width: 100%"
+        >
+          <thead>
+            <tr class="bg-transparent">
+              <th>S.no</th>
+              <th>Brand Name</th>
+              <th>Product Name</th>
+              <th>Product Weight</th>
+              <th>Label</th>
+              <th>Qty</th>
+              <th>MRP</th>
+              <th>Selling Price</th>
+              <th>Status</th>
+              <th>Gift</th>
+              <th>Presc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products; let i = index" class="odd">
+              <td>
+                <div class="form-check text-center">
+                  {{ i + 1 }}
+                </div>
+              </td>
+              <td>
+                <ngb-highlight
+                  [result]="product.seller || '---'"
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight
+                  [result]="product?.productId?.name"
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight
+                  [result]="product?.weight"
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+              <td>
+                <p *ngIf="product.label.length">
+                  <span *ngFor="let label of product.label">{{
+                    label + ""
+                  }}</span>
+                </p>
+                <p *ngIf="!product.label.length">
+                  <span>---</span>
+                </p>
+              </td>
+              <td>
+                <ngb-highlight
+                  [result]="product?.quantity"
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight
+                  [result]="product?.mrp / (product?.quantity || 1)"
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight
+                  [result]="
+                    product?.mrp >
+                    product?.productPrice
+                      ? (product?.productPrice / (product?.quantity || 1))
+                      : (product?.mrp / (product?.quantity || 1))
+                  "
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight
+                  [result]="product?.statusDetails"
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+
+              <td>
+                <ngb-highlight
+                  [result]="
+                    product?.productId?.is.giftable
+                      ? product?.productId?.is.giftable
+                      : '---'
+                  "
+                  [term]="service?.searchTerm"
+                ></ngb-highlight>
+              </td>
+
+              <td>
+                <span
+                  *ngIf="product?.productId?.is.prescriptionRequired"
+                  class="viewPrescription px-2"
+                  (click)="viewUploadedPrescription(product)"
+                >
+                  View
+                </span>
+                <span *ngIf="!product?.productId?.is.prescriptionRequired">
+                  ---
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row" *ngIf="orderDetails">
+          <div class="col-lg-12 p-3">
+            <div class="row">
+              <div class="col-lg-5 mb-4">
+                <p class="font-size-18" style="font-weight: 600">
+                  Order Amount
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Total Mrp</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.totalMrp }}</span
+                  >
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Discount</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.totalSavings }}</span
+                  >
+                </p>
+                <p
+                  class="mb-0 py-2 bottom-border"
+                  *ngIf="orderDetails.couponDiscount > 0"
+                >
+                  <span>Coupon Discount</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.couponDiscount }}</span
+                  >
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Total Savings</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.totalSavings }}</span
+                  >
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Tax</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.tax }}</span
+                  >
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Total Amount</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.totalAmount }}</span
+                  >
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Shipping and Handling Fee</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.shippingCharges }}</span
+                  >
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Order Value</span>
+                  <span class="float-lg-end"
+                    >&#8377; {{ orderDetails.totalPayableAmount }}</span
+                  >
+                </p>
+                <p class="mb-0 py-2 bottom-border">
+                  <span>Order Weight</span>
+                  <span class="float-lg-end">
+                    {{ orderDetails.totalWeight }}gm</span
+                  >
+                </p>
+              </div>
+              <div class="col-lg-5 offset-lg-2">
+                <p class="font-size-18" style="font-weight: 600">
+                  Payment Information
+                </p>
+                <ng-container *ngIf="!showTxnInfoForm">
+                  <p class="mb-0 py-2 bottom-border">
+                    <span>Payment Status</span>
+                    <span
+                      class="float-lg-end text-uppercase px-1"
+                      [ngClass]="{
+                        'status-warning':
+                          orderDetails.paymentStatus == 'awaited' ||
+                          orderDetails.paymentStatus == 'refunded',
+                        'status-success':
+                          orderDetails.paymentStatus == 'accepted',
+                        'status-danger': orderDetails.paymentStatus == 'failed'
+                      }"
+                      >{{ orderDetails.paymentStatus }}</span
+                    >
+                  </p>
+                  <p class="mb-0 py-2 bottom-border">
+                    <span>Payment Gateway</span>
+                    <span class="float-lg-end">{{
+                      orderDetails.paymentType
+                    }}</span>
+                  </p>
+                  <p class="mb-0 py-2 bottom-border">
+                    <span>Payment Method</span>
+                    <span class="float-lg-end">{{
+                      orderDetails.paymentMethod
+                    }}</span>
+                  </p>
+                  <p class="mb-0 py-2 bottom-border">
+                    <span>Txn. ID</span>
+                    <span class="float-lg-end">{{
+                      orderDetails.paymentDetails?.txnId
+                    }}</span>
+                  </p>
+                  <p class="mb-0 py-2 bottom-border">
+                    <span>Payment Date</span>
+                    <span
+                      class="float-lg-end"
+                      *ngIf="orderDetails.paymentDetails?.txnDate"
+                      >{{
+                        orderDetails.paymentDetails.txnDate | date: "dd-MM-YYYY"
+                      }}</span
+                    >
+                  </p>
+                  <button
+                    class="btn btn-primary mt-4"
+                    type="button"
+                    (click)="onShowPaymentForm()"
+                  >
+                    Update Payment Details
+                  </button>
+                </ng-container>
+
+                <form
+                  *ngIf="showTxnInfoForm"
+                  class="mt-4"
+                  [formGroup]="paymentFormGroup"
+                  (submit)="onSubmitTxnInfo()"
+                >
+                  <div class="mb-3">
+                    <label>Payment Method *</label>
+                    <select
+                      formControlName="paymentMethod"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          paymentFormGroup.get('paymentMethod').touched &&
+                          paymentFormGroup.get('paymentMethod').invalid
+                      }"
+                      (change)="onChangePayType()"
+                    >
+                      <option value="">-- Select Method --</option>
+                      <option value="cod">COD/Cash</option>
+                      <option value="payZapp">PayZapp</option>
+                      <option value="freeRecharge">FreeRecharge</option>
+                      <option value="card">Card</option>
+                      <option value="netBanking">Net Banking</option>
+                      <option value="upi">UPI</option>
+                      <option value="paytm">PayTm</option>
+                      <option value="phonePe">PhonePe</option>
+                      <option value="freecharge">FreeCharge</option>
+                      <option value="olaMoney">OlaMoney</option>
+                      <option value="airtel">Airtel</option>
+                      <option value="oxigen">Oxigen</option>
+                    </select>
+                    <div
+                      *ngIf="
+                        paymentFormGroup.get('paymentMethod').touched &&
+                        paymentFormGroup.get('paymentMethod').invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      This field is required
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="
+                      paymentFormGroup.get('paymentMethod').value != 'Cash'
+                    "
+                    class="mb-3"
+                  >
+                    <label>Transaction ID *</label>
+                    <input
+                      formControlName="txnId"
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          paymentFormGroup.get('txnId').touched &&
+                          paymentFormGroup.get('txnId').invalid
+                      }"
+                      placeholder="Transaction ID"
+                    />
+                    <div
+                      *ngIf="
+                        paymentFormGroup.get('txnId').touched &&
+                        paymentFormGroup.get('txnId').invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      This field is required
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label>Transaction Date *</label>
+                    <input
+                      formControlName="txnDate"
+                      type="date"
+                      [ngClass]="{
+                        'is-invalid':
+                          paymentFormGroup.get('txnDate').touched &&
+                          paymentFormGroup.get('txnDate').invalid
+                      }"
+                      class="form-control"
+                      placeholder="Transaction Date"
+                    />
+                    <div
+                      *ngIf="
+                        paymentFormGroup.get('txnDate').touched &&
+                        paymentFormGroup.get('txnDate').invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      This field is required
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label>Payment Status *</label>
+                    <select
+                      formControlName="paymentStatus"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          paymentFormGroup.get('paymentStatus').touched &&
+                          paymentFormGroup.get('paymentStatus').invalid
+                      }"
+                      (change)="onChangePayType()"
+                    >
+                      <option value="">-- Select Status --</option>
+                      <option value="awaited">Awaited</option>
+                      <option value="accepted">Accepted</option>
+                      <option value="failed">Failed</option>
+                      <option value="refunded">Refunded</option>
+                    </select>
+                    <div
+                      *ngIf="
+                        paymentFormGroup.get('paymentStatus').touched &&
+                        paymentFormGroup.get('paymentStatus').invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      This field is required
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="paymentFormGroup.invalid"
+                    >
+                      Update
+                    </button>
+                    <button
+                      type="button"
+                      class="btn"
+                      (click)="showTxnInfoForm = false"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="cancelProducts">
+      <div class="p-4">
+        <h3>Cancel Product(s)</h3>
+        <form
+          #cancelProductForm="ngForm"
+          (submit)="submitCancelProducts(cancelProductForm)"
+        >
+          <table class="table" style="border-spacing: 0 12px; width: 100%">
+            <thead class="table-light">
+              <tr class="bg-transparent">
+                <th>S.no</th>
+                <th>Product Name</th>
+                <th>Label</th>
+                <th>Qty</th>
+                <th>Status</th>
+                <th>Cancel Product</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let product of productsEligibleForCancel; let i = index"
+                class="odd"
+              >
+                <td>
+                  <div>
+                    {{ i + 1 }}
+                  </div>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="
+                      product?.productId?.name +
+                      ' [' +
+                      product.productId?.brandId.name +
+                      ']'
+                    "
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+
+                <td>
+                  <p *ngIf="product.label.length">
+                    <span *ngFor="let label of product.label">{{
+                      label + ""
+                    }}</span>
+                  </p>
+                  <p *ngIf="!product.label.length">
+                    <span>---</span>
+                  </p>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="product?.quantity"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="product?.statusDetails"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+
+                <td class="text-center">
+                  <select
+                    [name]="'qty[' + i + ']'"
+                    ngModel
+                    class="form-control"
+                  >
+                    <option value="">Select Qty</option>
+                    <option
+                      [value]="qty"
+                      *ngFor="let qty of qtyArray(product?.quantity)"
+                    >
+                      {{ qty }}
+                    </option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mb-3">
+            <label>Cancel Reason</label>
+            <input name="reason" ngModel type="text" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label>Comment</label>
+            <textarea
+              name="comment"
+              ngModel
+              rows="3"
+              class="form-control"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button
+            type="button"
+            class="btn btn-default"
+            (click)="hideCancelProducts()"
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #TabContentUserDetails>
+    <div class="tab-content p-4">
+      <div class="tab-pane active">
+        <div class="p-4 border-top">
+          <table
+            class="
+              table table-centered
+              datatables
+              dt-responsive
+              nowrap
+              table-card-list
+            "
+            style="border-spacing: 0 12px; width: 100%"
+          >
+            <thead>
+              <tr class="bg-transparent">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody
+              style="cursor: pointer"
+              (click)="navigateToUser(orderDetails.user)"
+            >
+              <tr>
+                <td>
+                  <ngb-highlight
+                    [result]="
+                      orderDetails.billingInfo.firstName +
+                      ' ' +
+                      orderDetails.billingInfo.lastName
+                    "
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="orderDetails.billingInfo.email || '---'"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="orderDetails.billingInfo.phone"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="orderDetails.user.category | titlecase"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12 px-3">
+            <div class="row">
+              <div class="col-lg-5 px-0 address-container">
+                <div class="d-flex p-3 mb-3 address-heading">
+                  Billing Address
+                </div>
+
+                <div class="ps-3">
+                  <p>
+                    {{
+                      orderDetails.billingInfo.firstName +
+                        " " +
+                        orderDetails.billingInfo.lastName
+                    }}
+                  </p>
+                  <p>
+                    {{ orderDetails.billingInfo.address.houseNumber }}
+                  </p>
+                  <p>{{ orderDetails.billingInfo.address.line1 }}</p>
+                  <p>
+                    {{
+                      orderDetails.billingInfo.address.city +
+                        ", " +
+                        orderDetails.billingInfo.address.state +
+                        ", " +
+                        orderDetails.billingInfo.address.pinCode
+                    }}
+                  </p>
+                  <p>
+                    {{ orderDetails.billingInfo.address.country }}
+                  </p>
+                  <p>Tel: {{ orderDetails.billingInfo.phone }}</p>
+                </div>
+              </div>
+              <div class="offset-2 col-lg-5 px-0 address-container">
+                <div class="d-flex p-3 mb-3 address-heading">
+                  Shipping Address
+                </div>
+
+                <div class="ps-3">
+                  <p>
+                    {{
+                      orderDetails.shippingInfo.firstName +
+                        " " +
+                        orderDetails.shippingInfo.lastName
+                    }}
+                  </p>
+                  <p>
+                    {{ orderDetails.shippingInfo.address.houseNumber }}
+                  </p>
+                  <p>{{ orderDetails.shippingInfo.address.line1 }}</p>
+                  <p>
+                    {{
+                      orderDetails.shippingInfo.address.city +
+                        ", " +
+                        orderDetails.shippingInfo.address.state +
+                        ", " +
+                        orderDetails.shippingInfo.address.pinCode
+                    }}
+                  </p>
+                  <p>
+                    {{ orderDetails.shippingInfo.address.country }}
+                  </p>
+                  <p>Tel: {{ orderDetails.shippingInfo.phone }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #TabShipment>
+    <div class="tab-content p-4">
+      <div class="tab-pane active">
+        <div class="p-4 border-top">
+          <table
+            class="
+              table table-centered
+              datatables
+              dt-responsive
+              nowrap
+              table-card-list
+            "
+            style="border-spacing: 0 12px; width: 100%"
+            *ngIf="orderDetails.shippingDetails.length"
+          >
+            <thead>
+              <tr class="bg-transparent">
+                <th>Shipment Id</th>
+                <th>Product</th>
+                <th>Carrier</th>
+                <th>Tracking Code</th>
+                <th>Weight</th>
+                <th>Fee</th>
+                <th>Shipment Status</th>
+                <th>Shipping Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let shipment of shipments; let i = index" class="odd">
+                <td>
+                  <ngb-highlight
+                    [result]="shipment.shippingId"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <div *ngFor="let product of shipment.products">
+                    <ngb-highlight
+                      [result]="product.name"
+                      [term]="service?.searchTerm"
+                    ></ngb-highlight>
+                  </div>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="shipment.carrier"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="shipment.trackingCode"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="shipment.weight"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+                <td>
+                  <ngb-highlight
+                    [result]="shipment.fee || 0"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+
+                <td>
+                  <ngb-highlight
+                    [result]="shipment.statusDetails"
+                    [term]="service?.searchTerm"
+                  ></ngb-highlight>
+                </td>
+
+                <td>
+                  <ngb-highlight
+                    [result]="shipment.date | date: 'mediumDate'"
+                    [term]="service?.searchTerm"
+                  >
+                  </ngb-highlight>
+                </td>
+
+                <td>
+                  <a
+                    href="javascript:void(0)"
+                    placement="top"
+                    ngbTooltip="Print Package Slip"
+                    [ngClass]="{ disabled: shipment.carrier != 'Delhivery' }"
+                    (click)="getPackageSlipData(shipment.trackingCode)"
+                  >
+                    <i
+                      class="mdi mdi-printer px-3 pointer"
+                      style="font-size: 18px"
+                    ></i>
+                  </a>
+                  <a
+                    [routerLink]="['../../shipment/edit', shipment._id]"
+                    [queryParams]="{ type: 'shipmentDetail' }"
+                    href="javascript:void(0);"
+                    class="px-3 text-primary"
+                    placement="top"
+                    ngbTooltip="Edit"
+                    ><i class="uil uil-pen font-size-18"></i
+                  ></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <button
+              class="btn btn-sm btn-primary"
+              [routerLink]="['../../shipment/', orderDetails._id]"
+            >
+              Add Shippment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <!-- end row -->
+
+  <div class="row mb-4">
+    <!-- <div class="col text-end">
+        <a
+          href="javascript:void(0);"
+          class="btn btn-danger"
+          [routerLink]="'/ecommerce/products'"
+        >
+          <i class="uil uil-times me-1"></i> Cancel
+        </a>
+        <a
+          href="javascript:void(0);"
+          class="btn btn-success ms-1"
+          (click)="save()"
+        >
+          <i class="uil uil-file-alt me-1"></i> Save
+        </a>
+      </div> -->
+    <!-- end col -->
+  </div>
+
+  <!-- end row-->
+</div>
+<!-- container-fluid -->
+<ng-template #paymentLinkModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Payment Link</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-hidden="true"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body py-5">
+    <div class="input-group">
+      <input
+        class="form-control"
+        type="text"
+        [value]="orderDetails?.paymentLink"
+        readonly
+      />
+      <div class="input-group-append">
+        <button
+          (click)="copyToClipboard(orderDetails?.paymentLink)"
+          class="btn btn-primary"
+          title="Copy Link"
+        >
+          <i class="mdi mdi-content-copy"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="modal.close('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<div id="delhiveryPackageSlip" class="d-none">
+  <div
+    *ngIf="packageSlipDetails"
+    style="
+      box-sizing: border-box;
+      padding: 20px 60px;
+      font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    "
+  >
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      style="width: 100%; border: 1px solid #000"
+    >
+      <tbody>
+        <tr>
+          <td
+            style="
+              width: 50%;
+              text-align: center;
+              padding: 10px;
+              border-right: 1px solid #000;
+            "
+          >
+            <img
+              style="height: 35px"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGYAAAAuCAMAAADtCpxRAAAA3lBMVEUAAAAFj0YFj0YFj0YIjkcFj0YFj0YFj0bzwBYFj0YFj0YFjkYFj0YIjkfzwBYFj0bzwBYFj0YFj0bzwRbzwRYFj0bzwBbzwRbzwBbzwBbzwRbywRbzwRbzwRbzwRbywRYMjUjywRbywRYPi0rywRYVikvzwBbywRbywRYFjkYWiUwaiE3MuR4FjkYclEEelUF3py8YiUzywRYXiUyTrSrhvhoWikwFjkZInTnPuh4Ri0qxsyPcvBvzwBZkozMFjkYFjkZAnDrxwRcFj0bzwRbxwRcUkkPivhpPnzd7qC8b2V+qAAAAQ3RSTlMAQIC/EO8w379gz4BQIICvQJ9wMN+PEO/Pn2CfUCBwQO/Pv8+vn48QjzBgMPfv79/Xr4Bw7+/f39/fv6+vr5+PcEAQOC2FfwAABEtJREFUWMO1lueW2yAQhQchoRLJsiSXeJ11dlOcbHrvHZzy/i+UYUYEdBI7zjnR/WE0GPhgLiDBAd0Rg7CCMSSu34x9FN98PAYmrpM8CJ++eAojSKWpCtJ1/ewujCCVFEHC7p5dj2EE5Tqk3Dm7SeXIFD02haPHo2RMJUnlo1KP40uVJCp0PxmFEhc6D5hnWsEYanQTRNd1C2OoHdh/U9ewVxJVBnGOcX2s/VqF9qcHjNGoSwAXFneBcaRRx2EKHQU2nWkBf8UIW4p/wFQ1tkvrqOwHf6PnMAIm1V6YiIJSJtqoDfIoRC7U75jSY4TABgdU6lDcuU3oIWWr46YPW4+5r1mXGKNorkXMUe7apR4ThYSvrx5oCY12ivhI+dBhXM1H7p9wJKGyRe1mH/0R8+DZt29ftaAWiUz77Ecc0u8vjGS2zIfTrED2zeYcQsWOY8x6+Ojebrf7oRsoeP1Q08QorOPe8z3eFKUo+P+ccsiO1/ZvyYlPmPF6Z3UPZ1C5ARSbq9BdhLYeM9xp/MDjlzxeBJXzSOootvZi+P35jvUu0ZIHKCTKjVTlc3w+hIG+IgIytuBJxUApYRXR5xlT1q3tGelQgmeij8VwGXPCUSq1h7KgtmuibDChBa3eK1Eg2ezoOAy7UrrEg3MmxeJ0udtd6ywg9+ay2KF5DHBoC3gMm2hRSfgq5pvly9WO5kEvs37r0yFNuTtG5RATU/knTKxZTXhnahXc0x8sDBpOEhUNd59XZTLAcHn/0sXvGHY9HLga3AftW9NxJr01MbbxCjEv/WUTYvp1DwceLO2KmQG43cFNlT+/ha1sPObTXgzQNINrXpLnTjNzG1hxXstU1rl7Pyb2VskjFMAl1AVNupZSChBY29rMRKgKfmW9Grw7VLAYcwL/RXxCWf06fbQ2putuGGNm61PoNUW5YCiFi8sVBOoblnyr5oPLOQ1zZuCaYW2oZrKkYHYFn+mR1QGINDDvPdZNT5ZmEt74MbB450kfGXMO3blhPcGKVTjwZY85BRVuRdhiHbYdYObgJUNMZ8w1fjjBdZmrMMXf5XZigxVAZrIs4yVNobaAOTnd4qKZHmBkBPswVxnjbLoBJzgupmuBA2TA2hhm0unjrR45TLaaQqAhRg8xoU+s6dZjTkyABEFfDE2PIcZ+TOWCU+tNsJyruMVXvSOZp1xeAB0SqVmSMSvYr/lg42HjW9DrGmIWzJgRZkjJiRBiJge/nUJzzv3xvIVeU+/ZpgPCeIq79IpWRcdh+A0E3t9lv5wbdgtk2HvhtkBIgbI/5fMjMYLej94cc96xM9aa/sCsCLOgvbydWi3sKtIYVHIkBvIEOaIPbhvU+slt68ZtoNUseRNchqnxmgptOfIob1hVg6BGsSPnxmnNV6nbAmYxwEChSYmlHYUB+g6reudvGNJyw1f2ZYRMFhs8ptPFZLLKep1CJS0gUhKl4Eq2zTr4o34ChX1cUsvA5Z4AAAAASUVORK5CYII="
+            />
+          </td>
+          <td style="width: 50%; text-align: center; padding: 10px">
+            <img
+              style="height: 35px"
+              src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/4QMtaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODBCNkQzNzNCMDA2MTFFODkwMjRBOTEwQTREMjlERTYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6ODBCNkQzNzRCMDA2MTFFODkwMjRBOTEwQTREMjlERTYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3QTRCQzc0Q0IwMDQxMUU4OTAyNEE5MTBBNEQyOURFNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4MEI2RDM3MkIwMDYxMUU4OTAyNEE5MTBBNEQyOURFNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEAAEBAQEBAQEBAQEBAQEBAQEB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"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td
+            style="
+              text-align: center;
+              border-top: 1px solid #000;
+              padding-top: 5px;
+            "
+            colspan="2"
+          >
+            <img [src]="packageSlipDetails.barcode" />
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0 10px; font-size: 18px; font-weight: 300">
+            {{ packageSlipDetails.pin }}
+          </td>
+          <td
+            style="
+              padding: 0 10px;
+              font-size: 18px;
+              font-weight: 600;
+              text-align: right;
+            "
+          >
+            {{ packageSlipDetails.sort_code }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <table
+              width="100%"
+              cellpadding="0"
+              cellspacing="0"
+              style="width: 100%; font-size: 13px"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 10px;
+                      border-top: 1px solid #000;
+                      border-right: 1px solid #000;
+                    "
+                  >
+                    <b
+                      style="
+                        display: block;
+                        margin-bottom: 8px;
+                        font-size: 14px;
+                      "
+                      >Shipping Address:</b
+                    >
+                    <b
+                      style="
+                        display: block;
+                        margin-bottom: 5px;
+                        font-size: 18px;
+                      "
+                      >{{ packageSlipDetails.name }}</b
+                    >
+                    <span style="display: block; font-size: 15px">{{
+                      packageSlipDetails.address
+                    }}</span>
+                    <span style="display: block; font-size: 15px"
+                      >{{ packageSlipDetails.destination }}
+                    </span>
+                    <b style="display: block; font-size: 14px; margin-top: 5px"
+                      >PIN:{{ packageSlipDetails.pin }}</b
+                    >
+                  </td>
+                  <td
+                    style="
+                      width: 250px;
+                      padding: 10px;
+                      border-top: 1px solid #000;
+                      font-weight: 600;
+                      color: #555;
+                      vertical-align: middle;
+                      text-align: center;
+                      line-height: 1.6;
+                    "
+                  >
+                    <ng-container *ngIf="packageSlipDetails.pt == 'Pre-paid'"
+                      >Pre-paid</ng-container
+                    >
+                    <ng-container *ngIf="packageSlipDetails.pt == 'COD'">
+                      COD <br />
+                      ₹ {{ packageSlipDetails.rs }}
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <table
+              width="100%"
+              cellpadding="0"
+              cellspacing="0"
+              style="width: 100%; font-size: 13px"
+            >
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 10px;
+                      border-top: 1px solid #000;
+                      border-right: 1px solid #000;
+                    "
+                  >
+                    Seller: {{ packageSlipDetails.snm }} Address:
+                    {{ packageSlipDetails.sadd }}
+                  </td>
+                  <td
+                    colspan="2"
+                    style="padding: 10px; border-top: 1px solid #000"
+                  >
+                    Invoice No: {{ packageSlipDetails.si }} Dt.:
+                    {{ packageSlipDetails.sid }}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      padding: 6px 10px;
+                      border-top: 1px solid #000;
+                      border-right: 1px solid #000;
+                      border-bottom: 1px solid #000;
+                      font-weight: 500;
+                    "
+                  >
+                    Product
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 10px;
+                      border-top: 1px solid #000;
+                      border-right: 1px solid #000;
+                      border-bottom: 1px solid #000;
+                      font-weight: 500;
+                    "
+                  >
+                    Price
+                  </td>
+                  <td
+                    style="
+                      padding: 6px 10px;
+                      border-top: 1px solid #000;
+                      border-bottom: 1px solid #000;
+                      font-weight: 500;
+                    "
+                  >
+                    Total
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; border-right: 1px solid #000"></td>
+                  <td style="padding: 8px 0; border-right: 1px solid #000"></td>
+                  <td style="padding: 8px 0"></td>
+                </tr>
+
+                <tr>
+                  <td style="padding: 5px 10px; border-right: 1px solid #000">
+                    {{ packageSlipDetails.prd }}
+                  </td>
+                  <td style="padding: 5px 10px; border-right: 1px solid #000">
+                    ₹{{ packageSlipDetails.rs }}
+                  </td>
+                  <td style="padding: 5px 10px">
+                    ₹{{ packageSlipDetails.rs }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding: 8px 0; border-right: 1px solid #000"></td>
+                  <td style="padding: 8px 0; border-right: 1px solid #000"></td>
+                  <td style="padding: 8px 0"></td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      padding: 5px 10px;
+                      border-top: 1px solid #000;
+                      border-right: 1px solid #000;
+                      font-weight: 500;
+                    "
+                  >
+                    Total
+                  </td>
+                  <td
+                    style="
+                      padding: 5px 10px;
+                      border-top: 1px solid #000;
+                      border-right: 1px solid #000;
+                      font-weight: 500;
+                    "
+                  >
+                    ₹{{ packageSlipDetails.rs }}
+                  </td>
+                  <td
+                    style="
+                      padding: 5px 10px;
+                      border-top: 1px solid #000;
+                      font-weight: 500;
+                    "
+                  >
+                    ₹{{ packageSlipDetails.rs }}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    colspan="3"
+                    style="
+                      border-top: 1px solid #000;
+                      padding: 10px;
+                      text-align: center;
+                    "
+                  >
+                    <img [src]="packageSlipDetails.oid_barcode" />
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    colspan="3"
+                    style="border-top: 1px solid #000; padding: 10px"
+                  >
+                    Return Address: {{ packageSlipDetails.radd }} -
+                    {{ packageSlipDetails.rcty }} -
+                    {{ packageSlipDetails.rst }} - {{ packageSlipDetails.rpin }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #medicalAttachmentModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Attachment</h5>
+    <span>
+      <i
+        class="uil-multiply float-end font-size-20 pointer"
+        (click)="modal.dismiss('Cross click')"
+      >
+      </i>
+    </span>
+  </div>
+
+  <div class="modal-body">
+    <div class="d-block" style="text-align: center">
+      <ng-container *ngIf="showImageBlock">
+        <img [src]="imageUrl + currentOpenedAttachment" />
+      </ng-container>
+      <ng-container *ngIf="!showImageBlock">
+        <iframe
+          width="100%"
+          height="450"
+          title="Medical Record"
+          [src]="currentOpenedAttachment"
+        ></iframe>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

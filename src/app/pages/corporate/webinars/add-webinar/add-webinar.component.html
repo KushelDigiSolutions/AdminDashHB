@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <app-page-title [title]="this.editId? 'Update Webinar': 'Create Webinar'" [breadcrumbItems]="breadcrumb">
+  </app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-lg-12 mb-3">
+            <label class="required">Select Webinar</label>
+            <ng-select [items]="webinarTemplates" bindLabel="title" bindValue="_id" class="select2"
+              placeholder="Choose Webinar Template" formControlName="webinarId" [multiple]="false">
+            </ng-select>
+          </div>
+          <!-- <div class="col-lg-12 mb-3">
+            <label class="required">Webinar Title</label>
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || form.get('title').touched) && form.get('title').invalid}"
+              formControlName="title" placeholder="Title" />
+            <div class="invalid-feedback">
+              <span>This field is required.</span>
+            </div>
+          </div> -->
+          <div class="col-lg-4 mb-3">
+            <label class="required">Date</label>
+            <div class="input-group clockpicker">
+              <input ngbDatepicker [minDate]="minDate" formControlName="date" class="form-control" [autoClose]="true"
+                placeholder="yyyy-mm-dd" #date="ngbDatepicker" (dateSelect)="onDateSelect($event)" />
+              <div class="input-group-append" (click)="date.toggle()">
+                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-3">
+            <label class="required">Time</label>
+            <input formControlName="time" type="time" class="form-control" placeholder="" />
+          </div>
+          <div class="col-lg-4 mb-3">
+            <label>Duration (In minutes)</label>
+            <input formControlName="duration" type="number" class="form-control" placeholder="" />
+          </div>
+          <div class="col-lg-12 mb-3">
+            <label>Host URL</label>
+            <input formControlName="hostUrl" type="text" class="form-control" placeholder="" />
+          </div>
+          <div class="col-lg-12 mb-3">
+            <label>Join URL</label>
+            <input formControlName="joinUrl" type="text" class="form-control" placeholder="" />
+          </div>
+          <div class="col-lg-12 mb-3">
+            <label>Platform</label>
+            <ng-select [items]="platformList" class="select2"
+              placeholder="Choose platform" formControlName="platform" [multiple]="false">
+            </ng-select>
+          </div>
+          <!-- <div class="col-lg-12 mb-3">
+            <label>Attachments</label>
+            <app-dropzone formControlName="attachments"></app-dropzone>
+          </div> -->
+          <div class="col-lg-12 mb-3">
+            <div class="form-check form-switch mb-3" dir="ltr">
+              <input formControlName="isActive" type="checkbox" class="form-check-input" id="ActiveSwitch1">
+              <label class="form-check-label" for="ActiveSwitch1"> Active</label>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{{this.editId?'Update':'Submit'}}</button>
+      </form>
+    </div>
+  </div>
+</div>

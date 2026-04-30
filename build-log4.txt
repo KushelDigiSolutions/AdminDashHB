@@ -1,0 +1,2570 @@
+[33m>[39m Building...
+[32m√[39m Building...
+Application bundle generation failed. [19.609 seconds] - 2026-04-08T13:22:58.479Z
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AbandonedCartComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/abandoned-cart/abandoned-cart.component.ts:26:4:
+[37m      26 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AbandonedCartComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/abandoned-cart/abandoned-cart.component.ts:27:4:
+[37m      27 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AbandonedCartComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/abandoned-cart/abandoned-cart.component.ts:43:4:
+[37m      43 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddproductComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/addproduct.component.ts:25:4:
+[37m      25 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddproductComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/addproduct.component.ts:26:4:
+[37m      26 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddproductComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/addproduct.component.ts:35:4:
+[37m      35 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddproductComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/addproduct.component.ts:42:4:
+[37m      42 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of RelatedBlogsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/related-blogs/related-blogs.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of RelatedBlogsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/related-blogs/related-blogs.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of RelatedProductsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/related-products/related-products.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of RelatedProductsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/related-products/related-products.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of RelatedProductsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/related-products/related-products.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of RelatedProductsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/addproduct/related-products/related-products.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AwaitedOrderComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/awaited-order/awaited-order.component.ts:35:4:
+[37m      35 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AwaitedOrderComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/awaited-order/awaited-order.component.ts:36:4:
+[37m      36 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AwaitedOrderComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/awaited-order/awaited-order.component.ts:52:4:
+[37m      52 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/banners/add-banner/add-banner.component.ts:25:4:
+[37m      25 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/banners/add-banner/add-banner.component.ts:26:4:
+[37m      26 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/banners/add-banner/add-banner.component.ts:35:4:
+[37m      35 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/banners/add-banner/add-banner.component.ts:42:4:
+[37m      42 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of BannersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/banners/banners.component.ts:23:4:
+[37m      23 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of BannersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/banners/banners.component.ts:24:4:
+[37m      24 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of BannersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/banners/banners.component.ts:40:4:
+[37m      40 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddBrandComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/brand/add-brand/add-brand.component.ts:25:4:
+[37m      25 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddBrandComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/brand/add-brand/add-brand.component.ts:26:4:
+[37m      26 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddBrandComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/brand/add-brand/add-brand.component.ts:35:4:
+[37m      35 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddBrandComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/brand/add-brand/add-brand.component.ts:42:4:
+[37m      42 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of BrandComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/brand/brand.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of BrandComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/brand/brand.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of BrandComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/brand/brand.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of CartComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/cart/cart.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of CartComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/cart/cart.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of CartComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/cart/cart.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of CartComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/cart/cart.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddCategoryComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/category/add-category/add-category.component.ts:23:4:
+[37m      23 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddCategoryComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/category/add-category/add-category.component.ts:24:4:
+[37m      24 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddCategoryComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/category/add-category/add-category.component.ts:33:4:
+[37m      33 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddCategoryComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/category/add-category/add-category.component.ts:40:4:
+[37m      40 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of CategoryComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/category/category.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of CategoryComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/category/category.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of CategoryComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/category/category.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of CheckoutComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/checkout/checkout.component.ts:18:4:
+[37m      18 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of CheckoutComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/checkout/checkout.component.ts:19:4:
+[37m      19 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of CheckoutComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/checkout/checkout.component.ts:28:4:
+[37m      28 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of CheckoutComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/checkout/checkout.component.ts:35:4:
+[37m      35 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddCouponsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/coupons/add-coupons/add-coupons.component.ts:26:4:
+[37m      26 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddCouponsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/coupons/add-coupons/add-coupons.component.ts:27:4:
+[37m      27 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddCouponsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/coupons/add-coupons/add-coupons.component.ts:36:4:
+[37m      36 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddCouponsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/coupons/add-coupons/add-coupons.component.ts:43:4:
+[37m      43 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of CouponsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/coupons/coupons.component.ts:22:4:
+[37m      22 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of CouponsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/coupons/coupons.component.ts:23:4:
+[37m      23 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of CouponsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/coupons/coupons.component.ts:39:4:
+[37m      39 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of CustomersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/customers/customers.component.ts:24:4:
+[37m      24 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of CustomersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/customers/customers.component.ts:40:4:
+[37m      40 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddHealthConcernComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/health-concern/add-health-concern/add-health-concern.component.ts:23:4:
+[37m      23 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddHealthConcernComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/health-concern/add-health-concern/add-health-concern.component.ts:24:4:
+[37m      24 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddHealthConcernComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/health-concern/add-health-concern/add-health-concern.component.ts:33:4:
+[37m      33 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddHealthConcernComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/health-concern/add-health-concern/add-health-concern.component.ts:40:4:
+[37m      40 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of HealthConcernComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/health-concern/health-concern.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of HealthConcernComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/health-concern/health-concern.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of HealthConcernComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/health-concern/health-concern.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddMenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/add-menu/add-menu.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddMenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/add-menu/add-menu.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddMenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/add-menu/add-menu.component.ts:34:4:
+[37m      34 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddMenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/add-menu/add-menu.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of MenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/menu.component.ts:25:4:
+[37m      25 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of MenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/menu.component.ts:26:4:
+[37m      26 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of MenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/menu.component.ts:35:4:
+[37m      35 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of MenuComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/menu/menu.component.ts:42:4:
+[37m      42 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddAttributeToSetComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute-to-set/add-attribute-to-set.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddAttributeToSetComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute-to-set/add-attribute-to-set.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddAttributeToSetComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute-to-set/add-attribute-to-set.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddAttributeToSetComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute-to-set/add-attribute-to-set.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddAttributeComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute/add-attribute.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddAttributeComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute/add-attribute.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddAttributeComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute/add-attribute.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddAttributeComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-attribute/add-attribute.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddTypesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-types/add-types.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddTypesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-types/add-types.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddTypesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-types/add-types.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddTypesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-types/add-types.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddVariationComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-variation/add-variation.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddVariationComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-variation/add-variation.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddVariationComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-variation/add-variation.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddVariationComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/add-variation/add-variation.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of NewDateComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/new-date/new-date.component.ts:18:4:
+[37m      18 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of NewDateComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/new-date/new-date.component.ts:19:4:
+[37m      19 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of NewDateComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/new-date/new-date.component.ts:28:4:
+[37m      28 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of NewDateComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/new-date/new-date.component.ts:35:4:
+[37m      35 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of RefundModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/refund/refund-modal/refund-modal.component.ts:21:4:
+[37m      21 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of RefundModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/refund/refund-modal/refund-modal.component.ts:22:4:
+[37m      22 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of RefundModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/refund/refund-modal/refund-modal.component.ts:31:4:
+[37m      31 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of RefundModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/refund/refund-modal/refund-modal.component.ts:38:4:
+[37m      38 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of RemoveModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/remove/remove-modal/remove-modal.component.ts:18:4:
+[37m      18 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of RemoveModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/remove/remove-modal/remove-modal.component.ts:19:4:
+[37m      19 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of RemoveModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/remove/remove-modal/remove-modal.component.ts:28:4:
+[37m      28 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of RemoveModalComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/remove/remove-modal/remove-modal.component.ts:35:4:
+[37m      35 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of SeasonSpecialComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/season-special/season-special.component.ts:19:4:
+[37m      19 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of SeasonSpecialComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/season-special/season-special.component.ts:20:4:
+[37m      20 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of SeasonSpecialComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/season-special/season-special.component.ts:29:4:
+[37m      29 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of SeasonSpecialComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/modals/season-special/season-special.component.ts:36:4:
+[37m      36 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of CreateOrderComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/create-order/create-order.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of CreateOrderComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/create-order/create-order.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of CreateOrderComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/create-order/create-order.component.ts:34:4:
+[37m      34 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of CreateOrderComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/create-order/create-order.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of EnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-detail/enquiry-detail.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of EnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-detail/enquiry-detail.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of EnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-detail/enquiry-detail.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of EnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-detail/enquiry-detail.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of EnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-list/enquiry-list.component.ts:21:4:
+[37m      21 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of EnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-list/enquiry-list.component.ts:22:4:
+[37m      22 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of EnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-list/enquiry-list.component.ts:31:4:
+[37m      31 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of EnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/enquiry-list/enquiry-list.component.ts:38:4:
+[37m      38 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of InternationalEnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-detail/international-enquiry-detail.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of InternationalEnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-detail/international-enquiry-detail.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of InternationalEnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-detail/international-enquiry-detail.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of InternationalEnquiryDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-detail/international-enquiry-detail.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of InternationalEnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-list/international-enquiry-list.component.ts:21:4:
+[37m      21 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of InternationalEnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-list/international-enquiry-list.component.ts:22:4:
+[37m      22 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of InternationalEnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-list/international-enquiry-list.component.ts:31:4:
+[37m      31 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of InternationalEnquiryListComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/international-enquiry-list/international-enquiry-list.component.ts:38:4:
+[37m      38 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of OrderDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/order-detail/order-detail.component.ts:23:4:
+[37m      23 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of OrderDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/order-detail/order-detail.component.ts:24:4:
+[37m      24 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of OrderDetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/order-detail/order-detail.component.ts:40:4:
+[37m      40 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of OrdersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/orders.component.ts:36:4:
+[37m      36 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of OrdersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/orders.component.ts:37:4:
+[37m      37 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of OrdersComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/orders.component.ts:53:4:
+[37m      53 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of ShippmentComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/shippment/shippment.component.ts:23:4:
+[37m      23 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of ShippmentComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/shippment/shippment.component.ts:24:4:
+[37m      24 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of ShippmentComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/shippment/shippment.component.ts:33:4:
+[37m      33 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of ShippmentComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/orders/shippment/shippment.component.ts:40:4:
+[37m      40 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of ProductdetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/productdetail/productdetail.component.ts:19:4:
+[37m      19 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of ProductdetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/productdetail/productdetail.component.ts:20:4:
+[37m      20 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of ProductdetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/productdetail/productdetail.component.ts:29:4:
+[37m      29 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of ProductdetailComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/productdetail/productdetail.component.ts:36:4:
+[37m      36 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AttributeListingComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/attributes/attribute-listing/attribute-listing.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AttributeListingComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/attributes/attribute-listing/attribute-listing.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AttributeListingComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/attributes/attribute-listing/attribute-listing.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AttributesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/attributes/attributes.component.ts:27:4:
+[37m      27 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AttributesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/attributes/attributes.component.ts:43:4:
+[37m      43 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of ProductsReviewsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/products-reviews/products-reviews.component.ts:21:4:
+[37m      21 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of ProductsReviewsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/products-reviews/products-reviews.component.ts:22:4:
+[37m      22 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of ProductsReviewsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/products-reviews/products-reviews.component.ts:38:4:
+[37m      38 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of ProductsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/products.component.ts:31:4:
+[37m      31 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of ProductsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/products.component.ts:32:4:
+[37m      32 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of ProductsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/products.component.ts:48:4:
+[37m      48 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of TaxesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/taxes/taxes.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of TaxesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/taxes/taxes.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of TaxesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/taxes/taxes.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of TaxesComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/taxes/taxes.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of VariationsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/variations/variations.component.ts:26:4:
+[37m      26 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of VariationsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/products/variations/variations.component.ts:42:4:
+[37m      42 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddPromotionalBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/promotional-banner/add-promotional-banner/add-promotional-banner.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddPromotionalBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/promotional-banner/add-promotional-banner/add-promotional-banner.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddPromotionalBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/promotional-banner/add-promotional-banner/add-promotional-banner.component.ts:34:4:
+[37m      34 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddPromotionalBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/promotional-banner/add-promotional-banner/add-promotional-banner.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of PromotionalBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/promotional-banner/promotional-banner.component.ts:27:4:
+[37m      27 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of PromotionalBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/promotional-banner/promotional-banner.component.ts:28:4:
+[37m      28 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of PromotionalBannerComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/promotional-banner/promotional-banner.component.ts:44:4:
+[37m      44 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of AddSeasonComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/seasons/add-season/add-season.component.ts:29:4:
+[37m      29 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of AddSeasonComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/seasons/add-season/add-season.component.ts:30:4:
+[37m      30 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of AddSeasonComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/seasons/add-season/add-season.component.ts:39:4:
+[37m      39 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of AddSeasonComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/seasons/add-season/add-season.component.ts:46:4:
+[37m      46 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of SeasonsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/seasons/seasons.component.ts:24:4:
+[37m      24 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of SeasonsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/seasons/seasons.component.ts:25:4:
+[37m      25 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of SeasonsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/seasons/seasons.component.ts:41:4:
+[37m      41 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: AsyncPipe is not used within the template of ShopsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/shops/shops.component.ts:20:4:
+[37m      20 │     [32mAsyncPipe[37m,
+         ╵     [32m~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: DecimalPipe is not used within the template of ShopsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/shops/shops.component.ts:21:4:
+[37m      21 │     [32mDecimalPipe[37m,
+         ╵     [32m~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgbHighlight is not used within the template of ShopsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/shops/shops.component.ts:30:4:
+[37m      30 │     [32mNgbHighlight[37m,
+         ╵     [32m~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: NgOptionHighlightDirective is not used within the template of ShopsComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/ecommerce/shops/shops.component.ts:37:4:
+[37m      37 │     [32mNgOptionHighlightDirective[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mCalling "saveAs" will crash at run-time because it's an import namespace object, not a function[0m [call-import-namespace]
+
+    src/app/core/services/csv.service.ts:28:8:
+[37m      28 │         [32msaveAs[37m(blob, `HB-${filename}.csv`);
+         ╵         [32m~~~~~~[0m
+
+  Consider changing "saveAs" to a default import instead:
+
+    src/app/core/services/csv.service.ts:2:7:
+[37m      2 │ import [32m* as saveAs[37m from "file-saver";
+        │        [32m~~~~~~~~~~~[37m
+        ╵        [32msaveAs[0m
+
+  Make sure to enable TypeScript's "esModuleInterop" setting so that TypeScript's type checker generates an error when you try to do this. You can read more about this setting here: [4mhttps://www.typescriptlang.org/tsconfig#esModuleInterop[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mCalling "saveAs" will crash at run-time because it's an import namespace object, not a function[0m [call-import-namespace]
+
+    src/app/core/services/sheets.service.ts:212:12:
+[37m      212 │             [32msaveAs[37m(blob, filename + '-' + new Date().valueOf() + ...
+          ╵             [32m~~~~~~[0m
+
+  Consider changing "saveAs" to a default import instead:
+
+    src/app/core/services/sheets.service.ts:3:7:
+[37m      3 │ import [32m* as saveAs[37m from "file-saver";
+        │        [32m~~~~~~~~~~~[37m
+        ╵        [32msaveAs[0m
+
+  Make sure to enable TypeScript's "esModuleInterop" setting so that TypeScript's type checker generates an error when you try to do this. You can read more about this setting here: [4mhttps://www.typescriptlang.org/tsconfig#esModuleInterop[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mCalling "saveAs" will crash at run-time because it's an import namespace object, not a function[0m [call-import-namespace]
+
+    src/app/pages/contacts/userlist/userlist.component.ts:254:16:
+[37m      254 │                 [32msaveAs[37m(blob, "UserList.csv");
+          ╵                 [32m~~~~~~[0m
+
+  Consider changing "saveAs" to a default import instead:
+
+    src/app/pages/contacts/userlist/userlist.component.ts:13:7:
+[37m      13 │ import [32m* as saveAs[37m from "file-saver";
+         │        [32m~~~~~~~~~~~[37m
+         ╵        [32msaveAs[0m
+
+  Make sure to enable TypeScript's "esModuleInterop" setting so that TypeScript's type checker generates an error when you try to do this. You can read more about this setting here: [4mhttps://www.typescriptlang.org/tsconfig#esModuleInterop[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mCalling "html2pdf" will crash at run-time because it's an import namespace object, not a function[0m [call-import-namespace]
+
+    src/app/pages/ecommerce/awaited-order/awaited-order.component.ts:941:8:
+[37m      941 │         [32mhtml2pdf[37m()
+          ╵         [32m~~~~~~~~[0m
+
+  Consider changing "html2pdf" to a default import instead:
+
+    src/app/pages/ecommerce/awaited-order/awaited-order.component.ts:29:7:
+[37m      29 │ import [32m* as html2pdf[37m from 'html2pdf.js';
+         │        [32m~~~~~~~~~~~~~[37m
+         ╵        [32mhtml2pdf[0m
+
+  Make sure to enable TypeScript's "esModuleInterop" setting so that TypeScript's type checker generates an error when you try to do this. You can read more about this setting here: [4mhttps://www.typescriptlang.org/tsconfig#esModuleInterop[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mCalling "html2pdf" will crash at run-time because it's an import namespace object, not a function[0m [call-import-namespace]
+
+    src/app/pages/ecommerce/orders/orders.component.ts:1071:8:
+[37m      1071 │         [32mhtml2pdf[37m()
+           ╵         [32m~~~~~~~~[0m
+
+  Consider changing "html2pdf" to a default import instead:
+
+    src/app/pages/ecommerce/orders/orders.component.ts:30:7:
+[37m      30 │ import [32m* as html2pdf[37m from 'html2pdf.js';
+         │        [32m~~~~~~~~~~~~~[37m
+         ╵        [32mhtml2pdf[0m
+
+  Make sure to enable TypeScript's "esModuleInterop" setting so that TypeScript's type checker generates an error when you try to do this. You can read more about this setting here: [4mhttps://www.typescriptlang.org/tsconfig#esModuleInterop[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/app/components/subscribed-health-packages/subscribed-health-package-notifications/subscribed-health-package-notifications.component.scss:1:8:
+[37m      1 │ @import [32m[37m"~src/assets/scss/fullcalendar.scss";
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/app/components/subscribed-health-packages/subscribed-health-package/subscribed-health-package.component.scss:1:8:
+[37m      1 │ @import [32m[37m"~src/assets/scss/fullcalendar.scss";
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/app/components/view-appointment/view-appointment.component.scss:1:8:
+[37m      1 │ @import [32m[37m"~src/app/components/select-product/select-product.componen...
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/app/pages/role/consultant/consultant-appointments/consultant-appointments.component.scss:1:8:
+[37m      1 │ @import [32m[37m'~src/assets/scss/fullcalendar.scss';
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:104:8:
+[37m      104 │ $grays: [32m[37mmap-merge(
+          ╵         [32m^[0m
+
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "900": $gray-900
+  ),
+  $grays
+);
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use map.merge instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:104:8:
+[37m      104 │ $grays: [32m[37mmap-merge(
+          ╵         [32m^[0m
+
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "900": $gray-900
+  ),
+  $grays
+);
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use map.merge instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:132:9:
+[37m      132 │ $colors: [32m[37mmap-merge(
+          ╵          [32m^[0m
+
+  (
+    "blue":       $blue,
+    "indigo":     $indigo,
+    "purple":     $purple,
+    "pink":       $pink,
+    "red":        $red,
+    "orange":     $orange,
+    "yellow":     $yellow,
+    "green":      $green,
+    "teal":       $teal,
+    "cyan":       $cyan,
+    "white":      $white,
+    "gray":       $gray-600,
+    "gray-dark":  $gray-800
+  ),
+  $colors
+);
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use map.merge instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:132:9:
+[37m      132 │ $colors: [32m[37mmap-merge(
+          ╵          [32m^[0m
+
+  (
+    "blue":       $blue,
+    "indigo":     $indigo,
+    "purple":     $purple,
+    "pink":       $pink,
+    "red":        $red,
+    "orange":     $orange,
+    "yellow":     $yellow,
+    "green":      $green,
+    "teal":       $teal,
+    "cyan":       $cyan,
+    "white":      $white,
+    "gray":       $gray-600,
+    "gray-dark":  $gray-800
+  ),
+  $colors
+);
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use map.merge instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:163:15:
+[37m      163 │ $theme-colors: [32m[37mmap-merge(
+          ╵                [32m^[0m
+
+  (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "pink":       $pink,
+    "light":      $light,
+    "dark":       $dark,
+    "purple":       $purple
+  ),
+  $theme-colors
+);
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use map.merge instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:163:15:
+[37m      163 │ $theme-colors: [32m[37mmap-merge(
+          ╵                [32m^[0m
+
+  (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "pink":       $pink,
+    "light":      $light,
+    "dark":       $dark,
+    "purple":       $purple
+  ),
+  $theme-colors
+);
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use map.merge instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:338:5:
+[37m      338 │   1: [32m[37m$spacer / 4,
+          ╵      [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($spacer, 4) or calc($spacer / 4)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:338:5:
+[37m      338 │   1: [32m[37m$spacer / 4,
+          ╵      [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($spacer, 4) or calc($spacer / 4)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:339:5:
+[37m      339 │   2: [32m[37m$spacer / 2,
+          ╵      [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($spacer, 2) or calc($spacer / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:339:5:
+[37m      339 │   2: [32m[37m$spacer / 2,
+          ╵      [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($spacer, 2) or calc($spacer / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:345:19:
+[37m      345 │ $negative-spacers: [32m[37mif($enable-negative-margins, negativify-map($s...
+          ╵                    [32m^[0m
+
+
+  The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+  
+  Suggestion: if(sass($enable-negative-margins): negativify-map($spacers))
+  
+  More info: [4mhttps://sass-lang.com/d/if-function[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:345:19:
+[37m      345 │ $negative-spacers: [32m[37mif($enable-negative-margins, negativify-map($s...
+          ╵                    [32m^[0m
+
+
+  The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+  
+  Suggestion: if(sass($enable-negative-margins): negativify-map($spacers))
+  
+  More info: [4mhttps://sass-lang.com/d/if-function[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:374:42:
+[37m      374 │ $link-hover-color:                        [32m[37mdarken($link-color, 15%);
+          ╵                                           [32m^[0m
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:374:42:
+[37m      374 │ $link-hover-color:                        [32m[37mdarken($link-color, 15%);
+          ╵                                           [32m^[0m
+
+
+  darken() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: -23.6842105263%)
+  color.adjust($color, $lightness: -15%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:374:42:
+[37m      374 │ $link-hover-color:                        [32m[37mdarken($link-color, 15%);
+          ╵                                           [32m^[0m
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:374:42:
+[37m      374 │ $link-hover-color:                        [32m[37mdarken($link-color, 15%);
+          ╵                                           [32m^[0m
+
+
+  darken() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: -23.6842105263%)
+  color.adjust($color, $lightness: -15%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:436:22:
+[37m      436 │ $container-padding-x: [32m[37m$grid-gutter-width / 2;
+          ╵                       [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:436:22:
+[37m      436 │ $container-padding-x: [32m[37m$grid-gutter-width / 2;
+          ╵                       [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($grid-gutter-width, 2) or calc($grid-gutter-width / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:535:30:
+[37m      535 │ $headings-margin-bottom:      [32m[37m$spacer / 2;
+          ╵                               [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($spacer, 2) or calc($spacer / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:535:30:
+[37m      535 │ $headings-margin-bottom:      [32m[37m$spacer / 2;
+          ╵                               [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($spacer, 2) or calc($spacer / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:770:72:
+[37m      770 │ ...          add($input-line-height * .25em, [32m[37m$input-padding-y / 2);
+          ╵                                              [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($input-padding-y, 2) or calc($input-padding-y / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:770:72:
+[37m      770 │ ...          add($input-line-height * .25em, [32m[37m$input-padding-y / 2);
+          ╵                                              [32m^[0m
+
+
+  Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+  
+  Recommendation: math.div($input-padding-y, 2) or calc($input-padding-y / 2)
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/slash-div[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:1198:36:
+[37m      1198 │ ...ver-arrow-outer-color:         [32m[37mfade-in($popover-border-color,...
+           ╵                                   [32m^[0m
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:1198:36:
+[37m      1198 │ ...ver-arrow-outer-color:         [32m[37mfade-in($popover-border-color,...
+           ╵                                   [32m^[0m
+
+
+  fade-in() is deprecated. Suggestions:
+  
+  color.scale($color, $alpha: 5.5555555556%)
+  color.adjust($color, $alpha: 0.05)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:1198:36:
+[37m      1198 │ ...ver-arrow-outer-color:         [32m[37mfade-in($popover-border-color,...
+           ╵                                   [32m^[0m
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/_variables.scss:1198:36:
+[37m      1198 │ ...ver-arrow-outer-color:         [32m[37mfade-in($popover-border-color,...
+           ╵                                   [32m^[0m
+
+
+  fade-in() is deprecated. Suggestions:
+  
+  color.scale($color, $alpha: 5.5555555556%)
+  color.adjust($color, $alpha: 0.05)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/app.scss:11:8:
+[37m      11 │ @import [32m[37m"custom/fonts/fonts";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/app.scss:14:8:
+[37m      14 │ @import [32m[37m"bootstrap/scss/functions";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/app.scss:15:8:
+[37m      15 │ @import [32m[37m"bootstrap/scss/variables";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/app.scss:16:8:
+[37m      16 │ @import [32m[37m"variables";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/app.scss:17:8:
+[37m      17 │ @import [32m[37m"bootstrap/scss/mixins";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/bootstrap.scss:12:8:
+[37m      12 │ @import [32m[37m"bootstrap/scss/functions";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/bootstrap.scss:13:8:
+[37m      13 │ @import [32m[37m"bootstrap/scss/variables";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/bootstrap.scss:14:8:
+[37m      14 │ @import [32m[37m"variables";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/bootstrap.scss:15:8:
+[37m      15 │ @import [32m[37m"bootstrap/scss/bootstrap";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/bootstrap.scss:17:8:
+[37m      17 │ @import [32m[37m"custom/components/reboot";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/components/_badge.scss:38:28:
+[37m      38 │           background-color: [32m[37mdarken($value, 4%) !important;
+         ╵                             [32m^[0m
+
+
+  darken() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: -6.3157894737%)
+  color.adjust($color, $lightness: -4%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/components/_badge.scss:38:28:
+[37m      38 │           background-color: [32m[37mdarken($value, 4%) !important;
+         ╵                             [32m^[0m
+
+
+  darken() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: -7.9377431907%)
+  color.adjust($color, $lightness: -4%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/components/_badge.scss:38:28:
+[37m      38 │           background-color: [32m[37mdarken($value, 4%) !important;
+         ╵                             [32m^[0m
+
+
+  darken() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: -8.2591093117%)
+  color.adjust($color, $lightness: -4%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/plugins/_icons.scss:5:8:
+[37m      5 │ @import [32m[37m"icons/materialdesignicons";
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:5:8:
+[37m      5 │ @import [32m'src/assets/scss/icons.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/plugins/_icons.scss:6:8:
+[37m      6 │ @import [32m[37m"icons/boxicons";
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:5:8:
+[37m      5 │ @import [32m'src/assets/scss/icons.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/plugins/_icons.scss:7:8:
+[37m      7 │ @import [32m[37m"icons/fontawesome-all";
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:5:8:
+[37m      5 │ @import [32m'src/assets/scss/icons.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/plugins/_icons.scss:8:8:
+[37m      8 │ @import [32m[37m"icons/dripicons";
+        ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:5:8:
+[37m      5 │ @import [32m'src/assets/scss/icons.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/structure/_right-sidebar.scss:19:26:
+[37m      19 │         background-color: [32m[37mlighten($dark, 7%);
+         ╵                           [32m^[0m
+
+
+  lighten() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: 9.0609137056%)
+  color.adjust($color, $lightness: 7%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/structure/_right-sidebar.scss:28:30:
+[37m      28 │             background-color: [32m[37mlighten($dark, 10%);
+         ╵                               [32m^[0m
+
+
+  lighten() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: 12.9441624365%)
+  color.adjust($color, $lightness: 10%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/custom/structure/_topbar.scss:276:30:
+[37m      276 │             background-color: [32m[37mlighten($header-dark-bg,4%);
+          ╵                               [32m^[0m
+
+
+  lighten() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: 5.2987012987%)
+  color.adjust($color, $lightness: 4%)
+  
+  More info: [4mhttps://sass-lang.com/d/color-functions[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/assets/scss/icons.scss:11:8:
+[37m      11 │ @import [32m[37m"custom/plugins/icons";
+         ╵         [32m^[0m
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:5:8:
+[37m      5 │ @import [32m'src/assets/scss/icons.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/styles.scss:10:8:
+[37m      10 │ @import [32m[37m"ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:2:8:
+[37m      2 │ @import [32m'src/styles.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/styles.scss:11:8:
+[37m      11 │ @import [32m[37m"ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:2:8:
+[37m      2 │ @import [32m'src/styles.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mDeprecation[0m [1m[35m[plugin angular-sass][0m
+
+    src/styles.scss:12:8:
+[37m      12 │ @import [32m[37m"swiper/swiper-bundle";
+         ╵         [32m^[0m
+
+
+  Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+  
+  More info and automated migrator: [4mhttps://sass-lang.com/d/import[0m
+
+  The plugin "angular-sass" was triggered by this import
+
+    angular:styles/global:styles:2:8:
+[37m      2 │ @import [32m'src/styles.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m24 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.[0m [1m[35m[plugin angular-sass][0m
+
+    angular:styles/global:styles:3:8:
+[37m      3 │ @import [32m'src/assets/scss/bootstrap.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  null
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m81 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.[0m [1m[35m[plugin angular-sass][0m
+
+    angular:styles/global:styles:4:8:
+[37m      4 │ @import [32m'src/assets/scss/app.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  null
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m1 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.[0m [1m[35m[plugin angular-sass][0m
+
+    angular:styles/global:styles:5:8:
+[37m      5 │ @import [32m'src/assets/scss/icons.scss'[37m;
+        ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  null
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCan't find stylesheet to import.
+  ╷
+1 │ @import "~src/assets/scss/fullcalendar.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src\app\components\subscribed-health-packages\subscribed-health-package\subscribed-health-package.component.scss 1:9  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCan't find stylesheet to import.
+  ╷
+1 │ @import '~src/assets/scss/fullcalendar.scss';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src\app\pages\role\consultant\consultant-appointments\consultant-appointments.component.scss 1:9  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCan't find stylesheet to import.
+  ╷
+1 │ @import "~src/app/components/select-product/select-product.component.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src\app\components\view-appointment\view-appointment.component.scss 1:9  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCan't find stylesheet to import.
+  ╷
+1 │ @import "~src/assets/scss/fullcalendar.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src\app\components\subscribed-health-packages\subscribed-health-package-notifications\subscribed-health-package-notifications.component.scss 1:9  root stylesheet[0m [1m[35m[plugin angular-sass][0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'relativeLinkResolution' does not exist in type 'ExtraOptions'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app-routing.module.ts:16:77:
+[37m      16 │ ...lPositionRestoration: 'top', [32mrelativeLinkResolution[37m: 'legacy' })],
+         ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2554: Expected 0 arguments, but got 3.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.module.ts:36:33:
+[37m      36 │   return new TranslateHttpLoader([32mhttp, 'assets/i18n/', '.json'[37m);
+         ╵                                  [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG6002: 'ToastrModule' does not appear to be an NgModule class.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.module.ts:43:11:
+[37m      43 │   imports: [32m[[37m
+         ╵            [32m^[0m
+
+  This likely means that the library (ngx-toastr) which declares ToastrModule is not compatible with Angular Ivy. Check if a newer version of the library is available, and update if so. Also consider checking with the library's authors to see if the library is expected to be compatible with Ivy.
+
+    node_modules/ngx-toastr/toastr/toastr.module.d.ts:4:21:
+[37m      4 │ export declare class [32mToastrModule[37m {
+        ╵                      [32m~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG6002: 'NgxSpinnerModule' does not appear to be an NgModule class.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.module.ts:65:4:
+[37m      65 │     [32mNgxSpinnerModule[37m,
+         ╵     [32m~~~~~~~~~~~~~~~~[0m
+
+  This likely means that the library (ngx-spinner) which declares NgxSpinnerModule is not compatible with Angular Ivy. Check if a newer version of the library is available, and update if so. Also consider checking with the library's authors to see if the library is expected to be compatible with Ivy.
+
+    node_modules/ngx-spinner/lib/ngx-spinner.module.d.ts:1:21:
+[37m      1 │ export declare class [32mNgxSpinnerModule[37m {
+        ╵                      [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/notification-templates/add-notification-template/add-notification-template.component.ts:138:20:
+[37m      138 │       req.subscribe([32mres => {[37m
+          ╵                     [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/subscribed-health-packages/create-health-package-subscription/create-health-package-subscription.component.html:57:41:
+[37m      57 │ ...     <div *ngIf="form.value.testsId.[32mlength[37m" class="col-md-4 mb-3">
+         ╵                                        [32m~~~~~~[0m
+
+  Error occurs in the template of component CreateHealthPackageSubscriptionComponent.
+
+    src/app/components/subscribed-health-packages/create-health-package-subscription/create-health-package-subscription.component.ts:15:15:
+[37m      15 │   templateUrl: [32m'./create-health-package-subscription.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'undefined[]' is not assignable to type 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/subscribed-health-packages/create-health-package-subscription/create-health-package-subscription.component.ts:135:46:
+[37m      135 │     this.form.patchValue({ variationId: null, [32mtestsId[37m: [] });
+          ╵                                               [32m~~~~~~~[0m
+
+  The expected type comes from property 'testsId' which is declared here on type 'Partial<{ userId: null; healthPackageId: null; variationId: any; consultant: null; pincode: string; testsId: null; healthPackagePrice: string; adminPaymentStatus: string; paymentType: string; paymentMethod: string; paymentDate: string; txnId: string; }>'
+
+    src/app/components/subscribed-health-packages/create-health-package-subscription/create-health-package-subscription.component.ts:59:4:
+[37m      59 │     [32mtestsId: [[]][37m,
+         ╵     [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18047: 'testsId' is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/subscribed-health-packages/create-health-package-subscription/create-health-package-subscription.component.ts:200:55:
+[37m      200 │ ...edLabTests = this.labTests.filter(el => [32mtestsId[37m.includes(el._id))
+          ╵                                            [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18047: 'value.testsId' is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/subscribed-health-packages/create-health-package-subscription/create-health-package-subscription.component.ts:220:17:
+[37m      220 │     if (valid && [32mvalue.testsId[37m.length && this.isPincodeServiceabl...
+          ╵                  [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18047: 'value.testsId' is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/subscribed-health-packages/create-health-package-subscription/create-health-package-subscription.component.ts:223:18:
+[37m      223 │     if (valid && ([32mvalue.testsId[37m.length ? this.isPincodeServiceabl...
+          ╵                   [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/view-appointment/view-appointment.component.ts:335:2:
+[37m      335 │   [32mopenModal[37m(content: any, type: 'reschedule' | 'followUp', appt) {
+          ╵   [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/view-appointment/view-appointment.component.ts:915:2:
+[37m      915 │   [32msubmitPrescription[37m() {
+          ╵   [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/view-appointment/view-appointment.component.ts:1004:2:
+[37m      1004 │   [32monAttachment[37m(event) {
+           ╵   [32m~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'File' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/view-appointment/view-appointment.component.ts:1013:35:
+[37m      1013 │       this.recordForm.patchValue({ [32mattachment[37m: file });
+           ╵                                    [32m~~~~~~~~~~[0m
+
+  The expected type comes from property 'attachment' which is declared here on type 'Partial<{ date: string; description: string; attachment: string; }>'
+
+    src/app/components/view-appointment/view-appointment.component.ts:168:4:
+[37m      168 │     [32mattachment: ["", Validators.required][37m,
+          ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string' is not assignable to type 'File'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/components/view-appointment/view-appointment.component.ts:1028:19:
+[37m      1028 │       .fileUpload([[32mthis.recordForm.value.attachment[37m], "")
+           ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m

@@ -1,0 +1,46 @@
+@import "src/assets/scss/fullcalendar.scss";
+
+#external-events {
+  td:not(:last-child) {
+    cursor: all-scroll;
+  }
+}
+.timeInput {
+  width: 125px;
+  flex-shrink: 0;
+}
+.repeatSelect {
+  width: 100px;
+}
+.count {
+  width: 55px;
+  text-align: center;
+}
+.endType {
+  width: 80px;
+}
+.endDate {
+  width: 120px;
+}
+.day {
+  text-align: center;
+  input {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  span {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    padding: 4px 0;
+    border: 1px solid #999;
+  }
+  input:checked {
+    + span {
+      background-color: #5b73e8;
+      border-color: #5b73e8;
+      color: #fff;
+    }
+  }
+}

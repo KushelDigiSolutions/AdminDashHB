@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <app-page-title title="Create Notification Template" [breadcrumbItems]="breadcrumb"></app-page-title>
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="form" (submit)="onSubmit()">
+                <div class="mb-3">
+                    <label>Image</label>
+                    <app-dropzone accept="image/jpeg,image/jpg,image/png" formControlName="image" [multiple]="false">
+                    </app-dropzone>
+                </div>
+                <!-- <div class="mb-3">
+                    <label>Type</label>
+                    <select formControlName="notificationType" name="type" class="form-control"
+                        [ngClass]="{'is-invalid':form.get('type').invalid && form.get('type').touched}">
+                        <option value="reminder">Reminder</option>
+                        <option value="survey">Survey</option>
+                    </select>
+
+                    <div class="invalid-feedback">This field is required</div>
+                </div> -->
+                <div class="mb-3">
+                    <label class="required">Title</label>
+                    <input formControlName="title" type="text" class="form-control"
+                        [ngClass]="{'is-invalid':form.get('title').invalid && form.get('title').touched}"
+                        (blur)="onBlur(f.title)">
+                </div>
+                <div class="mb-3">
+                    <label class="required">Message</label>
+                    <textarea formControlName="message" class="form-control" rows="2"
+                        (blur)="onBlur(f.message)"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="required">Notification Type</label>
+                    <ng-select formControlName="notificationType" [items]="types" bindLabel="label" bindValue="value"
+                        placeholder="Search template" (input)="searchTemplate($event)"
+                        [ngClass]="{'is-invalid': f.notificationType.touched && f.notificationType.invalid}">
+                    </ng-select>
+                    <div *ngIf="f.notificationType.touched && f.notificationType.invalid" class="invalid-feedback">
+                        This field is required</div>
+                </div>
+                <div class="mb-3">
+                    <label>Health Concerns <i class="uil-info-circle" placement="top"
+                            ngbTooltip="Only will be used to filter out the templates while creating the health package."></i></label>
+                    <ng-select [items]="healthConcerns" bindLabel="name" bindValue="_id" class="select2"
+                        placeholder="Choose Health Concern" formControlName="healthConcernsId" [multiple]="true">
+                    </ng-select>
+                    <div *ngIf="f.notificationType.touched && f.notificationType.invalid" class="invalid-feedback">
+                        This field is required</div>
+                </div>
+                <!-- <div class="mb-3">
+                    <label>Link Type</label>
+                    <select formControlName="linkType" class="form-control"
+                        [ngClass]="{'is-invalid':form.get('linkType').invalid && form.get('linkType').touched}">
+                        <option value="internal">Internal</option>
+                        <option value="external">External</option>
+                    </select>
+
+                    <div class="invalid-feedback">This field is required</div>
+                </div>
+                <div class="mb-3">
+                    <label class="required">link</label>
+                    <input formControlName="link" type="text" class="form-control"
+                        [ngClass]="{'is-invalid':form.get('link').invalid && form.get('link').touched}">
+                </div> -->
+
+
+                <div class="mb-3">
+                    <button type="submit" [disabled]="form.invalid" class="btn btn-primary me-2">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

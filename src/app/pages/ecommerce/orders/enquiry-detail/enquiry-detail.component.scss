@@ -1,0 +1,80 @@
+/* small styles to match card layout used across the app */
+.card-body p { margin: 6px 0; }
+.label { font-weight: 600; color: #333; width: 120px; }
+.value { color: #111; }
+
+@media (max-width: 767px) {
+	.label { width: auto; }
+}
+
+.header-fields .field {
+	display: flex;
+	align-items: center;
+}
+.header-fields .label {
+	width: auto;
+	margin-right: .5rem;
+	white-space: nowrap;
+}
+.header-fields .value a { text-decoration: underline; }
+
+/* adopt same table/list font sizing and spacing */
+.header-fields {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between; /* spread fields across full width */
+	align-items: flex-start;
+}
+.header-fields .field {
+	flex: 0 0 auto; /* don't stretch each field; let justify distribute space */
+	min-width: 140px;
+	margin-right: 1rem;
+	text-align: center; /* heading above value, centered */
+}
+	.enq-field {
+		/* ensure each field is a block with its own heading above the value */
+		display: block;
+		min-width: 140px;
+	}
+
+	/* high specificity to override app-wide utilities that may force inline layouts */
+	.card .header-fields .enq-field .enq-heading,
+	.card .header-fields .enq-field h6.enq-heading {
+		display: block !important;
+		margin: 0 0 4px 0 !important;
+		font-size: 14px !important;
+		font-weight: 600 !important;
+		color: #495057 !important;
+		line-height: 1 !important;
+		text-transform: none !important;
+	}
+
+	.card .header-fields .enq-field .enq-value {
+		display: block !important;
+		font-size: 13px !important;
+		font-weight: 400 !important;
+		color: #495057 !important;
+		word-break: break-word !important;
+	}
+
+	/* ensure anchor inside value inherits same styles */
+	.card .header-fields .enq-field .enq-value a {
+		color: inherit !important;
+		text-decoration: none !important;
+		font-weight: inherit !important;
+	}
+
+@media (max-width: 767px) {
+	.header-fields .field { flex: 1 1 45%; }
+}
+
+/* Make comment heading/value use same visual hierarchy as header fields */
+.card-body .label {
+	font-size: 16px;
+	color: #495057;
+	font-weight: 700;
+}
+.card-body .value {
+	font-size: 12px;
+	color: #495057;
+}

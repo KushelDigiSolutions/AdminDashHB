@@ -1,0 +1,446 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title [title]="editId? 'Update Appointment':'Create Appointment'" [breadcrumbItems]="breadCrumbItems">
+  </app-page-title>
+  <!-- end page title -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="addproduct-accordion">
+        <div class="">
+          <div class="checkout-acco">
+            <div ngbAccordion [closeOthers]="true"  activeIds="toggle-1">
+              <div ngbAccordionItem="toggle-1" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            01
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">User Details</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Fill all information below
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <div id="addproduct-billinginfo-collapse" class="show">
+                    <div class="p-4 border-top">
+                      <form *ngIf="!editId" [formGroup]="form">
+                        <div class="row">
+                          <div class="col-12 mb-3">
+                            <div class="form-check d-inline-block">
+                              <input type="radio" name="userType" formControlName="userType" value="guest"
+                                id="userType1" class="form-check-input" (change)="onChangeUserType()" />
+                              <label for="userType1" class="form-check-label">
+                                New User
+                              </label>
+                            </div>
+                            <div class="form-check d-inline-block mx-4">
+                              <input type="radio" name="userType" formControlName="userType" value="regsUser"
+                                id="userType2" class="form-check-input" (change)="onChangeUserType()" />
+                              <label for="userType2" class="form-check-label">
+                                Registered User
+                              </label>
+                            </div>
+                          </div>
+                          <div *ngIf="form.get('userType').value == 'regsUser'" class="col-12 col-lg-4 mb-3">
+                            <label class="required"> Phone Number</label>
+                            <ng-select formControlName="userId" [items]="userList" bindLabel="phone" bindValue="_id"
+                              placeholder="Enter 10 digit phone number" (input)="searchUsers($event)"
+                              [ngClass]="{'is-invalid': (apptForm.userId.touched || submit) &&  apptForm.userId.invalid}">
+                            </ng-select>
+                            <div class="invalid-feedback">This field is required</div>
+                          </div>
+                          <ng-container formGroupName="guestUser" *ngIf="form.get('userType').value == 'guest'">
+                            <div class="col-12 col-lg-4 mb-3">
+                              <label class="form-label required" for="firstName">First Name</label>
+                              <input formControlName="firstName" id="firstName" type="text" class="form-control"
+                                [ngClass]="{'is-invalid': (guestUser.firstName.touched || submit) &&  guestUser.firstName.invalid}"
+                                (blur)="onBlur(guestUser.firstName)" />
+                              <div class="invalid-feedback">This field is required</div>
+                            </div>
+                            <div class="col-12 col-lg-4 mb-3">
+                              <label class="form-label" for="lastName">Last Name</label>
+                              <input id="lastName" name="lastName" type="text" class="form-control"
+                                formControlName="lastName" />
+                            </div>
+
+                            <div class="col-12 col-lg-4 mb-3">
+                              <label class="form-label required" for="Gender">Gender</label>
+                              <ng-select id="gender" name="gender" class="select2"
+                                [ngClass]="{'is-invalid': (guestUser.gender.touched || submit) &&  guestUser.gender.invalid}"
+                                formControlName="gender" placeholder="Choose Gender" [multiple]="false">
+                                <ng-option disabled value="">
+                                  Choose Gender
+                                </ng-option>
+                                <ng-option *ngFor="let item of gender" [value]="item?.name">
+                                  {{ item?.name | titlecase }}
+                                </ng-option>
+                              </ng-select>
+                              <div class="invalid-feedback">This field is required</div>
+                            </div>
+
+                            <div class="col-12 col-lg-4 mb-3">
+                              <label class="form-label required" for="DOB">DOB</label>
+                              <input id="DOB" type="date" class="form-control"
+                                [ngClass]="{'is-invalid': (guestUser.DOB.touched || submit) &&  guestUser.DOB.invalid}"
+                                formControlName="DOB" />
+                              <div class="invalid-feedback">This field is required</div>
+                            </div>
+
+                            <div class="col-12 col-lg-4 mb-3">
+                              <label class="form-label required" for="phone">Mobile Number</label>
+                              <ngx-intl-tel-input [cssClass]="'custom'"
+                                [preferredCountries]="intlTelInput.preferredCountries" [enableAutoCountrySelect]="true"
+                                [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                [searchCountryField]="intlTelInput.searchCountryField" [selectFirstCountry]="false"
+                                [selectedCountryISO]="intlTelInput.selectedCountryISO" [maxLength]="15"
+                                [phoneValidation]="true" [separateDialCode]="intlTelInput.separateDialCode"
+                                [numberFormat]="intlTelInput.PhoneNumberFormat.National" name="phone"
+                                formControlName="phone"
+                                [ngClass]="{'is-invalid': (guestUser.phone.touched || submit) &&  guestUser.phone.invalid}">
+                              </ngx-intl-tel-input>
+                              <div class="invalid-feedback">This field is required</div>
+                              <!-- <div class="d-flex">
+                                <div>+91</div> <input id="phone" name="phone" type="tel" class="form-control"
+                                  formControlName="phone" />
+                              </div> -->
+                            </div>
+                            <div class="col-4 col-lg-4 mb-3">
+                              <label class="form-label" for="email">Email</label>
+                              <input id="email" name="email" type="email" class="form-control"
+                                formControlName="email" />
+                            </div>
+                            <div class="col-4 col-lg-4 mb-3">
+                              <label class="form-label" for="weight">Weight (Kg)</label>
+                              <input id="weight" name="weight" type="text" class="form-control"
+                                formControlName="weight" />
+                            </div>
+
+                            <div class="col-12 col-lg-4 mb-3">
+                              <div class="mb-3">
+                                <label class="form-label" for="concerns">Health Concerns</label>
+                                <ng-select id="concerns" name="concerns" class="select2" formControlName="concern"
+                                  placeholder="Choose Health Concerns" [multiple]="true">
+                                  <ng-option disabled value="">
+                                    Choose Health Concerns
+                                  </ng-option>
+                                  <ng-option *ngFor="let item of healthConcerns" [value]="item?._id">
+                                    {{ item?.name | titlecase }}
+                                  </ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </div>
+
+                      </form>
+                      <div class="container-fluid" *ngIf="editId && apptData">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="table-responsive">
+                              <table class="table table-sm table-borderless">
+                                <tbody>
+                                  <tr>
+                                    <th style="min-width: 80px;">Full Name</th>
+                                    <td>{{ apptData.userId?.firstName }} {{ apptData.userId?.lastName }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Mobile</th>
+                                    <td>{{ apptData.userId?.phone }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Email</th>
+                                    <td>{{ apptData.userId?.email }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="2">
+                                      <span></span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Gender</th>
+                                    <td>{{ apptData.userId?.gender | titlecase }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>D.O.B</th>
+                                    <td>{{ apptData.userId?.DOB | date: "dd-MM-YYYY" }} ({{getAge(apptData.userId?.DOB) +'
+                                      years'}})
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Weight</th>
+                                    <td>
+                                      {{ apptData.userId?.weight
+                                      }}{{ apptData.userId?.weightUnit || "KG" }}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Concerns</th>
+                                    <td *ngIf="apptData.userId?.diseases">
+                                      <span *ngFor="let disease of apptData.userId?.diseases">{{disease.name}}, </span>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </ng-template></div></div>
+              </div>
+              <div ngbAccordionItem="toggle-2" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            02
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Appointment Details</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Fill all information below
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <div id="addproduct-billinginfo-collapse" class="show">
+                    <div class="p-4 border-top">
+                      <form [formGroup]="form">
+                        <div class="row">
+                          <div class="col-12 col-lg-4 mb-3">
+                            <label class="required">Select Consultant</label>
+                            <ng-select formControlName="consultantId" [items]="consultantList" bindLabel="fullName"
+                              bindValue="_id" placeholder="Enter consultant name"
+                              [ngClass]="{'is-invalid': (apptForm.consultantId.touched || submit) &&  apptForm.consultantId.invalid}"
+                              (change)="onSelectConsultant($event)">
+                              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                                <div class="d-flex">
+                                  <img class="avatar-xs flex-shrink-0 me-2"
+                                    [src]="item.profilePhoto? s3Base+ item.profilePhoto.savedName:'assets/images/user-thumbnail.png'"
+                                    onerror="this.src = 'http://localhost:4200/assets/images/user-thumbnail.png'"
+                                    alt="">
+                                  <div class="flex-grow-1">
+                                    <p *ngIf="item.firstName || item.lastName" class="mb-0"><b>{{item.fullName}}</b></p>
+                                    <p *ngIf="!item.firstName && !item.lastName" class="mb-0">HB Consultant</p>
+                                    <p class="mb-0">
+                                      {{item.designation}}
+                                      <span *ngIf="item.designation && item.consultantType.length"> | </span>
+                                      <span *ngFor="let type of item.consultantType; last as isLast">{{type.name}}<span
+                                          *ngIf="!isLast">, </span></span>
+                                    </p>
+                                  </div>
+                                </div>
+                              </ng-template>
+                            </ng-select>
+                            <div class="invalid-feedback">This field is required</div>
+                          </div>
+                          <div class="col-12 col-lg-4 mb-3">
+                            <label class="required">Select Date</label>
+                            <input formControlName="date" type="date" class="form-control"
+                              [ngClass]="{'is-invalid': (apptForm.date.touched || submit) &&  apptForm.date.invalid}"
+                              (change)="onChangeApptDate()">
+                            <div class="invalid-feedback">This field is required</div>
+                          </div>
+                          <div class="col-12 col-lg-4 mb-3">
+                            <label class="required">Select Slot</label>
+                            <select formControlName="primaryTimeSlot" class="form-control"
+                              [ngClass]="{'is-invalid': (apptForm.primaryTimeSlot.touched || submit) &&  apptForm.primaryTimeSlot.invalid}">
+                              <option value="">--Select Slot--</option>
+                              <option [value]="slot.startTime+' - '+slot.endTime" *ngFor="let slot of slots">
+                                {{slot.startTime12}} - {{slot.endTime12}}</option>
+                            </select>
+                            <div class="invalid-feedback">This field is required</div>
+                          </div>
+                          <div class="col-12 col-lg-4 mb-3">
+                            <label class="required">Appointment Mode</label>
+                            <div
+                              [ngClass]="{'is-invalid': (apptForm.appointmentMode.touched || submit) &&  apptForm.appointmentMode.invalid}">
+                              <p *ngIf="!selectedConsultant?.appointmentMode?.isAudio && !selectedConsultant?.appointmentMode?.isVideo && !selectedConsultant?.appointmentMode?.isChat"
+                                class="text-danger">Update mode in consultant profile first</p>
+                              <div class="form-check mb-3 me-3 p-0 d-inline-block">
+                                <label *ngIf="selectedConsultant?.appointmentMode?.isAudio" class="form-check-label">
+                                  <input name="appointmentMode" formControlName="appointmentMode" value="audio"
+                                    type="radio" z gclass="form-check-input">
+                                  Audio Call </label>
+                              </div>
+                              <div class="form-check mb-3 me-3 p-0 d-inline-block">
+                                <label *ngIf="selectedConsultant?.appointmentMode?.isVideo" class="form-check-label">
+                                  <input name="appointmentMode" formControlName="appointmentMode" value="video"
+                                    type="radio" z gclass="form-check-input">
+                                  Video Call </label>
+                              </div>
+                              <div class="form-check mb-3 me-3 p-0 d-inline-block">
+                                <label *ngIf="selectedConsultant?.appointmentMode?.isChat" class="form-check-label">
+                                  <input name="appointmentMode" formControlName="appointmentMode" value="chat"
+                                    type="radio" z gclass="form-check-input">
+                                  Messaging </label>
+                              </div>
+                            </div>
+                            <div class="invalid-feedback">This field is required</div>
+                          </div>
+                          <div class="col-12 col-lg-4 mb-3">
+                            <div class="mb-3">
+                              <label class="form-label" for="status">Appointment Status</label>
+                              <ng-select id="concerns" name="status" class="select2" formControlName="status"
+                                placeholder="Select Status" [multiple]="false">
+                                <ng-option disabled value="">
+                                  Select Status
+                                </ng-option>
+                                <ng-option *ngFor="let item of appointmentStatus" [value]="item">
+                                  {{ item | titlecase }}
+                                </ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="col-12 col-lg-4 mb-3">
+                            <div class="mb-3">
+                              <label class="form-label" for="status">Payment Status</label>
+                              <p class="h6 mt-2" [ngClass]="{'text-success': apptData?.paymentStatus == 'accepted'}">{{(apptData?.paymentStatus || 'N/A') | titlecase}}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="mt-4 mb-3">
+                              <div class="mb-3">
+                                <label>Select Payment Type</label>
+                                <div>
+                                  <div class="form-check d-inline-block me-3">
+                                    <input type="radio" formControlName="adminPaymentStatus" value="prepaid"
+                                      id="paymentType1" checked class="form-check-input"
+                                      (change)="onChangePaymentType()" />
+                                    <label for="paymentType1" class="form-check-label">
+                                      Prepaid
+                                    </label>
+                                  </div>
+                                  <!-- <div class="form-check d-inline-block mx-4">
+                                    <input type="radio" formControlName="adminPaymentStatus" value="postpaid"
+                                      id="paymentType2" class="form-check-input" (change)="onChangePaymentType()" />
+                                    <label for="paymentType2" class="form-check-label">
+                                      COD
+                                    </label>
+                                  </div> -->
+                                  <div class="form-check d-inline-block">
+                                    <input type="radio" formControlName="adminPaymentStatus" value="paymentLink"
+                                      id="paymentType3" class="form-check-input" (change)="onChangePaymentType()" />
+                                    <label for="paymentType3" class="form-check-label">
+                                      Link Payment
+                                    </label>
+                                  </div>
+                                  <!-- <div class="form-check d-inline-block mx-4">
+                                    <input type="radio" formControlName="adminPaymentStatus" value="free"
+                                      id="paymentType4" class="form-check-input" (change)="onChangePaymentType()" />
+                                    <label for="paymentType4" class="form-check-label">
+                                      Free Appointment
+                                    </label>
+                                  </div> -->
+                                </div>
+                              </div>
+                              <div *ngIf="
+                                  form.get('adminPaymentStatus').value ==
+                                  'prepaid'
+                                " class="row mb-3">
+                                <div class="col-md-4">
+                                  <select formControlName="paymentMethod" class="form-control">
+                                    <option value="">
+                                      -- Select Method --
+                                    </option>
+                                    <option *ngFor="let item of paymentMethod" [value]="item">
+                                      {{ item }}
+                                    </option>
+                                  </select>
+                                </div>
+                                <div *ngIf="
+                                    form.get('adminPaymentStatus').value !=
+                                    'postpaid'
+                                  " class="col-md-4">
+                                  <input formControlName="txnId" type="text" class="form-control"
+                                    placeholder="Transaction ID" />
+                                </div>
+                                <div class="col-md-4">
+                                  <input formControlName="paymentDate" type="date" class="form-control"
+                                    placeholder="Transaction ID" />
+                                </div>
+                              </div>
+                              <div *ngIf="
+                                form.get('adminPaymentStatus').value !=
+                                'free'
+                              " class="row mb-3">
+                                <div class="col-md-4">
+                                  <label for="fee">Appointment Fee</label>
+                                  <input formControlName="fee" type="number" min="0" class="form-control"
+                                    placeholder="Appointment fee" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="row">
+                        <div class="col-4 col-lg-4">
+                          <button type="button" class="btn btn-primary" [disabled]="form.invalid"
+                            (click)="bookAppointment()">
+                            {{ editId ? "Update" : "Create" }} Appointment
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- container-fluid -->
+<ng-template #paymentLinkModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Payment Link</h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body py-5">
+    <div class="input-group">
+      <input class="form-control" type="text" [value]="appointmentDetails?.paymentLink" readonly>
+      <div class="input-group-append">
+        <button (click)="copyToClipboard(appointmentDetails?.paymentLink)" class="btn btn-primary" title="Copy Link"><i
+            class="mdi mdi-content-copy"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <app-page-title title="Schedule Timings" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="mb-3">
+          <div class="row">
+            <div class="col-md-3">
+              <label>Timing Slot Duration</label>
+              <select formControlName="slotDuration" class="form-control">
+                <option value="00:15">15 mins</option>
+                <option value="00:30">30 mins</option>
+                <option value="00:45">45 mins</option>
+                <option value="01:00">1 Hour</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="schedule-widget">
+          <ul formArrayName="timeSlots" class="nav nav-pills nav-justified mb-4">
+            <li class="nav-item" *ngFor="let timeSlot of form.get('timeSlots')['controls'];let i = index;"
+              [formGroupName]="i">
+              <a href="javascript:void(0);" class="nav-link" [ngClass]="{active: activeDay == timeSlot.value.day, navLinkDanger: activeDay != timeSlot.value.day && timeSlot.invalid}"
+                (click)="onChangeDay(timeSlot.value.day)">
+                {{timeSlot.value.day}} <span *ngIf="activeDay != timeSlot.value.day && timeSlot.invalid"
+                  class="uil-info-circle text-danger"></span>
+              </a>
+            </li>
+          </ul>
+
+          <ng-container formArrayName="timeSlots">
+            <ng-container *ngFor="let timeSlot of form.get('timeSlots')['controls'];let i = index;" [formGroupName]="i">
+
+              <ng-container *ngIf="timeSlot.value.day == activeDay" formArrayName="availableTime">
+                <h4 class="card-title d-flex justify-content-between">
+                  <span>Available Time</span>
+                  <a class="edit-link" href="javascript:void(0);" (click)="addTimeSlot(timeSlot)"><i
+                      class="fa fa-plus-circle mr-1"></i>
+                    Add
+                    Time</a>
+                </h4>
+                <span *ngIf="!timeSlot.get('availableTime').length" class="text-muted mb-0">Not Available</span>
+                <div class="row mb-3"
+                  *ngFor="let availableTimeSlot of timeSlot.get('availableTime')['controls'];let j = index;"
+                  [formGroupName]="j">
+                  <div class="col-12 col-md-10">
+                    <div class="row">
+                      <div class="col-12 col-md-5">
+                        <label class="required">Start Time</label>
+                        <input formControlName="startTime" type="time" min="06:00" max="22:00" class="form-control"
+                          [ngClass]="{'is-invalid': availableTimeSlot.get('startTime').touched && availableTimeSlot.get('startTime').invalid}" (change)="onChangeStartTime(availableTimeSlot)">
+                        <div class="invalid-feedback">
+                          <span *ngIf="availableTimeSlot.get('startTime').errors?.required">This field is required</span>
+                          <span *ngIf="availableTimeSlot.get('startTime').errors?.startTime">Start time should be less than start Time</span>
+                          <span *ngIf="!availableTimeSlot.get('startTime').errors?.startTime && availableTimeSlot.get('startTime').errors?.timeIntersect">Selected time is intersecting with another time</span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-5">
+                        <label class="required">End Time</label>
+                        <input formControlName="endTime" type="time" min="06:00" max="22:00" class="form-control"
+                        [ngClass]="{'is-invalid': availableTimeSlot.get('endTime').touched && availableTimeSlot.get('endTime').invalid}">
+                        <div class="invalid-feedback">
+                          <span *ngIf="availableTimeSlot.get('endTime').errors?.required">This field is required</span>
+                          <span *ngIf="availableTimeSlot.get('endTime').errors?.endTime">End time should be greater than start Time</span>
+                          <span *ngIf="!availableTimeSlot.get('endTime').errors?.endTime && availableTimeSlot.get('endTime').errors?.timeIntersect">Selected time is intersecting with another time</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-2 text-end">
+                    <label class="d-md-block d-sm-none d-none">&nbsp;</label>
+                    <button type="button" class="btn btn-danger trash" (click)="removeTimeSlot(timeSlot,j)"><i
+                        class="far fa-trash-alt"></i></button>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+          </ng-container>
+        </div>
+        <button type="submit" [disabled]="form.invalid" class="btn btn-primary mt-5">Save Changes</button>
+      </form>
+
+    </div>
+  </div>
+</div>

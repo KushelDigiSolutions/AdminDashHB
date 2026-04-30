@@ -1,0 +1,351 @@
+<div class="container-fluid pb-4">
+  <app-page-title title="Profile Settings" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title mt-0 mb-3">Basic Information</h3>
+        <div class="photoUpload d-flex align-items-center mb-3">
+          <img *ngIf="!profileData" src="/assets/images/doctor-profile-thumb.png" />
+          <img *ngIf="profileData" [src]="
+              photo.base64
+                ? photo.base64
+                : s3Base + profileData.profilePhoto.savedName
+            " />
+          <div>
+            <div>
+              <label class="btn btn-primary btn-rounded">
+                <input class="d-none" type="file" accept=".jpg,.jpeg,.png" (change)="onImageChange($event)" />
+                Choose Photo
+              </label>
+            </div>
+            <span>Allowed JPG, JPEG or PNG.</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="required">First Name</label>
+              <input formControlName="firstName" class="form-control" [ngClass]="{
+                  'is-invalid':
+                    form.get('firstName').touched &&
+                    form.get('firstName').invalid
+                }" type="text" />
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Last Name</label>
+              <input formControlName="lastName" class="form-control" type="text" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Email</label>
+              <input formControlName="email" class="form-control" type="text" readonly />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Phone</label>
+              <input formControlName="phone" class="form-control" type="text" readonly />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Type</label>
+              <ng-select class="select2" formControlName="consultantType" placeholder="Doctor Type" [multiple]="true">
+                <ng-option value="" disabled>Type of the Doctor</ng-option>
+                <ng-option *ngFor="let item of doctorTypes" [value]="item._id">{{ item.name }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="Specialization">Specializations</label>
+            <ng-select id="speciality" class="select2" formControlName="specialization" placeholder="Specializations"
+              [multiple]="true">
+              <ng-option value="" disabled>Specialization</ng-option>
+              <ng-option *ngFor="let item of specializationList" [value]="item._id">{{ item.name }}</ng-option>
+            </ng-select>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="speciality">Health Concerns</label>
+            <ng-select id="speciality" class="select2" formControlName="speciality" placeholder="Health Concerns"
+              [multiple]="true">
+              <ng-option value="" disabled>Health Concerns</ng-option>
+              <ng-option *ngFor="let item of healthConcern" [value]="item._id">{{ item.name }}</ng-option>
+            </ng-select>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Designation</label>
+              <input formControlName="designation" class="form-control" type="text"
+                placeholder="e.g. General Physician" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Experience (in years)</label>
+              <input formControlName="experience" class="form-control" type="number" min="0"
+                formControlName="experience" [ngClass]="{
+                'is-invalid':
+                  form.get('experience').touched &&
+                  form.get('experience').invalid
+              }" />
+              <div class="invalid-feedback mt-2" *ngIf="form.get('experience').errors?.pattern">
+                Please enter value between 0-99
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Experience (in months)</label>
+              <input formControlName="experienceInMonths" class="form-control" type="number" min="0"
+                formControlName="experienceInMonths" [ngClass]="{
+                'is-invalid':
+                  form.get('experienceInMonths').touched &&
+                  form.get('experienceInMonths').invalid
+              }" />
+              <div class="invalid-feedback mt-2" *ngIf="form.get('experienceInMonths').errors?.pattern">
+                Please enter value between 0-11
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="required">DOB</label>
+              <input formControlName="DOB" class="form-control"
+                [ngClass]="{'is-invalid':form.get('DOB').touched && form.get('DOB').invalid}" type="date" />
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="required">Per Consultation Charge</label>
+              <input formControlName="fee" class="form-control" [ngClass]="{
+                  'is-invalid':
+                    form.get('fee').touched && form.get('fee').invalid
+                }" type="text" mask="0*" placeholder="e.g. 300" />
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label>Languages
+                <i class="uil-info-circle" placement="top"
+                  ngbTooltip='You can add multiple languages separated by "," comma'></i></label>
+              <input formControlName="language" class="form-control" type="text" placeholder="eg. English, Hindi" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="required">Appointment Mode <i class="uil-info-circle" placement="top"
+                  ngbTooltip='At least one communication mode should be enabled'></i></label>
+              <div formGroupName="appointmentMode" class="row mt-2" [ngClass]="{
+                'is-invalid': form.get('appointmentMode').touched && isInvalidAppointmentMode()
+              }">
+                <div class="col">
+                  <div dir="ltr" class="form-check form-switch form-switch-md mb-3">
+                    <input type="checkbox" id="isVideo" formControlName="isVideo" class="form-check-input">
+                    <label for="isVideo" class="form-check-label">Video Call</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div dir="ltr" class="form-check form-switch form-switch-md mb-3">
+                    <input type="checkbox" id="isAudio" formControlName="isAudio" class="form-check-input">
+                    <label for="isAudio" class="form-check-label">Audio Call</label>
+                  </div>
+                </div>
+                <!-- <div class="col">
+                  <div dir="ltr" class="form-check form-switch form-switch-md mb-3">
+                    <input type="checkbox" id="isChat" formControlName="isChat" class="form-check-input">
+                    <label for="isChat" class="form-check-label">Messaging</label>
+                  </div>
+                </div> -->
+              </div>
+              <div class="invalid-feedback">At least one communication mode should be enabled</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="row" formGroupName="currentAddress">
+            <div class="col-sm-6 col-lg-6">
+              <div class="mb-3">
+                <label>Current PinCode
+                </label>
+                <input formControlName="pinCode" class="form-control" type="text" placeholder="eg. Delhi" />
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+              <div class="mb-3">
+                <label>Current City
+                </label>
+                <input formControlName="city" class="form-control" type="text" placeholder="eg. Delhi" />
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+              <div class="mb-3">
+                <label>Current State
+                </label>
+                <input formControlName="state" class="form-control" type="text" placeholder="eg. Delhi" />
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label>Upload Signature <i class="uil-info-circle" placement="top"
+                ngbTooltip="Signature will use on prescription."></i></label>
+            <app-dropzone formControlName="signature" accept="image/jpeg,image/jpg,image/png" [multiple]="false">
+            </app-dropzone>
+            <!-- <ngx-dropzone accept="image/jpeg,image/jpg,image/png" [multiple]="false" (change)="
+                  onSelectCertificate($event, form.get('signature'))
+                ">
+              <ngx-dropzone-label>Drop files here or click to upload.</ngx-dropzone-label>
+              <ngx-dropzone-preview *ngIf="
+                    form.value.signature &&
+                    typeOf(form.value.signature) == 'string'
+                  " class="oldImagePreview" [removable]="true"
+                (removed)="onRemoveCertificate(form.get('signature'))">
+                <ngx-dropzone-label><img [src]="s3Base + form.value.signature" />
+                </ngx-dropzone-label>
+              </ngx-dropzone-preview>
+              <ngx-dropzone-image-preview *ngIf="
+                    form.value.signature &&
+                    typeOf(form.value.signature) != 'string'
+                  " ngProjectAs="ngx-dropzone-preview" [file]="form.value.signature" [removable]="true"
+                (removed)="onRemoveCertificate(form.get('signature'))">
+              </ngx-dropzone-image-preview>
+            </ngx-dropzone> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title mt-0 mb-3">About Me</h3>
+        <div>
+          <label>Biography</label>
+          <textarea formControlName="description" class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title mt-0 mb-3">Education</h3>
+        <div *ngIf="!form.value.qualification.length" class="text-center pb-4" (click)="addMoreEdu()">
+          <p class="text-muted">No Education Added Yet!</p>
+          <button type="button" class="btn btn-primary">
+            <i class="uil uil-plus-circle me-2"></i> Add Education
+          </button>
+        </div>
+        <ng-container formArrayName="qualification">
+          <div class="d-flex" *ngFor="
+              let control of form.get('qualification')['controls'];
+              let i = index
+            " [formGroupName]="i">
+            <div class="row flex-grow-1 me-2">
+              <div class="col-sm-4 mb-3">
+                <label class="required">Degree</label>
+                <input formControlName="degree" class="form-control" [ngClass]="{
+                    'is-invalid':
+                      control.get('degree').touched &&
+                      control.get('degree').invalid
+                  }" type="text" (blur)="onBlur(control.get('degree'))" />
+                <div class="invalid-feedback">This field is required</div>
+              </div>
+              <div class="col-sm-4 mb-3">
+                <label class="required">College/Institute</label>
+                <input formControlName="college" class="form-control" [ngClass]="{
+                    'is-invalid':
+                      control.get('college').touched &&
+                      control.get('degree').invalid
+                  }" type="text" (blur)="onBlur(control.get('college'))" />
+                <div class="invalid-feedback">This field is required</div>
+              </div>
+              <div class="col-sm-2 mb-3">
+                <label class="required">Year of Completion</label>
+                <input formControlName="passingYear" class="form-control" [ngClass]="{
+                    'is-invalid':
+                      control.get('passingYear').touched &&
+                      control.get('passingYear').invalid
+                  }" type="text" mask="0000" (blur)="onBlur(control.get('passingYear'))" />
+                <div class="invalid-feedback">This field is required</div>
+              </div>
+              <div class="col-sm-2 mb-3">
+                <label>Show on Profile</label>
+                <div class="form-check mt-2">
+                  <input formControlName="show" class="form-check-input" type="checkbox" id="show">
+                </div>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <label>Upload Degree (optional)
+                  <i class="uil-info-circle" placement="top"
+                    ngbTooltip="We will use degree proof to verify your qualification."></i></label>
+                <app-dropzone formControlName="certificate" accept="image/jpeg,image/jpg,image/png,application/pdf"
+                  [multiple]="false"></app-dropzone>
+                <small>Accepted Formats: JPG, JPEG, PNG, PDF</small>
+              </div>
+            </div>
+            <div class="flex-shrink-0">
+              <label>&nbsp;</label> <br />
+              <i class="btn btn-danger bx uil-trash removeEdu" (click)="removeEdu(i)"></i>
+            </div>
+          </div>
+        </ng-container>
+        <span *ngIf="form.value.qualification.length" class="btn text-primary addMore" (click)="addMoreEdu()"><i
+            class="bx uil-plus-circle"></i> Add More</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title mt-0 mb-3">Account Info</h3>
+        <div class="row" formGroupName="accountInfo">
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="account_name">Account Holder Name</label>
+            <input id="firstName" type="text" class="form-control" formControlName="account_name" />
+          </div>
+
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="account_type">Account Type</label>
+            <ng-select id="account_type" class="select2" formControlName="account_type" placeholder="Account Type"
+              [multiple]="false">
+              <ng-option value="" disabled>Type of the Account</ng-option>
+              <ng-option *ngFor="let item of accountType" [value]="item">{{
+                item
+                }}</ng-option>
+            </ng-select>
+          </div>
+
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="account_number">Account Number</label>
+            <input id="account_number" type="text" class="form-control" formControlName="account_number" />
+          </div>
+
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="bank_name">Bank Name</label>
+            <input id="bank_name" type="text" class="form-control" formControlName="bank_name" />
+          </div>
+
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="bank_branch">Bank Branch</label>
+            <input id="bank_branch" type="text" class="form-control" formControlName="bank_branch" />
+          </div>
+
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="bank_ifsc">Bank IFSC</label>
+            <input id="bank_ifsc" type="text" class="form-control" formControlName="bank_ifsc" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isInvalidAppointmentMode()">
+      Save Changes
+    </button>
+  </form>
+</div>

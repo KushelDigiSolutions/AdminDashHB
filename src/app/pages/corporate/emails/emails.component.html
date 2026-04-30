@@ -1,0 +1,114 @@
+<div class="container-fluid">
+  <app-page-title title="Corporate Email Logs" [breadcrumbItems]="breadcrumb"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <a routerLink="create" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i>
+              Create New</a>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-inline float-md-end mb-3">
+            <div class="search-box ms-2">
+              <!-- <div class="position-relative">
+                      <input
+                        class="form-control rounded bg-light border-0"
+                        type="text"
+                        name="searchTerm"
+                        placeholder="Search..."
+                      />
+                      <i class="mdi mdi-magnify search-icon"></i>
+                    </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dataTables_length">
+        <label class="d-inline-flex align-items-center">Show<select name="pageSize" [(ngModel)]="pageSize"
+            class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"
+            (change)="changeValue()">
+            <option [ngValue]="10">10</option>
+            <option [ngValue]="25">25</option>
+            <option [ngValue]="50">50</option>
+            <option [ngValue]="100">100</option>
+          </select>
+          entries</label>
+      </div>
+      <div class="table-responsive mb-4">
+        <table class="table table-centered table-nowrap mb-0 align-middle">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 50px">
+                <div class="form-check font-size-16">
+                  <input type="checkbox" class="form-check-input" id="contacusercheck" />
+                  <label class="form-check-label" for="contacusercheck"></label>
+                </div>
+              </th>
+              <th scope="col">Subject</th>
+              <th scope="col">Company</th>
+              <th scope="col">Date Time</th>
+              <!-- <th scope="col" style="width: 200px;text-align: right;">Action</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of list;let index = index">
+              <td>
+                <div class="form-check font-size-16">
+                  <input id="contacusercheck{{ index }}" type="checkbox" class="form-check-input" />
+                  <label class="form-check-label" for="contacusercheck{{ index }}">&nbsp;</label>
+                </div>
+              </td>
+              <td>
+                <ngb-highlight [result]="data.subject"></ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight [result]="data.company?.name"></ngb-highlight>
+              </td>
+              <td>
+                <ngb-highlight [result]="data.createdAt | date: 'MMM d, y, h:mm a'"></ngb-highlight>
+              </td>
+              <td>
+                <!-- <ul class="list-inline mb-0 text-end">
+                  <li class="list-inline-item">
+                    <a [routerLink]="[data._id]" href="javascript:void(0);" class="px-2 text-primary"
+                      ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a (click)="remove(data._id)" href="javascript:void(0);" class="px-2 text-danger"
+                      ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                  </li>
+                </ul> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-sm-12">
+          <div class="float-end">
+            <ngb-pagination [collectionSize]="total$" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"
+              (pageChange)="pageChanged()">
+              <ng-template ngbPaginationPages let-page let-pages="pages">
+                <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                  <div class="form-group d-flex flex-nowrap px-2">
+                    <label id="paginationInputLabel" for="paginationInput" class="col-form-label mr-2 ml-1">Page</label>
+                    <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                      id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)"
+                      (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                      aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                    <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                      of {{pages.length}}</span>
+                  </div>
+                </li>
+              </ng-template>
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

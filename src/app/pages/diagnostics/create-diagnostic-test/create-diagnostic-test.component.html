@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between mb-4 titleTabs">
+    <h5 class="title">Update "{{data?.name}}" Lab Test </h5>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <ng-container *ngIf="data">
+        <div class="row">
+          <div class="col-sm-4">Type: <b>{{data.type}}</b></div>
+          <div class="col-sm-4">Rate: <b>₹{{data.rate.b2C}} (B2C)</b>, <ng-container *ngIf="data.type == 'OFFER'">
+              <b>₹{{data.rate.offerRate}} (Offer Rate)</b>
+            </ng-container>
+          </div>
+          <div class="col-sm-4" *ngIf="data.type == 'OFFER'">Thyrocare Discount: <b>{{((data.rate.b2C -
+              data.rate.offerRate) / data.rate.b2C*100).toFixed(2)}}% </b>
+          </div>
+        </div>
+        <hr>
+      </ng-container>
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="mb-3 col-sm-4 col-md-3">
+            <label>HB Discount (%) <small *ngIf="data">[After Discount: ₹{{ (data.type == 'OFFER'?data.rate.offerRate: data.rate.b2C) - ((data.type == 'OFFER'?data.rate.offerRate: data.rate.b2C) * (f.hbDiscount.value ||
+              0) / 100)}}]</small></label>
+            <input formControlName="hbDiscount" type="number" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || f.hbDiscount.touched) && f.hbDiscount.invalid}" min="0" max="100">
+            <div class="invalid-feedback">Enter value between 0 - 100</div>
+          </div>
+          <div class="mb-3 col-sm-4 col-md-3">
+            <label>Cost Price <small>(Flat Amount in ₹)</small></label>
+            <input formControlName="costPrice" type="number" class="form-control"
+              [ngClass]="{'is-invalid': (submitted || f.costPrice.touched) && f.costPrice.invalid}" min="0">
+            <div class="invalid-feedback">Please enter a valid value</div>
+          </div>
+        </div>
+        <!-- <div class="mb-3">
+          <label>Short Description</label>
+          <textarea formControlName="shortDescription" class="form-control" rows="3"></textarea>
+          <div class="invalid-feedback">This field is required</div>
+        </div> -->
+        <div class="mb-3">
+          <label>Description</label>
+          <textarea formControlName="description" class="form-control" rows="3"></textarea>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="mb-3">
+          <label>Meta Title</label>
+          <input formControlName="metaTitle" class="form-control">
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <div class="mb-3">
+          <label>Meta Description</label>
+          <textarea formControlName="metaDescription" class="form-control" rows="3"></textarea>
+          <div class="invalid-feedback">This field is required</div>
+        </div>
+        <ng-container formGroupName="process">
+          <h5 class="text-muted">PROCESS:</h5>
+          <div class="mb-3" *ngFor="let control of process.controls;index as i">
+            <div>
+              <label class="required">Process #{{i+1}}</label>
+              <textarea [formControlName]="i" class="form-control"
+                [ngClass]="{'is-invalid': (submitted || control.touched) && control.invalid}" rows="3"
+                (blur)="trimInputValue(control)"></textarea>
+              <div class="invalid-feedback">This field is required</div>
+            </div>
+            <a class="mt-2 d-inline-block" href="javascript:void(0)" (click)="removeProcess(i)"><i
+                class="uil uil-trash"></i> Remove</a>
+          </div>
+          <button *ngIf="process.controls.length" class="btn btn-primary mb-3" type="button" (click)="addProcess()">Add
+            Process</button> <br>
+          <div *ngIf="!process.controls.length" class="text-center p-5">
+            <p>No process added yet!</p>
+            <button type="button" class="btn btn-primary" (click)="addProcess()">Add Process</button>
+          </div>
+        </ng-container>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+  </div>
+</div>

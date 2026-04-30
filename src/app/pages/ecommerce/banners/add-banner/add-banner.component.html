@@ -1,0 +1,129 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 uploadBannerContainer">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input type="text" name="title"
+                [ngClass]="{'is-invalid': form.get('title').touched && form.get('title').invalid}" class="form-control"
+                formControlName="title" (blur)="trim(form.get('title'))" />
+              <div *ngIf="form.get('image').touched && form.get('image').invalid" class="invalid-feedback">
+                <span>This field is required.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <label class="form-label">Banner Text</label>
+              <textarea class="form-control" style="resize: none"
+                [ngClass]="{'is-invalid': form.get('description').touched && form.get('description').invalid}"
+                formControlName="description" rows="4" (blur)="trim(form.get('description'))"></textarea>
+              <div *ngIf="form.get('image').touched && form.get('image').invalid" class="invalid-feedback">
+                <span>This field is required.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label required" for="bannerType">Banner type</label>
+              <select id="bannerType" [ngClass]="{'is-invalid': form.get('type').touched && form.get('type').invalid}"
+                class="form-control" formControlName="type">
+                <option disabled value="">Choose Type</option>
+                <option *ngFor="let item of bannerTypes" [value]="item.value">
+                  {{ item.title }}
+                </option>
+              </select>
+              <div *ngIf="form.get('image').touched && form.get('image').invalid" class="invalid-feedback">
+                <span>This field is required.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label" for="bannerLink">Banner Link</label>
+              <input type="text" id="bannerLink"
+                [ngClass]="{'is-invalid': form.get('link').touched && form.get('link').invalid}" class="form-control"
+                formControlName="link" (blur)="trim(form.get('link'))" placeholder="eg. /categories/personal-care" />
+              <div *ngIf="form.get('image').touched && form.get('image').invalid" class="invalid-feedback">
+                <span>This field is required.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label" for="buttonText">Button Text</label>
+              <input type="text" id="buttonText"
+                [ngClass]="{'is-invalid': form.get('buttonText').touched && form.get('buttonText').invalid}"
+                class="form-control" formControlName="buttonText" (blur)="trim(form.get('buttonText'))"
+                placeholder="eg. Shop now" />
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label" for="couponCode">Coupon Code</label>
+              <input type="text" id="couponCode"
+                [ngClass]="{'is-invalid': form.get('couponCode').touched && form.get('couponCode').invalid}"
+                class="form-control" formControlName="couponCode" (blur)="trim(form.get('couponCode'))"
+                placeholder="eg. HBFRSHP500" />
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div id="addproduct-img-collapse">
+              <div class="mb-3">
+                <label class="required mb-0">Image </label>
+                <div class="mb-2 fs-13">Shop Now and Lifestyle Tips: 1440px * 358px <br>Consult Us, Health Packages, and
+                  Lab Tests: 1350px * 200px<br>File Format: .webp, .png, .jpg, .jpeg</div>
+                <app-dropzone formControlName="image" accept="image/jpeg,image/png,image/webp" [multiple]="false"
+                  [ngClass]="{'is-invalid': form.get('image').touched && form.get('image').invalid}">
+                </app-dropzone>
+                <!-- <ngx-dropzone [ngClass]="{'is-invalid': form.get('image').touched && form.get('image').invalid}"
+                  [accept]="'image/*'" [multiple]="false" (change)="onSelect('image',$event)">
+                  <ngx-dropzone-label>Drop files here or click to upload.</ngx-dropzone-label>
+                  <ngx-dropzone-preview class="oldImagePreview" *ngFor="let f of oldFiles;index as i" [removable]="true"
+                    (removed)="onRemoveOldFile(i)">
+                    <ngx-dropzone-label><img [src]="s3Base+f.savedName"></ngx-dropzone-label>
+                  </ngx-dropzone-preview>
+                  <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files;index as i"
+                    [file]="f" [removable]="true" (removed)="onRemove(i)">
+                  </ngx-dropzone-image-preview>
+                </ngx-dropzone> -->
+                <div *ngIf="form.get('image').touched && form.get('image').invalid" class="invalid-feedback">
+                  <span>This field is required.</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div id="addproduct-img-collapse">
+              <div class="mb-3">
+                <label class="required mb-0">Mobile Image</label>
+                <div class="mb-2 fs-13">400px * 200px <br>File Format: .webp, .png, .jpg, .jpeg</div>
+                <app-dropzone formControlName="mobImage" accept="image/jpeg,image/png,image/webp" [multiple]="false"
+                  [ngClass]="{'is-invalid': form.get('mobImage').touched && form.get('mobImage').invalid}">
+                </app-dropzone>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <label class="label">Active</label>
+              <app-hb-switch formControlName="active" defaultBoColor="#dfdfdf" size="small" color="#f46a6a">
+              </app-hb-switch>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid"
+          (click)="onSubmit()">{{editId?'Update':'Add'}} Banner</button>
+      </form>
+    </div>
+  </div>
+</div>

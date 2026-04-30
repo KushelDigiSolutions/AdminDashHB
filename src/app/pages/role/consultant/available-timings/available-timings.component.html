@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <app-page-title title="Available Slots" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="searchForm" (submit)="onSearch()">
+                <div class="row mb-5">
+                    <div class="col-sm-4">
+                        <div class="row row-cols-lg-auto gx-3 gy-2 align-items-center">
+                            <div class="col-12">
+                                <div class="input-group clockpicker">
+                                    <input ngbDatepicker [minDate]="minDate" formControlName="date"
+                                        class="form-control" placeholder="yyyy-mm-dd" #date="ngbDatepicker" readonly
+                                        (dateSelect)="onDateChange()">
+                                    <div class="input-group-append" (click)="date.toggle()">
+                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="mb-5">
+                <div *ngIf="!timeSlot.slots.length" class="text-center">
+                    <p>No slots for {{timeSlot.day}}</p>
+                    <a routerLink="/consultant/schedule-timings" class="btn btn-primary">Update Time Availability</a>
+                </div>
+                <label class="visit-btns" [ngClass]="{'visit-btns-disabled': slot.isBooked}" *ngFor="let slot of timeSlot.slots;">
+                    <input id="token_data" type="checkbox" [checked]="slot.available" [disabled]="slot.isBooked" class="form-check-input"
+                        name="slot[]" [value]="slot._id" (change)="onChangeAvailability($event,timeSlot, slot)">
+                    <span class="visit-rsn" data-toggle="tooltip" [title]="slot.startTime12">{{slot.startTime12}} <i *ngIf="slot.isBooked" class="uil-info-circle" placement="top"
+                        ngbTooltip="Slot is Booked. You can't disable it."></i></span>
+                </label>
+            </div>
+            <!-- <div class="text-center">
+                <button type="submit" class="btn btn-primary w-md">Save</button>
+            </div> -->
+        </div>
+    </div>
+</div>

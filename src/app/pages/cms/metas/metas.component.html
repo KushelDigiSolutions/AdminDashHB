@@ -1,0 +1,134 @@
+<div class="container-fluid">
+    <app-page-title
+      title="Metas"
+      [breadcrumbItems]="breadCrumbItems"
+    ></app-page-title>
+  
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <button
+            type="button"
+            routerLink="/metas/add-metas"
+            class="btn btn-success mb-3"
+          >
+            <i class="mdi mdi-plus me-1"></i> Add New Meta
+          </button>
+        </div>
+        <div class="row mb-md-2">
+          <!-- Search -->
+          <div class="col-sm-12 col-md-12">
+            <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+              <label class="d-inline-flex align-items-center"
+                >Search:
+                <input
+                  type="text"
+                  name="searchTerm"
+                  class="form-control form-control-sm ms-2"
+                  aria-controls="tickets-table"
+                  [(ngModel)]="tempsearchTerm"
+              /></label>
+            </div>
+          </div>
+          <!-- End search -->
+        </div>
+        <div class="table-responsive mb-4">
+          <div
+            id="DataTables_Table_0_wrapper"
+            class="dataTables_wrapper dt-bootstrap4 no-footer"
+          >
+            <form>
+              <table
+                class="
+                  table table-centered
+                  datatables
+                  dt-responsive
+                  nowrap
+                  table-card-list
+                "
+                style="border-spacing: 0 12px; width: 100%"
+              >
+                <thead>
+                  <tr class="bg-transparent">
+                    <th style="width: 24px">
+                      <div class="form-check text-center font-size-16">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="ordercheck"
+                        />
+                        <label class="form-check-label" for="ordercheck"></label>
+                      </div>
+                    </th>
+                    <th scope="col" sortable="id" (sort)="onSort($event)">
+                      URL
+                    </th>
+                    <th scope="col" sortable="name" (sort)="onSort($event)">
+                      Meta Title
+                    </th>
+                    <th scope="col" sortable="top" (sort)="onSort($event)">
+                      Meta Description
+                    </th>
+                    <th scope="col" sortable="featured" (sort)="onSort($event)">
+                      Meta Tags
+                    </th>
+                    <th style="width: 170px">{{ "Order.action" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of dataArray; let i = index" class="odd">
+                    <td>
+                      <div class="form-check text-center">
+                        <input
+                          id="ordercheck{{ i + 1 }}"
+                          type="checkbox"
+                          class="form-check-input"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="ordercheck{{ i + 1 }}"
+                          >&nbsp;</label
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      {{data.name}}
+                    </td>
+                    <td>
+                        {{data.metaTitle}}
+                    </td>
+                    <td>
+                        {{data.metaDescription}}
+                    </td>
+                    <td>
+                        <p class="text-truncate d-block" style="width: 150px;">
+                            <span *ngFor="let tag of data.metaTags;let last = last">{{tag}}{{last?'':','}}</span>
+                        </p>
+                    </td>
+                    <td>
+                      <a
+                        [routerLink]="'edit-meta/'+data._id"
+                        class="px-3 text-primary"
+                        placement="top"
+                        ngbTooltip="Edit"
+                        ><i class="uil uil-pen font-size-18"></i
+                      ></a>
+                      <a
+                        (click)="removeMeta(data._id)"
+                        href="javascript:void(0);"
+                        class="px-3 text-danger"
+                        placement="top"
+                        ngbTooltip="Delete"
+                        ><i class="uil uil-trash-alt font-size-18"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,450 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 p-3">
+      <h3 class="mb-5">{{ editId ? "Update" : "Add" }} Health Package</h3>
+      <form [formGroup]="form" (submit)="addHealthPackage()">
+        <div ngbAccordion [closeOthers]="true"  activeIds="toggle-1">
+          <div ngbAccordionItem="toggle-1" >
+            <h2 ngbAccordionHeader><button ngbAccordionButton>
+              <a class="text-dark" style="text-align: left">
+                <div class="d-flex align-items-center">
+                  <div class="me-3">
+                    <div class="avatar-xs">
+                      <div class="avatar-title rounded-circle bg-soft-primary text-primary ">
+                        01
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex-1 overflow-hidden">
+                    <h5 class="font-size-16 mb-1">General Details</h5>
+                    <p class="text-muted text-truncate mb-0">
+                      Fill all information below
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </button></h2>
+            <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+              <div id="hp-general-collapse" class="show">
+                <div class="row mb-3">
+                  <div class="col-lg-12 mb-3">
+                    <label class="required">Thumbnail <small>(300px * 180px)</small></label>
+                    <app-dropzone [ngClass]="{
+                        'is-invalid':
+                          form.get('thumbnail').touched && form.get('thumbnail').invalid
+                      }" formControlName="thumbnail" [multiple]="false" accept="image/jpeg,image/jpg,image/png">
+                    </app-dropzone>
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mb-3">
+                    <label>Package Image <small>(560px * 400px)</small></label>
+                    <app-dropzone [ngClass]="{
+                        'is-invalid':
+                          form.get('images').touched && form.get('images').invalid
+                      }" formControlName="images" accept="image/jpeg,image/jpg,image/png" [multiple]="false">
+                    </app-dropzone>
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 mb-3">
+                    <label class="required" for="name">Health Package Name</label>
+                    <input type="text" class="form-control"
+                      [ngClass]="{'is-invalid': form.get('name').touched && form.get('name').invalid}"
+                      formControlName="name" placeholder="Name" />
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 mb-3">
+                    <label class="required" for="shortDescription">Short Description</label>
+                    <textarea formControlName="shortDescription" rows="3" class="form-control"
+                      [ngClass]="{'is-invalid': form.get('shortDescription').touched && form.get('shortDescription').invalid}"></textarea>
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+
+                  <ng-container formGroupName="price">
+                    <div class="col-lg-6 mb-3">
+                      <label class="required">MRP</label>
+                      <input type="number" class="form-control"
+                        [ngClass]="{'is-invalid': form.get('price').get('mrp').touched && form.get('price').get('mrp').invalid}"
+                        formControlName="mrp" placeholder="e.g. 2500" />
+                      <div class="invalid-feedback">
+                        <span>This field is required.</span>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                      <label class="required">Selling Price</label>
+                      <input type="number" class="form-control"
+                        [ngClass]="{'is-invalid': form.get('price').get('sellingPrice').touched && form.get('price').get('sellingPrice').invalid}"
+                        formControlName="sellingPrice" placeholder="e.g. 2000" />
+                      <div class="invalid-feedback">
+                        <span>This field is required.</span>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="col-lg-6 mb-3">
+                    <label for="metaTitle">Meta Title</label>
+                    <input type="text" class="form-control" name="metaTitle" placeholder="Meta Title"
+                      formControlName="metaTitle" />
+                  </div>
+
+                  <div class="col-lg-12 mt-3">
+                    <label for="metaDescription">Meta Description</label>
+                    <textarea class="form-control text-area" placeholder="Meta Description"
+                      formControlName="metaDescription">
+                    </textarea>
+                  </div>
+
+                  <div class="col-lg-6 mt-3">
+                    <label class="control-label">Choose Health Concerns</label>
+                    <ng-select [items]="healthConcerns" bindLabel="name" bindValue="_id" class="select2"
+                      placeholder="Choose Health Concern" formControlName="healthConcerns" [multiple]="true"
+                      (change)="getTemplates()">
+                    </ng-select>
+                  </div>
+
+                  <div class="col-lg-6 mt-3" *ngIf="!isConsultant">
+                    <label class="control-label required">Choose Consultant</label>
+                    <ng-select class="select2" placeholder="Choose Consultant" formControlName="consultants"
+                      [multiple]="true" [ngClass]="{'is-invalid': form.get('consultants').touched && form.get('consultants').invalid}">
+                      <ng-option disabled value="">Choose Health Concern</ng-option>
+                      <ng-option *ngFor="let item of consultants" [value]="item._id">
+                        {{ item.firstName + " " + item.lastName || "" }}
+                      </ng-option>
+                    </ng-select>
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 mt-3">
+                    <label class="required">No of Appointments</label>
+
+                    <input formControlName="totalAppointments" type="number" class="form-control"
+                      [ngClass]="{'is-invalid': form.get('totalAppointments').touched && form.get('totalAppointments').invalid}"
+                      placeholder="No of Appointments" />
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 mt-3">
+                    <label class="required">Duration</label>
+                    <ng-select class="select2"
+                      [ngClass]="{'is-invalid': form.get('duration').touched && form.get('duration').invalid}"
+                      bindLabel="months" placeholder="Choose Duration" formControlName="duration" [multiple]="false">
+                      <ng-option disabled value="">Choose Duration</ng-option>
+                      <ng-option *ngFor="let item of durations" [value]="item">
+                        {{ item.label }}
+                      </ng-option>
+                    </ng-select>
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mt-3">
+                    <label>Choose Lab Tests <i class="uil-info-circle" placement="top"
+                        ngbTooltip="You can choose multiple tests"></i></label>
+                    <ng-select formControlName="diagnosticPackages" [items]="testList" bindLabel="testNames"
+                      bindValue="_id" placeholder="Search Product" (input)="onSearchProducts($event,'labTests')" [multiple]="true"
+                      [ngClass]="{'is-invalid': (submitted || form.get('diagnosticPackages').touched) && form.get('diagnosticPackages').invalid}">
+                      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                        <div>
+                          <span>{{ item.testNames }}</span>
+                        </div>
+                        <small><b>Test Included: {{ item.childs.length }}</b></small>
+                      </ng-template>
+                    </ng-select>
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mt-3">
+                    <label>Choose Related Articles <i class="uil-info-circle" placement="top"
+                        ngbTooltip="You can choose multiple blogs"></i></label>
+                    <ng-select id="relatedArticle" class="select2" formControlName="relatedBlogs"
+                      placeholder="Search Related Articles" [multiple]="true"
+                      (input)="searchBlogSubject$.next($event.target.value)">
+                      <ng-option disabled value="">
+                        Choose Related Articles
+                      </ng-option>
+                      <ng-option *ngFor="let item of articles" [value]="item._id">
+                        {{ item.title }}
+                      </ng-option>
+                    </ng-select>
+                    <div class="invalid-feedback">
+                      <span>This field is required.</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 mt-3">
+                    <label>Highlights</label>
+                    <div formArrayName="highlights">
+                      <div *ngFor="let highlight of form.get('highlights')['controls'];index as i" class="mb-3">
+                        <input [formControlName]="i" class="form-control" type="text">
+                        <a href="javascript:void(0)" class="addMore text-danger"
+                          (click)="removeHighlight(highlightsFA,i)"><i class="uil uil-minus-circle"></i> Remove</a>
+                      </div>
+                    </div>
+                    <div class="mt-3">
+                      <a href="javascript:void(0)" class="addMore" (click)="addHighlight(highlightsFA)"><i
+                          class="uil uil-plus-circle"></i> Add More</a>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 mt-4">
+                    <div *ngIf="!form.value.variations.length" class="text-center mb-3">
+                      <button class="btn btn-primary" (click)="addVariation()">Add Variation</button>
+                    </div>
+                    <div formArrayName="variations">
+                      <div class="variationGroup mb-4"
+                        *ngFor="let control of form.get('variations')['controls']; index as i" [formGroupName]="i">
+                        <span class="groupName">Varation #{{i+1}}</span>
+                        <div class="row">
+                          <div class="col-lg-6 mb-3">
+                            <label class="required" for="name">Health Package Name</label>
+                            <input type="text" class="form-control"
+                              [ngClass]="{'is-invalid': control.get('name').touched && control.get('name').invalid}"
+                              formControlName="name" placeholder="Name" />
+                            <div class="invalid-feedback">
+                              <span>This field is required.</span>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-6 mb-3">
+                            <label class="required">Duration</label>
+                            <ng-select class="select2"
+                              [ngClass]="{'is-invalid': control.get('duration').touched && control.get('duration').invalid}"
+                              bindLabel="months" placeholder="Choose Duration" formControlName="duration"
+                              [multiple]="false">
+                              <ng-option disabled value="">Choose Duration</ng-option>
+                              <ng-option *ngFor="let item of durations" [value]="item">
+                                {{ item.label }}
+                              </ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback">
+                              <span>This field is required.</span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6 mb-3">
+                            <label class="required">No. of Appointments</label>
+                            <input formControlName="totalAppointments" type="number" class="form-control"
+                              [ngClass]="{'is-invalid': control.get('totalAppointments').touched && control.get('totalAppointments').invalid}">
+                            <div class="invalid-feedback">
+                              <span>This field is required.</span>
+                            </div>
+                          </div>
+                          <ng-container formGroupName="price">
+                            <div class="col-sm-6 mb-3">
+                              <label class="required">MRP</label>
+                              <input type="number" class="form-control"
+                                [ngClass]="{'is-invalid': control.get('price').get('mrp').touched && control.get('price').get('mrp').invalid}"
+                                formControlName="mrp" placeholder="e.g. 2500" />
+                              <div class="invalid-feedback">
+                                <span>This field is required.</span>
+                              </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                              <label>Selling Price</label>
+                              <input formControlName="sellingPrice" type="number" class="form-control">
+                            </div>
+                          </ng-container>
+                          <div class="col-md-12 my-3">
+                            <div class="p-3" style="border: 1px solid #ccc;">
+                              <label>Highlights</label>
+                              <div formArrayName="highlights">
+                                <div *ngFor="let highlight of control.get('highlights')['controls'];index as i"
+                                  class="mb-3">
+                                  <input [formControlName]="i" class="form-control" type="text">
+                                  <a href="javascript:void(0)" class="addMore text-danger"
+                                    (click)="removeHighlight(control.get('highlights'), i)"><i
+                                      class="uil uil-minus-circle"></i> Remove Highlight</a>
+                                </div>
+                              </div>
+                              <div class="my-3">
+                                <a href="javascript:void(0)" class="addMore"
+                                  (click)="addHighlight(control.get('highlights'))"><i class="uil uil-plus-circle"></i>
+                                  Add Highlight</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <a href="javascript:void(0)" class="addMore text-danger" (click)="removeVariation(i)"><i
+                            class="uil uil-minus-circle"></i> Remove</a>
+                      </div>
+                      <div *ngIf="form.value.variations.length" class="mt-3">
+                        <a href="javascript:void(0)" class="addMore" (click)="addVariation()"><i
+                            class="uil uil-plus-circle"></i> Add More</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-check form-switch mb-3" dir="ltr">
+                  <input formControlName="published" type="checkbox" class="form-check-input" id="PublishSwitch1">
+                  <label class="form-check-label" for="PublishSwitch1"> Publish</label>
+                </div>
+                <div class="form-check form-switch mb-3" dir="ltr">
+                  <input formControlName="active" type="checkbox" class="form-check-input" id="ActiveSwitch1">
+                  <label class="form-check-label" for="ActiveSwitch1"> Active</label>
+                </div>
+
+              </div>
+            </ng-template></div></div>
+          </div>
+          <div ngbAccordionItem="toggle-2" >
+            <h2 ngbAccordionHeader><button ngbAccordionButton>
+              <a class="text-dark" style="text-align: left">
+                <div class="d-flex align-items-center">
+                  <div class="me-3">
+                    <div class="avatar-xs">
+                      <div class="avatar-title rounded-circle bg-soft-primary text-primary ">
+                        02
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex-1 overflow-hidden">
+                    <h5 class="font-size-16 mb-1">Recurring Notifications</h5>
+                    <p class="text-muted text-truncate mb-0">
+                      Fill all information below
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </button></h2>
+            <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+              <h5 class="mt-3 mb-3 text-center">Default Notifications</h5>
+              <div class="table-responsive mb-4">
+                <table class="table table-centered mb-0 align-middle">
+                  <thead>
+                    <tr>
+                      <!-- <th scope="col" style="width: 50px">
+                        <div class="form-check font-size-16">
+                          <input type="checkbox" class="form-check-input" id="contacusercheck" />
+                          <label class="form-check-label" for="contacusercheck"></label>
+                        </div>
+                      </th> -->
+                      <th scope="col">Image</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Body</th>
+                      <th scope="col">Type</th>
+                      <th scope="col" style="min-width: 65px">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of defaultNotifications;let index = index">
+                      <!-- <td>
+                        <div class="form-check font-size-16">
+                          <input id="contacusercheck{{ index }}" type="checkbox" class="form-check-input" />
+                          <label class="form-check-label" for="contacusercheck{{ index }}">&nbsp;</label>
+                        </div>
+                      </td> -->
+                      <td>
+                        <img class="avatar-sm" *ngIf="data.templateId?.image?.savedName"
+                          [src]="s3Base + data.templateId.image.savedName">
+                      </td>
+                      <td>
+                        <ngb-highlight [result]="data.templateId?.title">
+                        </ngb-highlight>
+                      </td>
+                      <td>
+                        <ngb-highlight [result]="data.templateId?.message">
+                        </ngb-highlight>
+                      </td>
+                      <td>
+                        <ngb-highlight [result]="typesObj[data.notificationType]">
+                        </ngb-highlight>
+                      </td>
+                      <td>
+                        <ngb-highlight [result]="data.time">
+                        </ngb-highlight>
+                      </td>
+                      <!-- <td>
+                        <ul class="list-inline mb-0 text-end">
+                          <li class="list-inline-item">
+                            <a [routerLink]="['../', data._id]" href="javascript:void(0);" class="px-2 text-primary"
+                              ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                          </li>
+                        </ul>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <h5 class="mt-3 mb-3 text-center">Health Package Notifications</h5>
+              <div class="mt-4" formArrayName="notifications" id="hp-noti-collapse">
+                <div class="variationGroup mb-4" *ngFor="let control of notificationsFA.controls; index as i"
+                  [formGroupName]="i">
+                  <h5 class="groupName">Notification #{{i+1}}</h5>
+                  <div class="row">
+                    <div class="col-md-8 mb-3">
+                      <label>Choose Template</label>
+                      <div class="row">
+                        <div class="col">
+                          <ng-select formControlName="templateId" [items]="templates" bindLabel="title" bindValue="_id"
+                            placeholder="Search template" (input)="onSearchProducts($event, 'templates')"
+                            [ngClass]="{'is-invalid': control.get('templateId').touched && control.get('templateId').invalid}">
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                              <div>
+                                <span class="oneLine">{{ item.title }}</span>
+                              </div>
+                              <small><b class="oneLine">{{ item.message }}</b></small>
+                            </ng-template>
+                          </ng-select>
+
+                        </div>
+                        <div class="col-auto">
+                          <a routerLink="/notifications/templates/create" target="_blank" [queryParams]="{redir: url}"
+                            class="btn btn-primary me-3">Create Template</a>
+                          <i class="uil-redo pointer" placement="top" ngbTooltip="Refresh list"
+                            (click)="getTemplates()"></i>
+                        </div>
+                      </div>
+
+                      <div *ngIf="control.get('templateId').touched && control.get('templateId').invalid"
+                        class="invalid-feedback">
+                        This field is required</div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label>Time</label>
+                      <select formControlName="time" class="form-control"
+                      [ngClass]="{'is-invalid': control.get('time').touched && control.get('time').invalid}">
+                        <option value="">Choose Time</option>
+                        <option *ngFor="let slot of timeSlots" [value]="slot.value">{{slot.label}}</option>
+                      </select>
+
+                      <div *ngIf="control.get('time').touched && control.get('time').invalid" class="invalid-feedback">
+                        This field is required</div>
+                    </div>
+                  </div>
+                  <a href="javascript:void(0)" class="addMore text-danger" (click)="removeNotification(i)"><i
+                      class="uil uil-minus-circle"></i> Remove</a>
+                </div>
+              </div>
+              <div *ngIf="notificationsFA.length" class="my-3">
+                <a href="javascript:void(0)" class="addMore" (click)="addNotification()"><i
+                    class="uil uil-plus-circle"></i>
+                  Add Notification</a>
+              </div>
+              <div *ngIf="!notificationsFA.length" class="text-center">
+                <button type="button" class="btn btn-primary" (click)="addNotification()">Add Notification</button>
+              </div>
+            </ng-template></div></div>
+          </div>
+        </div>
+        <button class="btn btn-primary mt-3" [disabled]="form.invalid">
+          {{ editId ? "Update" : "Add" }} Health Package
+        </button>
+      </form>
+
+    </div>
+  </div>
+</div>

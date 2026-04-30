@@ -1,0 +1,443 @@
+{
+  "HEADER": {
+    "SEARCH": "Search...",
+    "MEGA_MENU": "Mega Menu",
+    "NOTIFICATIONS": {
+      "TITLE": "Notifications",
+      "VIEW_ALL": "Mark all as read",
+      "LOAD_MORE": "View More..",
+      "FIRST": {
+        "TITLE": "Your order is placed",
+        "TEXT": "If several languages coalesce the grammar",
+        "TIME": "3 min ago"
+      },
+      "SECOND": {
+        "TITLE": "James Lemire",
+        "TEXT": "It will seem like simplified English.",
+        "TIME": "1 hours ago"
+      },
+      "THIRD": {
+        "TITLE": "Your item is shipped",
+        "TEXT": "If several languages coalesce the grammar",
+        "TIME": "3 min ago"
+      },
+      "FOUR": {
+        "TITLE": "Salena Layfield",
+        "TEXT": "As a skeptical Cambridge friend of mine occidental.",
+        "TIME": "1 hours ago"
+      }
+    },
+    "LOGIN": {
+      "PROFILE": "Profile",
+      "MY_WALLET": "My Wallet",
+      "SETTINGS": "Settings",
+      "LOCK_SCREEN": "Lock screen",
+      "LOGOUT": "Logout"
+    }
+  },
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Menu"
+    },
+    "DASHBOARDS": {
+      "TEXT": "Dashboard"
+    },
+    "LAYOUTS": {
+      "TEXT": "Layouts",
+      "LIST": {
+        "HORIZONTAL": "Horizontal",
+        "LIGHTSIDEBAR": "Light Sidebar",
+        "COMPACTSIDEBAR": "Compact Sidebar",
+        "ICONSIDEBAR": "Icons Sidebar",
+        "BOXED": "Boxed Layout",
+        "COLOREDSIDEBAR": "Colored Sidebar",
+        "VERTICAL": "Vertical",
+        "LIGHTTOPBAR": "Light Topbar",
+        "COLOREDHEADER": "Colored Header",
+        "DARKSIDEBAR": "Dark Sidebar",
+        "BOXEDWITH": "Boxed With",
+        "PRELOADER": "Preloader"
+      }
+    },
+    "APPS": {
+      "TEXT": "Apps"
+    },
+    "CALENDAR": {
+      "TEXT": "Calendar"
+    },
+    "CHAT": {
+      "TEXT": "Chat",
+      "BADGE": "New"
+    },
+    "ECOMMERCE": {
+      "TEXT": "Ecommerce",
+      "LIST": {
+        "PRODUCTS": "Products",
+        "PRODUCTDETAIL": "Product Detail",
+        "ORDERS": "Orders List",
+        "NEWORDER": "Create New",
+        "CUSTOMERS": "Customers",
+        "CART": "Cart",
+        "CHECKOUT": "Checkout",
+        "SHOPS": "Shops",
+        "ADDPRODUCT": "Add Product",
+        "MENU": {
+          "TEXT": "Menu"
+        },
+        "CATEGORIES": {
+          "CATEGORIES": "Categories",
+          "CATEGORIESLIST": "Category List"
+        },
+        "LIFESTYLECATEGORIES": {
+          "LIFESTYLECATEGORIES": "Lifestyle Categories",
+          "LIFESTYLECATEGORIESLIST": "Lifestyle Category List"
+        },
+        "BRANDS": {
+          "BRANDS": "Brands",
+          "BRANDSLIST": "Brand List"
+        },
+        "HEALTHCONCERNS": {
+          "HEALTHCONCERNS": "Health Concern",
+          "HEALTHCONCERNSLIST": "Health Concern List"
+        },
+        "BANNERS": {
+          "BANNERS": "Banners",
+          "BANNERSLIST": "Banner List",
+          "ADDNEW": "Add new"
+        },
+        "COUPONS": {
+          "COUPONS": "Coupons",
+          "COUPONSLIST": "Coupons List",
+          "ADDNEW": "Add Coupon"
+        },
+        "TYPES": {
+          "TYPES": "Types",
+          "ADDNEW": "Add New Type"
+        },
+        "SPECIALITY": {
+          "SPECIALITY": "Speciality",
+          "SPECIALITYLIST": "Speciality List",
+          "ADDNEW": "Add new Speciality"
+        },
+        "HEALTHPACKAGES": {
+          "HEALTHPACKAGES": "Health Packages",
+          "HEALTHPACKAGESLIST": "Health Packages List",
+          "ADDNEW": "Add new Health Package",
+          "NOTIFICATION_TEMPLATES": "Notification Templates"
+        },
+        "METAS": {
+          "METAS": "Metas",
+          "METASLIST": "Metas List",
+          "ADDNEW": "Add new Meta"
+        },
+        "SETTINGS": {
+          "SETTINGS": "Settings",
+          "SETTINGSLIST": "Setting List",
+          "ADDNEW": "Add new Setting"
+        }
+      }
+    },
+    "CONSULTATION": {
+      "TEXT": "Consultation",
+      "LIST": {
+        "APPOINTMENTS": {
+          "TEXT": "Appointments",
+          "LIST": "Appointment List",
+          "ADDNEW": "Create Appointment"
+        },
+        "DOCTORS": {
+          "TEXT": "Doctors",
+          "LIST": "Doctors List",
+          "ADDNEW": "Add Doctor",
+          "PENDING": "Pending Request",
+          "PAYOUTS": "Payouts",
+          "EARNINGLIST": "Earning List",
+          "TYPE": "Doctor Types",
+          "SPECIALIZATION": "Specialization"
+        }
+      }
+    },
+    "PAYOUTS": {
+      "LIST": "Payout List"
+    },
+    "PROMOTION": {
+      "TEXT": "Promotion",
+      "LIST": {
+        "APPOINTMENTS": {
+          "TEXT": "Appointments",
+          "LIST": "Appointment List",
+          "ADDNEW": "Create Appointment"
+        }
+      }
+    },
+    "LIFESTYLE": {
+      "TEXT": "Lifestyle Tips",
+      "LIST": {
+        "BLOGS": {
+          "TEXT": "Blogs",
+          "LIST": "Blogs List",
+          "ADDNEW": "Add Blog"
+        }
+      }
+    },
+    "EMAIL": {
+      "TEXT": "Email",
+      "LIST": {
+        "INBOX": "Inbox",
+        "READEMAIL": "Read Email"
+      }
+    },
+    "INVOICES": {
+      "TEXT": "Invoices",
+      "LIST": {
+        "INVOICELIST": "Invoice List",
+        "INVOICEDETAIL": "Invoice Detail"
+      }
+    },
+    "CONTACTS": {
+      "TEXT": "Users",
+      "LIST": {
+        "USERGRID": "User Grid",
+        "USERLIST": "User List",
+        "PROFILE": "Profile"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Pages"
+    },
+    "AUTHENTICATION": {
+      "TEXT": "Authentication",
+      "LIST": {
+        "LOGIN": "Login",
+        "REGISTER": "Register",
+        "RECOVERPWD": "Recover Password",
+        "LOCKSCREEN": "Lock screen"
+      }
+    },
+    "EXTRAS": {
+      "TEXT": "Extra Pages"
+    },
+    "UTILITY": {
+      "TEXT": "Utility",
+      "LIST": {
+        "STARTER": "Starter Page",
+        "MAINTENANCE": "Maintenance",
+        "COMINGSOON": "Coming Soon",
+        "TIMELINE": "Timeline",
+        "FAQS": "FAQs",
+        "PRICING": "Pricing",
+        "ERROR404": "Error 404",
+        "ERROR500": "Error 500"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "Components"
+    },
+    "UIELEMENTS": {
+      "TEXT": "UI Elements",
+      "LIST": {
+        "ALERTS": "Alerts",
+        "BUTTONS": "Buttons",
+        "CARDS": "Cards",
+        "CAROUSEL": "Carousel",
+        "DROPDOWNS": "Dropdowns",
+        "GRID": "Grid",
+        "IMAGES": "Images",
+        "MODALS": "Modals",
+        "RANGESLIDER": "Range Slider",
+        "SESSIONTIMEOUT": "Session Timeout",
+        "PROGRESSBAR": "Progress Bars",
+        "SWEETALERT": "Sweet Alert",
+        "TABS": "Tabs & Accordions",
+        "TYPOGRAPHY": "Typography",
+        "VIDEO": "Video",
+        "GENERAL": "General",
+        "COLORS": "Colors",
+        "CROPPER": "Image Cropper",
+        "RATING": "Rating"
+      }
+    },
+    "FORMS": {
+      "TEXT": "Forms",
+      "BADGE": "8",
+      "LIST": {
+        "ELEMENTS": "Basic Elements",
+        "VALIDATION": "Validation",
+        "ADVANCED": "Advanced",
+        "EDITOR": "Editor",
+        "FILEUPLOAD": "File Upload",
+        "REPEATER": "Repeater",
+        "WIZARD": "Wizard",
+        "MASK": "Mask"
+      }
+    },
+    "TABLES": {
+      "TEXT": "Tables",
+      "LIST": {
+        "BASIC": "Basic Tables",
+        "ADVANCED": "Advanced Table"
+      }
+    },
+    "CHARTS": {
+      "TEXT": "Charts",
+      "LIST": {
+        "APEX": "Apex",
+        "CHARTJS": "Chartjs",
+        "CHARTIST": "Chartist",
+        "ECHART": "E Chart"
+      }
+    },
+    "ICONS": {
+      "TEXT": "Icons",
+      "LIST": {
+        "UNICONS": "Unicons",
+        "BOXICONS": "Boxicons",
+        "MATERIALDESIGN": "Material Design",
+        "DRIPICONS": "Dripicons",
+        "FONTAWESOME": "Font Awesome"
+      }
+    },
+    "MAPS": {
+      "TEXT": "Maps",
+      "LIST": {
+        "GOOGLEMAP": "Google Maps"
+      }
+    },
+    "MULTILEVEL": {
+      "TEXT": "Multi Level",
+      "LIST": {
+        "LEVEL1": {
+          "1": "Level 1.1",
+          "2": "Level 1.2",
+          "LEVEL2": {
+            "1": "Level 2.1",
+            "2": "Level 2.2"
+          }
+        }
+      }
+    },
+    "CONSULTANT": {
+      "APPTS": "Appointments",
+      "PROFILE": "Profile Settings",
+      "MANAGESLOTS": "Schedule Timings",
+      "AVAILSLOTS": "Available Slots",
+      "SUBSCRIBED_HEALTHPACKAGES": "Subscribed Packages",
+      "ACCOUNTS": "Accounts",
+      "CHANGE_PWD": "Change Password"
+    },
+    "CORPORATE": {
+      "HOME": "Home",
+      "CONSULTANTS": "Consultants",
+      "COUPONS": "Coupons",
+      "WEBINARS": "Webinars",
+      "LIFESTYLETIPS": "Lifestyle Tips"
+    }
+  },
+  "Order": {
+    "orderId": "ID",
+    "date": "Date",
+    "billingName": "Billing Name",
+    "shippingName": "Shipping Name",
+    "pinCode": "Ship to Pincode",
+    "products": "Products",
+    "total": "Total",
+    "paymentMethod": "Payment Method",
+    "paymentStatus": "Payment Status",
+    "orderStatus": "Order Status",
+    "action": "Action"
+  },
+  "Categories": {
+    "categoryId": "Categoory Id",
+    "categoryName": "Category Name",
+    "categoryTop": "Top Category",
+    "categoryFeatured": "Featured Category",
+    "image": "Image",
+    "addCategory": "Add Category",
+    "addLifeStyleCategory": "Add Lifestyle Category",
+    "slug": "Slug"
+  },
+  "Brands": {
+    "brandId": "Brand Id",
+    "brandName": "Brand Name",
+    "brandStatus": "Status",
+    "top": "Top",
+    "logo": "Logo",
+    "addBrands": "Add Brands"
+  },
+  "HealthConcerns": {
+    "healthConcernId": "Health Concern Id",
+    "logo": "Logo",
+    "healthConcernName": "Health Concern Name",
+    "visibleHome": "Visible Home",
+    "visibleLifestyle": "Visible Lifestyle",
+    "visibleConsult": "Visible Consult Us",
+    "status": "Status",
+    "top": "Top",
+    "featured": "Featured",
+    "addHealthConcern": "Add Health Concern"
+  },
+  "Coupons": {
+    "couponCode": "Coupon Code",
+    "couponType": "Coupon Type",
+    "status": "Status",
+    "validity": "Validity"
+  },
+  "Types": {
+    "name": "Name",
+    "status": "Status"
+  },
+  "Products": {
+    "productList": "Product List",
+    "addProduct": "Add Product",
+    "attributes": "Attributes",
+    "variations": "Variations",
+    "productId": "Product ID",
+    "image": "Image",
+    "productName": "Product Name",
+    "brandName": "Brand Name",
+    "quantityAvailable": "Quantity",
+    "total": "Total",
+    "mrp": "MRP",
+    "sellingPrice": "Selling Price",
+    "qtySold": "Sold Units",
+    "status": "Active",
+    "approved": "Approved",
+    "action": "Action",
+    "attributeSetId": "Attribute Set ID",
+    "attributeSetName": "Attribute Set Name",
+    "attributeSetSlug": "Slug",
+    "filterable": "Filterable",
+    "attributeName": "Attribute Name",
+    "variationId": "Variation id",
+    "variationSetName": "Variation Set Name",
+    "variationSlug": "Slug",
+    "variationName": "variation Name",
+    "taxes": "Taxes"
+  },
+  "Blogs": {
+    "blogId": "Blog Id",
+    "blogTitle": "Title",
+    "blogType": "Type",
+    "related": "Related",
+    "blogAuthor": "Author",
+    "blogStatus": "Status",
+    "published": "Published",
+    "popular": "Popular",
+    "logo": "Featured Image"
+  },
+  "Banners": {
+    "title": "Title",
+    "type": "Type",
+    "link": "Link",
+    "image": "Image",
+    "status": "Status"
+  },
+  "Customer": {
+    "customerId": "Customer Id",
+    "name": "Name",
+    "email": "Email",
+    "joinDate": "Join Date",
+    "status": "Status",
+    "action": "Action"
+  }
+}

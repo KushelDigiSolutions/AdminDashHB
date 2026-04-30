@@ -1,0 +1,221 @@
+<div class="container-fluid">
+  <app-page-title title="Blogs" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <div class="float-end">
+          <form class="d-inline-flex mb-3">
+            <label class="form-check-label my-2 me-2" for="order-selectinput">Blogs</label>
+            <select class="form-select" id="order-selectinput">
+              <option selected>All</option>
+              <option value="1">Active</option>
+              <option value="2">Unpaid</option>
+            </select>
+          </form>
+        </div>
+        <button routerLink="/lifestyle/add-blog" type="button" class="btn btn-success mb-3">
+          <i class="mdi mdi-plus me-1"></i> Add New Blogs
+        </button>
+      </div>
+      <div class="row mb-md-2">
+        <div class="col-sm-12 col-md-6">
+          <div class="dataTables_length">
+            <label class="d-inline-flex align-items-center">Show<select name="pageSize" [(ngModel)]="pageSize" class="
+                    custom-select custom-select-sm
+                    form-control form-control-sm form-select form-select-sm
+                  " (change)="changeValue(pageSize,'limit')">
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="25">25</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+              </select>
+              entries</label>
+          </div>
+        </div>
+        <!-- Search -->
+        <div class="col-sm-12 col-md-6">
+          <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+            <form #search="ngForm" (submit)="onSearch(search)">
+              <label class="d-inline-flex align-items-center">Search:
+                <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                  aria-controls="tickets-table" ngModel /></label>
+            </form>
+          </div>
+        </div>
+        <!-- End search -->
+      </div>
+      <div class="table-responsive mb-4">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+          <form>
+            <table class="
+                  table table-centered
+                  datatables
+                  dt-responsive
+                  nowrap
+                  table-card-list
+                " style="border-spacing: 0 12px; width: 100%">
+              <thead>
+                <tr class="bg-transparent">
+                  <th style="width: 24px">
+                    <div class="form-check text-center font-size-16">
+                      <input type="checkbox" class="form-check-input" id="ordercheck" />
+                      <label class="form-check-label" for="ordercheck"></label>
+                    </div>
+                  </th>
+                  <th scope="col" sortable="id">
+                    {{ "Blogs.logo" | translate }}
+                  </th>
+                  <th scope="col" sortable="name">
+                    Date
+                  </th>
+                  <th scope="col" sortable="name">
+                    {{ "Blogs.blogTitle" | translate }}
+                  </th>
+                  <!-- <th scope="col" sortable="name">
+                    {{ "Blogs.blogType" | translate }}
+                  </th> -->
+                  <th *ngIf="isShowHerbCol()" scope="col" sortable="status">
+                    {{ "isHerb" | translate }}
+                  </th>
+                  <th *ngIf="isShowPopularCol()" scope="col" sortable="status">
+                    {{ "Blogs.popular" | translate }}
+                  </th>
+                  <th *ngIf="isShowStatusCol()" scope="col" sortable="status">
+                    {{ "Blogs.blogStatus" | translate }}
+                  </th>
+                  <th scope="col" sortable="status">
+                    Editor Status
+                  </th>
+                  <th scope="col" sortable="status">
+                    Publisher Status
+                  </th>
+                  <th *ngIf="isShowPublishCol()" scope="col">
+                    Published
+                  </th>
+                  <th *ngIf="isShowShortCol()" scope="col" sortable="status">
+                    isShort
+                  </th>
+                  <th style="width: 170px">{{ "Order.action" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of dataArray; let i = index" class="odd">
+                  <td>
+                    <div class="form-check text-center">
+                      <input id="ordercheck{{ i + 1 }}" type="checkbox" class="form-check-input" />
+                      <label class="form-check-label" for="ordercheck{{ i + 1 }}">&nbsp;</label>
+                    </div>
+                  </td>
+                  <td [width]="100">
+                    <img style="width: 100px;" *ngIf="data.thumbnail; else featuredImage "
+                      [src]="imgUrl+data.thumbnail.savedName" />
+                    <!-- {{imgUrl+data.featuredImage.savedName}} -->
+                    <ng-template #featuredImage>
+                      <img style="width: 100px;" [src]="imgUrl+data.featuredImage.savedName" />
+                    </ng-template>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.createdAt|date: 'medium'"
+                      [term]="service?.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.title" [term]="service?.searchTerm"></ngb-highlight>
+                  </td>
+                  <!-- <td>
+                    <ngb-highlight [result]="data.blogType" [term]="service?.searchTerm"></ngb-highlight>
+                  </td> -->
+                  <td *ngIf="isShowHerbCol()">
+                    <div>
+                      <app-hb-switch color="#34c38f"
+                        [isLoading]="data.toggleisHerbLoading || false" [beforeChange]="toggleFxnisHerb(data,'isHerb')"
+                        [checked]="data?.isHerbRelated">
+                      </app-hb-switch>
+                    </div>
+                  </td>
+                  <td *ngIf="isShowPopularCol()">
+                    <div>
+                      <app-hb-switch color="#34c38f"
+                        [isLoading]="data.togglePopularLoading || false" [beforeChange]="toggleFxn(data,'popular')"
+                        [checked]="data?.popular">
+                      </app-hb-switch>
+                    </div>
+                  </td>
+                  <td *ngIf="isShowStatusCol()">
+                    <div>
+                      <app-hb-switch color="#34c38f"
+                        [isLoading]="data.toggleStatusLoading || false" [beforeChange]="toggleFxn(data,'status')"
+                        [checked]="data?.status">
+                      </app-hb-switch>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge rounded-pill"
+                      [ngClass]="{'bg-warning':data.isApproverApproved.approverStatus =='pending',
+                      'bg-success':data.isApproverApproved.approverStatus =='approved',
+                      'bg-danger':data.isApproverApproved.approverStatus =='rejected'}">{{data.isApproverApproved.approverStatus | titlecase}}</span>
+                  </td>
+                  <td>
+                    <span class="badge rounded-pill"
+                      [ngClass]="{'bg-warning':data.isPublisherApproved.publisherStatus =='pending',
+                      'bg-success':data.isPublisherApproved.publisherStatus =='approved',
+                      'bg-danger':data.isPublisherApproved.publisherStatus =='rejected'}">{{data.isPublisherApproved.publisherStatus |
+                      titlecase}}</span>
+                  </td>
+                  <td *ngIf="isShowPublishCol()">
+                    <div>
+                      <app-hb-switch color="#34c38f"
+                        [isLoading]="data.togglePublishedLoading || false" [beforeChange]="toggleFxn(data,'published')"
+                        [checked]="data?.isPublished" [disabled]="!canTogglePublished(data)">
+                      </app-hb-switch>
+                    </div>
+                  </td>
+                  <td *ngIf="isShowShortCol()">
+                    <div>
+                      <!-- [loading]="data.isShortLength || false" -->
+                      <app-hb-switch color="#34c38f"
+                        [beforeChange]="toggleFxnisShortLength(data,'isShortLength')"
+                        [isLoading]="data.toggleisShortLoading || false" [checked]="data?.isShortLength">
+                      </app-hb-switch>
+                    </div>
+                  </td>
+                  <td>
+                    <a [routerLink]="['/lifestyle/blogs/view', data._id]" href="javascript:void(0);"
+                      class="px-2 text-success" placement="top" ngbTooltip="Review"><i
+                        class="mdi mdi-eye-check-outline font-size-18"></i></a>
+                    <a [routerLink]="['/lifestyle/blogs/edit', data._id]" href="javascript:void(0);"
+                      class="px-2 text-primary" [ngClass]="{'disabled': !canEdit(data)}" placement="top"
+                      ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                    <a href="javascript:void(0);" class="px-2 text-danger" [ngClass]="{'disabled': !canDelete(data)}"
+                      placement="top" ngbTooltip="Delete" (click)="removeBlog(data)"><i
+                        class="uil uil-trash-alt font-size-18"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="float-end" *ngIf="count">
+              <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [boundaryLinks]="true"
+                (pageChange)="changeValue($event,'page')">
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="form-group d-flex flex-nowrap px-2">
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label mr-2 ml-1">Page</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)"
+                        (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        of {{ pages.length }}</span>
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

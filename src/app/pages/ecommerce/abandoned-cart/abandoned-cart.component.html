@@ -1,0 +1,235 @@
+<!-- <div>
+    <div ngbAccordion  [closeOthers]="true">
+      <div ngbAccordionItem="static-1" >
+        <h2 ngbAccordionHeader><button ngbAccordionButton>
+          <h6 class="mb-0">
+            Total Orders: {{ ordersData.count }} | Download Records
+          </h6>
+          <i class="mdi mdi-chevron-down"></i>
+        </button></h2>
+        <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+          <div class="row">
+            <div class="col-md-6">
+              <form (ngSubmit)="filterOrders()" [formGroup]="filterFG"
+                class="row row-cols-lg-auto gx-3 gy-2 align-items-center">
+                <div class="col-12">
+                  <input class="form-control" type="text" placeholder="Order Id" formControlName="orderId" />
+                </div>
+                <div class="col-12">
+                  <input class="form-control" type="text" placeholder="User Name" formControlName="user" />
+                </div>
+                <div class="col-12">
+                  <ng-select class="select2" formControlName="orderStatus">
+                    <ng-option disabled value="">Order Status</ng-option>
+                    <ng-option *ngFor="let item of orderStatus" value="{{ item }}">{{ item | titlecase }}</ng-option>
+                  </ng-select>
+                </div>
+                <div class="col-12">
+                  <ng-select class="select2" formControlName="paymentStatus">
+                    <ng-option disabled value="">Payment Status</ng-option>
+                    <ng-option *ngFor="let item of paymentStatus" value="{{ item }}">{{ item | titlecase }}</ng-option>
+                  </ng-select>
+                </div>
+  
+                <div class="col-12 col-lg-12">
+                  <div class="row d-flex">
+                    <div class="col-6">
+                      <label for="startDate">Start Date</label>
+                      <input class="form-control" type="date" formControlName="startDate" placeholder="Start Date" />
+                    </div>
+                    <div class="col-6">
+                      <label for="endDate">End Date</label>
+                      <input class="form-control" type="date" formControlName="endDate" [max]="maxDate"
+                        placeholder="End Date" />
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-12 w-100">
+                  <button class="btn btn-primary" type="submit">Apply</button>
+                  <button class="btn btn-primary ms-3" (click)="resetFilters()">Clear</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+              <form [formGroup]="recordsFG" (submit)="getRecords()"
+                class="row row-cols-lg-auto gx-3 gy-2 align-items-center">
+                <div class="col-12">
+                  <input class="form-control" [ngClass]="{
+                      'is-invalid':
+                        recordsFG.get('startDate').touched &&
+                        recordsFG.get('startDate').invalid
+                    }" type="date" formControlName="startDate" placeholder="Start Date" />
+                </div>
+                <div class="col-12">
+                  <input class="form-control" type="date" formControlName="endDate" [max]="maxDate"
+                    placeholder="End Date" />
+                </div>
+                <div class="col-12 w-25">
+                  <ng-select class="select2" formControlName="type">
+                    <ng-option value="slips" selected>Packaging Slips</ng-option>
+                    <ng-option value="invoices">Invoices</ng-option>
+                    <ng-option value="gstInvoice">GST Invoice</ng-option>
+                  </ng-select>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary" [disabled]="recordsFG.invalid">
+                    View Records
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </ng-template></div></div>
+      </div>
+    </div>
+  </div> -->
+<div class="container-fluid">
+  <app-page-title title="Abandoned Cart" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <!-- <div class="float-end">
+          <form class="d-inline-flex mb-3">
+            <label class="form-check-label my-2 me-2" for="order-selectinput">Cart</label>
+            <select class="form-select" id="order-selectinput">
+              <option selected>All</option>
+              <option value="1">Active</option>
+              <option value="2">Unpaid</option>
+            </select>
+          </form>
+        </div> -->
+        <!-- <a routerLink="create-order" type="button" class="btn btn-success mb-3">
+          <i class="mdi mdi-plus me-1"></i> Add New Order
+        </a> -->
+      </div>
+      <div class="row mb-md-2">
+        <div class="col-sm-12 col-md-6">
+          <div class="dataTables_length">
+            <label class="d-inline-flex align-items-center">Show<select name="pageSize" [(ngModel)]="pageSize"
+                (change)="changeValue(pageSize, 'limit')" class="
+                    custom-select custom-select-sm
+                    form-control form-control-sm form-select form-select-sm
+                  ">
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="25">25</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+              </select>
+              entries</label>
+          </div>
+        </div>
+        <!-- Search -->
+        <div class="col-sm-12 col-md-6">
+          <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+            <label class="d-inline-flex align-items-center">Search:
+              <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                aria-controls="tickets-table" [(ngModel)]="service.searchTerm" /></label>
+          </div>
+
+          <!-- <app-bulk-export *ngIf="carts.length" [data]="carts" type="order"></app-bulk-export> -->
+        </div>
+        <!-- End search -->
+      </div>
+      <div class="table-responsive mb-4">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+          <form>
+            <table class="
+                  table table-centered
+                  datatables
+                  dt-responsive
+                  nowrap
+                  table-card-list
+                " style="border-spacing: 0 12px; width: 100%">
+              <thead>
+                <tr class="bg-transparent">
+                  <!-- <th style="width: 24px">
+                      <div class="form-check text-center font-size-16">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="ordercheck"
+                        />
+                        <label class="form-check-label" for="ordercheck"></label>
+                      </div>
+                    </th> -->
+                  <th scope="col">
+                    Date
+                  </th>
+                  <th scope="col" sortable="date" (sort)="onSort($event)">
+                    Name
+                  </th>
+                  <th scope="col">
+                    Phone/Email
+                  </th>
+                  <th scope="col">
+                    Products
+                  </th>
+                  <th scope="col">
+                    Total Quantity
+                  </th>
+                  <th scope="col">
+                    Amount
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of carts; let i = index" class="odd">
+                  <td>
+                    <ngb-highlight [result]="data.updatedAt | date: 'MMM d, y, h:mm a'" [term]="service.searchTerm">
+                    </ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.fullName" [term]="service.searchTerm"></ngb-highlight> <br>
+                  </td>
+                  <td>
+                    <ngb-highlight *ngIf="data.userId" [result]="data.userId.phone" [term]="service.searchTerm">
+                    </ngb-highlight> <br>
+                    <ngb-highlight *ngIf="data.userId" [result]="data.userId.email" [term]="service.searchTerm">
+                    </ngb-highlight> <br>
+                  </td>
+                  <td>
+                    <span *ngFor="let product of data.products; let last = last">
+                      {{ product.productName || product.productId?.name }}
+                      <b><small>[{{product.productId?.brandId?.name}}]</small></b>
+                      {{ last ? "" : "," }}
+                    </span>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.totalQty" [term]="service.searchTerm">
+                    </ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="data.totalPayableAmt.toFixed(2)" [term]="service.searchTerm">
+                    </ngb-highlight>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="float-end" *ngIf="count">
+              <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize"
+                [boundaryLinks]="true" (pageChange)="change()">
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                  <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                    <div class="form-group d-flex flex-nowrap px-2">
+                      <label id="paginationInputLabel" for="paginationInput"
+                        class="col-form-label mr-2 ml-1">Page</label>
+                      <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
+                        id="paginationInput" [value]="page" (keyup.enter)="selectPage(i.value)"
+                        (blur)="selectPage(i.value)" (input)="formatInput($any($event).target)"
+                        aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                      <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                        of {{ pages.length }}</span>
+                    </div>
+                  </li>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title title="Create Notification" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!-- end page title -->
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-8 mb-3">
+            <label>Choose Template</label>
+            <div class="row">
+              <div class="col">
+                <ng-select formControlName="templateId" [items]="templates" autofocus bindLabel="title" bindValue="_id"
+                  placeholder="Search template" (input)="searchTemplate($event)"
+                  [ngClass]="{'is-invalid': f.templateId.touched && f.templateId.invalid}">
+                  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                    <div>
+                      <span class="oneLine">{{ item.title }}</span>
+                    </div>
+                    <small><b class="oneLine">{{ item.message }}</b></small>
+                  </ng-template>
+                </ng-select>
+              </div>
+              <div class="col-auto">
+                <a routerLink="/notifications/templates/create"
+                  [queryParams]="{healthPackageId: healthPackageId,healthPackageBuyId: healthPackageBuyId, redir: url}"
+                  class="btn btn-primary">Create
+                  Template</a>
+              </div>
+            </div>
+
+            <div *ngIf="f.templateId.touched && f.templateId.invalid" class="invalid-feedback">
+              This field is required</div>
+          </div>
+          <!-- <div class="126 mb-3">
+            <label>Notification Type</label>
+            <ng-select formControlName="notificationType" [items]="types" bindLabel="label" bindValue="value"
+              placeholder="Search template" (input)="searchTemplate($event)"
+              [ngClass]="{'is-invalid': f.notificationType.touched && f.notificationType.invalid}">
+            </ng-select>
+            <div *ngIf="f.notificationType.touched && f.notificationType.invalid" class="invalid-feedback">
+              This field is required</div>
+          </div> -->
+          <!-- <div class="col-md-6 mb-3">
+            <label>Date</label>
+            <input formControlName="date" type="date" [min]="minDate" class="form-control">
+          </div> -->
+          <div class="col-md-4 mb-3">
+            <label>Time</label>
+            <!-- <input formControlName="time" type="time" class="form-control"> -->
+            <select formControlName="time" class="form-control"
+              [ngClass]="{'is-invalid':f.time.invalid && f.time.touched}">
+              <option value="">Choose Time</option>
+              <option *ngFor="let slot of timeSlots" [value]="slot.value">{{slot.label}}</option>
+            </select>
+          </div>
+          <div class="col-md-5 offset-md-1 pl-md-5">
+            <!-- <div class="mb-3">
+                            <label>Type</label><br>
+                            <div class="form-check d-inline-block">
+                                <input type="radio" name="type" formControlName="type" value="all" id="type1" checked
+                                    class="form-check-input" (change)="onChangeType()" />
+                                <label for="type1" class="form-check-label">
+                                    All
+                                </label>
+                            </div>
+                            <div class="form-check d-inline-block mx-4">
+                                <input type="radio" name="type" formControlName="type" value="custom" id="type2"
+                                    class="form-check-input" (change)="onChangeType()" />
+                                <label for="type2" class="form-check-label">
+                                    Custom
+                                </label>
+                            </div>
+                        </div> -->
+            <!-- <div *ngIf="form.value.type == 'custom'" class="mb-3">
+                            <label>Users</label>
+                            <ng-select class="select2"
+                                [ngClass]="{'is-invalid': form.get('users').touched && form.get('users').invalid}"
+                                formControlName="users" placeholder="Search Users" [multiple]="true">
+                                <ng-option disabled value="">
+                                    Choose User
+                                </ng-option>
+                                <ng-option *ngFor="let user of userList" [value]="user._id">
+                                    {{ user.name | titlecase }}
+                                </ng-option>
+                            </ng-select>
+                            <div *ngIf="form.get('users').touched && form.get('users').invalid"
+                                class="invalid-feedback">
+                                This field is required</div>
+                        </div> -->
+          </div>
+          <div class="col-md-12">
+            <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.menu {
+  &,
+  ul {
+    list-style: none;
+  }
+  .link {
+    position: relative;
+    > i {
+      position: absolute;
+      top: 5px;
+      left: 0;
+      font-size: 18px;
+    }
+    .menuDetail {
+      color: rgba(#000, 0.3);
+    }
+    &:hover {
+      .menuDetail {
+        color: #333;
+      }
+    }
+  }
+}

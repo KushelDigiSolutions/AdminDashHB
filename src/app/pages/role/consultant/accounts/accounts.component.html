@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <app-page-title title="Accounts" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div *ngIf="profileData && !profileData.inHouse" class="card">
+        <div class="card-body">
+            <h3 class="card-title mt-0 mb-3">My Earnings</h3>
+            <div class="row">
+                <div class="col-4 col-lg-4 col-xl-3 mb-3">
+
+                    <div class="bg-success-light account-card">
+                        <span>&#8377; {{profileData.totalEarning}}</span>
+                        Total Earning
+                    </div>
+                </div>
+
+                <div class="col-4 col-lg-4 col-xl-3 mb-3">
+
+                    <div class="bg-warning-light account-card">
+                        <span>&#8377; {{profileData.totalPaid}}</span>
+                        Amount Paid
+                    </div>
+                </div>
+
+                <div class="col-4 col-lg-4 col-xl-3 mb-3">
+
+                    <div class="bg-blue-light account-card">
+                        <span>&#8377; {{profileData.hbCommission}}</span>
+                        Hb Commission
+                    </div>
+                </div>
+
+                <div class="col-4 col-lg-4 col-xl-3 mb-3">
+                    <div class="bg-purple-light account-card">
+                        <span>&#8377; {{profileData.totalEarning -
+                            (profileData.hbCommission+profileData.totalPaid)}}</span>
+                        Payment Left
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

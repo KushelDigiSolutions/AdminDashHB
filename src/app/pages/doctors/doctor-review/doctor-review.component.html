@@ -1,0 +1,62 @@
+<div class="w-100 user-chat mt-4 mt-sm-0 ms-lg-1">
+    <div class="px-lg-2">
+      <div class="chat-conversation p-3">
+        <ngx-simplebar style="height: 455px" #componentRef>
+          <ul class="list-unstyled mb-0">
+            <!-- <li class="chat-day-title">
+              <div class="title">Today</div>
+            </li> -->
+            <li
+              *ngFor="let data of chatMessagesData"
+              [ngClass]="{ right: data.align === 'right' }"
+            >
+              <div class="conversation-list">
+                <div class="ctext-wrap">
+                  <div class="ctext-wrap-content"
+                  [ngStyle]="{'border':data.publish?'1px solid #058f46':''}">
+                    <h5 class="font-size-14 conversation-name">
+                      <a href="javascript: void(0);" class="text-dark">{{
+                        data.user.firstName
+                      }}</a>
+                      <span
+                        class="d-inline-block font-size-12 text-muted ms-2"
+                        >{{ data.createdAt|date: 'mediumDate' }}</span
+                      >
+                    </h5>
+                    <p class="mb-0">
+                      {{ data.review }}
+                    </p>
+                  </div>
+
+                  <div class="dropdown" ngbDropdown>
+                    <a
+                      class="dropdown-toggle"
+                      href="javascript: void(0);"
+                      role="button"
+                      ngbDropdownToggle
+                    >
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </a>
+                    <div
+                      class="dropdown-menu dropdown-menu-end"
+                      ngbDropdownMenu
+                    >
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        (click)="approveClicked(data)">{{data.publish?'Reject':'Approve'}}</a
+                      >
+                      <!-- <a class="dropdown-item" href="javascript: void(0);"
+                        >Reject</a
+                      >
+                      <a class="dropdown-item" href="javascript: void(0);"
+                        >Delete</a
+                      > -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ngx-simplebar>
+      </div>
+    </div>
+</div>

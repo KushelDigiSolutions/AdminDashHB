@@ -1,0 +1,914 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title title="Add Product" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!-- end page title -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div id="addproduct-accordion">
+        <div class="">
+          <div class="checkout-acco">
+            <div ngbAccordion [closeOthers]="true"  activeIds="toggle-1">
+              <div ngbAccordionItem="toggle-1" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            01
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Product Info</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Fill all information below
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <div id="addproduct-billinginfo-collapse" class="show">
+                    <div class="p-4 border-top">
+                      <form [formGroup]="productDetailFormGroup">
+                        <div class="row">
+                          <div class="col-lg-6 mb-3">
+                            <label class="form-label" for="productname">Product Name*</label>
+                            <input id="productname" name="productname" type="text" class="form-control"
+                              formControlName="name" />
+                          </div>
+                          <div class="col-lg-6 mb-3">
+                            <label class="form-label" for="hindiname">Hindi Name</label>
+                            <input id="hindiname" name="hindiname" type="text" class="form-control"
+                              formControlName="hindiName" />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="mb-3">
+                              <label class="form-label" for="brandName">Brand Name*</label>
+                              <select id="brandName" name="brandName" class="form-control" formControlName="brandId">
+                                <option disabled value="">Choose Brand</option>
+                                <option *ngFor="let item of brandList" [value]="item?._id">
+                                  {{ item?.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="mb-3">
+                              <label class="form-label" for="slug">Slug</label>
+                              <input id="slug" name="slug" type="text" class="form-control" formControlName="slug" />
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="mb-3">
+                              <label class="form-label" for="mrp">Primary Category*</label>
+                              <ng-select id="primaryCategory" name="primaryCategory" class="select2"
+                                formControlName="primaryCategory" [multiple]="false">
+                                <ng-option disabled value="">
+                                  Choose Category
+                                </ng-option>
+                                <ng-option *ngFor="let item of categoryList" [value]="item?._id">
+                                  {{ item?.name }}
+                                </ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="mb-3">
+                              <label class="control-label">Choose Category</label>
+                              <ng-select class="select2" name="category" bindLabel="category"
+                                placeholder="Choose Category" formControlName="categories" multiple="true">
+                                <ng-option disabled value="">Choose Category</ng-option>
+                                <ng-option *ngFor="let item of categoryList" [value]="item?._id">
+                                  {{ item?.name }}
+                                </ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="mb-3">
+                              <label class="control-label">Health Concerns</label>
+                              <ng-select class="select2" name="healthConcern" bindLabel="healthConcern"
+                                placeholder="Choose Health Concern" formControlName="healthConcernId" multiple="true">
+                                <ng-option *ngFor="let item of healthConcernList" [value]="item?._id">
+                                  {{ item?.name }}
+                                </ng-option>
+                              </ng-select>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="mb-3">
+                              <label class="form-label" for="slug">Weight</label>
+                              <input id="slug" name="slug" type="text" class="form-control" formControlName="weight" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-lg-2">
+                            <div class="mb-3">
+                              <label class="form-label" for="mrp">Max Sale Qty</label>
+                              <input id="maxSaleQty" name="maxSaleQty" type="text" class="form-control"
+                                formControlName="maxSaleQty" />
+                            </div>
+                          </div>
+                          <div class="col-lg-2">
+                            <div class="mb-3">
+                              <label class="form-label" for="mrp">Quantity Available</label>
+                              <input id="quantity" name="quantity" type="text" class="form-control"
+                                formControlName="quantity" />
+                            </div>
+                          </div>
+                          <div class="col-lg-8">
+                            <label class="form-label" for="highlights">Highlights</label>
+                            <ckeditor [editor]="Editor" formControlName="highlights"></ckeditor>
+                          </div>
+                        </div>
+                      </form>
+
+                      <div class="row mt-5">
+                        <ng-container>
+                          <form [formGroup]="priceDetailFormGroup" style="display: contents">
+                            <div class="col-lg-3 mx-3">
+                              <div class="mb-3">
+                                <label class="form-label" for="mrp">MRP*</label>
+                                <input id="mrp" name="mrp" type="text" class="form-control" formControlName="mrp" />
+                              </div>
+                            </div>
+                            <div class="col-lg-3 mx-3">
+                              <div class="mb-3">
+                                <label class="form-label" for="sellingPrice">Selling Price</label>
+                                <input id="sellingPrice" name="sellingPrice" type="text" class="form-control"
+                                  formControlName="minPrice" />
+                              </div>
+                            </div>
+                            <div class="col-lg-3 mx-3">
+                              <div class="mb-3">
+                                <label class="form-label" for="margin">Margin %</label>
+                                <input id="margin" type="number" min="0" max="100" class="form-control"
+                                  formControlName="margin" />
+                              </div>
+                            </div>
+                          </form>
+                        </ng-container>
+                        <ng-container>
+                          <form [formGroup]="productDetailFormGroup" style="display: contents">
+                            <div class="col-lg-3 mx-3">
+                              <div class="mb-3">
+                                <label class="form-label" for="productForm">Product Form</label>
+                                <ng-select class="select2" name="productForm" bindLabel="productForm"
+                                  placeholder="Choose form of product" formControlName="state" [multiple]="false">
+                                  <ng-option *ngFor="let item of productForm" [value]="item">
+                                    {{ item }}
+                                  </ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+
+
+                            <div class="col-lg-3 mx-3">
+                              <div class="mb-3">
+                                <label class="form-label" for="taxClass">Tax Class</label>
+                                <ng-select class="select2" name="taxClass" bindLabel="taxClass"
+                                  placeholder="Choose Tax Class" formControlName="taxClass" [multiple]="false">
+                                  <ng-option *ngFor="let item of taxClasses" [value]="item?._id">
+                                    {{ item?.name }}
+                                  </ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+                          </form>
+                        </ng-container>
+                      </div>
+
+                      <form [formGroup]="descriptionFormGroup">
+                        <div class="mb-3 mb-0">
+                          <label for="productdesc">Product Short Description</label>
+                          <ckeditor [editor]="Editor" formControlName="short"></ckeditor>
+                        </div>
+
+                        <div class="mb-3 mb-0">
+                          <label for="productdesc">Product Long Description</label>
+                          <ckeditor [editor]="Editor" formControlName="long"></ckeditor>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </ng-template></div></div>
+              </div>
+
+              <div ngbAccordionItem="toggle-2" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            02
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Product Image</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Fill all information below
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <div id="addproduct-img-collapse">
+                    <div class="p-4 border-top">
+                      <h4>Product Images</h4>
+                      <small>Dimensions: 650px * 650px</small>
+                      <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'"
+                        (change)="onSelect($event, 'gallery')">
+                        <ngx-dropzone-label>
+                          <div>
+                            <h2>Drag/Drop image to continue</h2>
+                          </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                          [file]="f" [removable]="true" (removed)="onRemove(f, 'gallery')">
+                        </ngx-dropzone-image-preview>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="productImagesSaved.length">
+                    <div class="col-lg-12 selectedTagContainer d-flex m-3 p-4">
+                      <div class="ms-4" *ngFor="let item of productImagesSaved; let i = index">
+                        <div class="selectedTagContainer">
+                          <img class="imgClass" [src]="imgUrl + item.savedName" />
+                          <span class="cross" (click)="removeImage(i)">
+                            X
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="p-4 border-top">
+                        <h4>Thumbnail Image</h4>
+                        <small>Dimensions: 130px * 130px</small>
+                        <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" [multiple]="false"
+                          (change)="onSelect($event, 'thumbnail')">
+                          <ngx-dropzone-label>
+                            <div>
+                              <h2>Drag/Drop image to continue</h2>
+                            </div>
+                          </ngx-dropzone-label>
+                          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="f"
+                            *ngFor="let f of thumbnail" [removable]="true" (removed)="onRemove(f, 'thumbnail')">
+                          </ngx-dropzone-image-preview>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="thumbnailSaved">
+                    <div class="col-lg-12 selectedTagContainer d-flex m-3 p-4">
+                      <div class="ms-4">
+                        <div class="selectedTagContainer">
+                          <img [src]="imgUrl + thumbnailSaved.savedName" />
+                          <span class="cross" (click)="removeThumb()"> X </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template></div></div>
+              </div>
+
+              <div ngbAccordionItem="toggle-3" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            03
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Meta Data</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Fill all information below
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <form [formGroup]="metaDetaiFormGroup">
+                    <div id="addproduct-metadata-collapse">
+                      <div class="p-4 border-top">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="mb-3">
+                              <label for="metatitle">Meta title</label>
+                              <input id="metatitle" name="metatitle" type="text" class="form-control"
+                                formControlName="metaTitle" />
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="mb-3">
+                              <label for="tagsTemp">Meta Tags</label>
+                              <input id="tagsTemp" name="tagsTemp" type="text" class="form-control"
+                                formControlName="tagsTemp" (keyup.enter)="fetchTags($event.target.value)" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-6 offset-0 p-3 selectedMetaIndex">
+                            <label for="metaIndexButton" style="margin-right: 1rem">Meta No Index</label>
+                            <app-hb-switch color="#f46a6a" class="translateY-3"
+                              name="metaIndexButton" formControlName="metaIndex" (change)="
+                                toggleFxn(tempSwitchData.metaIndex, 'metaIndex') ">
+                            </app-hb-switch>
+                          </div>
+                        </div>
+
+                        <div class="row" *ngIf="tempMetaTagArray.length">
+                          <div class="col-lg-6 offset-6 p-3 selectedTagContainer">
+                            <div class="d-flex">
+                              <span class="selectedTags" *ngFor="
+                                  let item of tempMetaTagArray;
+                                  let i = index
+                                ">{{ item }}
+                                <i class="uil uil-times me-1" (click)="removeMetaTag(i)"></i>
+                              </span>
+                              <span></span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mb-3 mb-0">
+                          <label for="metadescription">Meta Description</label>
+                          <textarea class="form-control" id="metadescription" rows="4"
+                            formControlName="metaDescription"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </ng-template></div></div>
+              </div>
+
+              <div ngbAccordionItem="toggle-4" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            04
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Attributes</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Fill in the information below
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <label for="" style="padding-left: 1rem">Choose Attribute
+                      </label>
+
+                      <div class="mb-3 d-flex" *ngIf="attributes.length">
+                        <ng-select [items]="attributes" class="w-75" bindLabel="name" bindValue="_id"
+                          groupBy="attributeSetId.name" placeholder="Choose Attribute" [(ngModel)]="selectedAttributes"
+                          [multiple]="true">
+                          <ng-template ng-optgroup-tmp let-item="item">
+                            {{ item?.attributeSetId.name || "Unnamed group" }}
+                          </ng-template>
+                        </ng-select>
+
+                        <button class="h-75 btn-sm btn-primary" style="margin-left: 1rem" (click)="addAttribute()">
+                          Select
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4" style="border-left: 1px solid #e5e5e5; padding-left: 1rem">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <ng-select class="select2 w-75" name="newAttribute" bindLabel="new Attribute"
+                            placeholder="Select Attribute Set" [(ngModel)]="selectedAttributeSet">
+                            <ng-option *ngFor="let item of attributeSet" [value]="item?._id">
+                              {{ item?.name }}
+                            </ng-option>
+                          </ng-select>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                          <input class="form-control" type="text" placeholder="Add New Attribute"
+                            [(ngModel)]="newAttributeValue" />
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                          <button class="btn-sm btn-primary ms-1" (click)="addNewAttribute()">
+                            Add New
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-2" *ngIf="attributesData.length">
+                    <ng-container *ngFor="let item of attributesData; let i = index">
+                      <div class="row attribute-card mt-3">
+                        <div class="col-md-12">
+                          <p>
+                            <strong>{{
+                              item.attributeSetId.name + " > " +
+                              (item.name
+                              ? item.name
+                              : item.attributeId.name)
+                              }}</strong>
+                          </p>
+
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <div class="mb-3">
+                                <ng-select class="select2 w-100" name="attributeValues" bindLabel="attributeValues"
+                                  placeholder="Select Attribute Value">
+                                  <ng-option *ngFor="
+                                      let value of item?.attributes?.value
+                                    " [value]="item?._id">
+                                    {{ item?.name }}
+                                  </ng-option>
+                                </ng-select>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6" style="border-left: 1px solid #e5e5e5">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <input class="form-control" type="text" placeholder="Add Value"
+                                    [(ngModel)]="item.value" />
+                                </div>
+
+                                <div class="col-lg-12 mt-3">
+                                  <!-- <button class="btn-sm btn-primary ms-1"
+                                  (click)="addAttributeValue(item)">
+                                    Add 
+                                  </button> -->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12">
+                              <p *ngIf="item.value.length">
+                                <span> Value = </span>
+                                <span>
+                                  {{ item.value }}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="float-right">
+                          <span class="text-danger" (click)="removeAttribute(item, i)">Remove</span>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-template></div></div>
+              </div>
+
+              <div ngbAccordionItem="toggle-5" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            05
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">
+                          Additional Information
+                        </h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Fill the information below
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <form [formGroup]="additionalInfoFormGroup">
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <label for="featuredButton" style="margin-right: 1rem">is Featured (Trending)</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="featuredButton" formControlName="featured" (change)="
+                            toggleFxn(tempSwitchData.featured, 'featured')
+                          ">
+                        </app-hb-switch>
+                      </div>
+                      <div class="col-lg-3">
+                        <label for="hbRecommended" style="margin-right: 1rem">Hb Recommended</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="hbRecommended" formControlName="hbRecommended" (change)="
+                            toggleFxn(
+                              tempSwitchData.hbRecommended,
+                              'hbRecommended'
+                            )
+                          ">
+                        </app-hb-switch>
+                      </div>
+                      <div class="col-lg-3">
+                        <label for="fragile" style="margin-right: 1rem">Fragile</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="fragile" formControlName="fragile"
+                          (change)="toggleFxn(tempSwitchData.fragile, 'fragile')">
+                        </app-hb-switch>
+                      </div>
+                      <div class="col-lg-3">
+                        <label for="prescriptionRequired" style="margin-right: 1rem">Prescription Required</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="prescriptionRequired" formControlName="prescriptionRequired" (change)="
+                            toggleFxn(
+                              tempSwitchData.prescriptionRequired,
+                              'prescriptionRequired'
+                            )
+                          ">
+                        </app-hb-switch>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col-lg-3">
+                        <label for="returnable" style="margin-right: 1rem">Returnable</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="returnable" formControlName="returnable" (change)="
+                            toggleFxn(tempSwitchData.returnable, 'returnable')
+                          ">
+                        </app-hb-switch>
+                      </div>
+                      <div class="col-lg-3">
+                        <label for="tempSeasonSpecial" style="margin-right: 1rem">Season Special</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="tempSeasonSpecial" formControlName="tempSeasonSpecial" (change)="
+                            toggleFxn(
+                              tempSwitchData.tempSeasonSpecial,
+                              'tempSeasonSpecial'
+                            )
+                          ">
+                        </app-hb-switch>
+                      </div>
+                      <!-- <div class="col-lg-3">
+                        <label for="tempNew" style="margin-right: 1rem">New</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="tempNew" formControlName="tempNew"
+                          (click)="toggleFxn(tempSwitchData.tempNew, 'tempNew')">
+                        </app-hb-switch>
+                      </div> -->
+                      <div class="col-lg-3">
+                        <label for="sexualWellness" style="margin-right: 1rem">Sexual Wellness</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="sexualWellness" formControlName="sexualWellness"
+                          (change)="toggleFxn(tempSwitchData.sexualWellness, 'sexualWellness')">
+                        </app-hb-switch>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <label for="lastMinuteBuy" style="margin-right: 1rem">Last Minute Buy(Cart)</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="lastMinuteBuy" formControlName="lastMinuteBuy"
+                          (change)="toggleFxn(tempSwitchData.lastMinuteBuy, 'lastMinuteBuy')">
+                        </app-hb-switch>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <label for="bulkOrder" style="margin-right: 1rem">Bulk Order</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="bulkOrder" formControlName="bulkOrder"
+                          (change)="toggleFxn(tempSwitchData.bulkOrder, 'bulkOrder')">
+                        </app-hb-switch>
+                      </div>
+
+                      <div class="col-lg-3">
+                        <label for="internationalEnq" style="margin-right: 1rem">International Enq</label>
+                        <app-hb-switch color="#f46a6a" class="translateY-3"
+                          name="internationalEnq" formControlName="internationalEnq"
+                          (change)="toggleFxn(tempSwitchData.internationalEnq, 'internationalEnq')">
+                        </app-hb-switch>
+                      </div>
+
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col-lg-3" [formGroup]="productDetailFormGroup">
+                        <label for="sequence" style="margin-right: 1rem">Sequence</label>
+                        <input id="sequence" type="number" class="form-control" formControlName="sequence" min="1" placeholder="Enter number for e.g 3" />
+                      </div>
+                    </div>
+                  </form>
+                </ng-template></div></div>
+              </div>
+
+              <div ngbAccordionItem="toggle-6" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            06
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Related Blogs</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Select the related blogs to product
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <app-related-blogs [blogs]="blogs" (newItemEvent)="getRelatedBlogs($event)"></app-related-blogs>
+                </ng-template></div></div>
+              </div>
+
+              <div ngbAccordionItem="toggle-7" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            07
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Related Products</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Select the related products
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <app-related-products [upsell]="upsell" [crossSell]="crossSell"
+                    (newItemEvent)="getRelatedProducts($event)"></app-related-products>
+                </ng-template></div></div>
+              </div>
+
+              <div ngbAccordionItem="toggle-8" >
+                <h2 ngbAccordionHeader><button ngbAccordionButton>
+                  <a class="text-dark" style="text-align: left">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <div class="avatar-xs">
+                          <div class="
+                              avatar-title
+                              rounded-circle
+                              bg-soft-primary
+                              text-primary
+                            ">
+                            08
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1 overflow-hidden">
+                        <h5 class="font-size-16 mb-1">Variations</h5>
+                        <p class="text-muted text-truncate mb-0">
+                          Add Variation to product
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </button></h2>
+                <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                  <div class="row">
+                    <label class="control-label">Variations </label>
+
+                    <div class="col-lg-12 d-flex">
+                      <div class="row w-100">
+                        <div class="col-lg-10">
+                          <div class="mb-3">
+                            <ng-select class="select2" name="variations" bindLabel="variations"
+                              placeholder="Choose Variations" [(ngModel)]="selectedVariations" multiple="true">
+                              <ng-option *ngFor="let item of variations" [value]="item?._id">
+                                {{ item?.title }}
+                              </ng-option>
+                            </ng-select>
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <button class="btn-sm btn-primary ms-2" (click)="addVariation()">
+                            Select
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <form [formGroup]="variationFromGroup">
+                    <div formArrayName="variationsValueGroup">
+                      <div *ngFor="
+                          let control of variationFromGroup.get(
+                            'variationsValueGroup'
+                          ).controls;
+                          let i = index
+                        " [formGroupName]="i">
+                        <div formArrayName="values">
+                          <div class="row">
+                            <div class="col-lg-12 mt-2">
+                              <p>
+                                <strong>{{ control.value.title }}</strong>
+                              </p>
+                            </div>
+                            <div class="col-lg-4 mt-1" *ngFor="
+                                let control2 of control.get('values').controls;
+                                let i2 = index
+                              ">
+                              <input class="form-control" type="text" [formControlName]="i2" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="float-right mt-3">
+                          <span class="text-danger" style="cursor: pointer" (click)="removeVariation(control)">Remove
+                          </span>
+                          <span class="text-success p-2" style="
+                              float: right;
+                              border: 1px dashed #058f46;
+                              cursor: pointer;
+                            " (click)="addVariationType(control)">Add New</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div formArrayName="variationsGroup">
+                      <div class="pb-3" style="border-bottom:1px solid #e5e5e5;" *ngFor="
+                          let control of variationFromGroup.get(
+                            'variationsGroup'
+                          ).controls;
+                          let i = index
+                        " [formGroupName]="i">
+                        <div class="row">
+                          <div class="col-lg-4 mt-4" *ngFor="
+                              let label of control.get('labels').value
+                                | keyvalue
+                            " formGroupName="labels">
+                            <label>
+                              {{label.key}}
+                            </label>
+                            <ng-select class="select2" name="var" bindLabel="variation" [formControlName]="label.key"
+                              [multiple]="false">
+                              <ng-option value="">Select {{ label.key }}</ng-option>
+                              <ng-option [value]="value" *ngFor="let value of getLabelValue(label.key)">
+                                {{ value }}
+                              </ng-option>
+                            </ng-select>
+                          </div>
+
+                          <div class="col-lg-4 mt-4">
+                            <label>
+                              Name
+                            </label>
+                            <input class="form-control" type="text" formControlName="name"
+                              placeholder="Enter Variation Title" />
+                          </div>
+                          <div class="col-lg-4 mt-4">
+                            <label>
+                              Weight
+                            </label>
+                            <input class="form-control" type="text" formControlName="weight"
+                              placeholder="Enter weight" />
+                          </div>
+                          <div class="col-lg-4 mt-4">
+                            <label>
+                              Quantity
+                            </label>
+                            <input class="form-control" type="text" formControlName="quantity"
+                              placeholder="Total Quantity " />
+                          </div>
+                          <div class="col-lg-4 mt-4">
+                            <label>
+                              Available Quantity
+                            </label>
+                            <input class="form-control" type="text" formControlName="availableQuantity"
+                              placeholder="Availble Quantity " />
+                          </div>
+                          <div class="col-lg-4 mt-4">
+                            <label>
+                              MRP
+                            </label>
+                            <input class="form-control" type="text" formControlName="mrp" placeholder="MRP" />
+                          </div>
+                          <div class="col-lg-4 mt-4">
+                            <label>
+                              Selling Price
+                            </label>
+                            <input class="form-control" type="text" formControlName="minPrice"
+                              placeholder="Selling Price" />
+                          </div>
+                          <div class="col-lg-4 mt-4">
+                            <label>
+                              Margin %
+                            </label>
+                            <input class="form-control" type="number" min="0" max="100" formControlName="margin"
+                              placeholder="Margin" />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12 pt-3">
+                            <button class="btn border-0 btn-danger"
+                              (click)="removeSelectedVariation(control,i)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12 mt-lg-4">
+                        <button [disabled]="variationFromGroup.status == 'INVALID'?true:false"
+                          class="btn btn-md btn-primary mb-3" (click)="createGroup()">
+                          Create Group
+                        </button>
+                      </div>
+                    </div>
+
+                  </form>
+                </ng-template></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+
+  <div class="row mb-4">
+    <div class="col text-end">
+      <a href="javascript:void(0);" class="btn btn-danger" [routerLink]="'/ecommerce/products'">
+        <i class="uil uil-times me-1"></i> Cancel
+      </a>
+      <a href="javascript:void(0);" class="btn btn-success ms-1" (click)="save()">
+        <i class="uil uil-file-alt me-1"></i> Save
+      </a>
+    </div>
+    <!-- end col -->
+  </div>
+  <!-- end row-->
+</div>
+<!-- container-fluid -->

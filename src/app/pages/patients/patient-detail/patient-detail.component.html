@@ -1,0 +1,350 @@
+<div *ngIf="profile" class="card">
+    <div class="card-body">
+        <div class="d-flex profile">
+            <div class="me-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="161 224 64 64" fill="#5b73e8"
+                    xmlns:v="https://vecta.io/nano">
+                    <path
+                        d="M185 250.7c-7.4 0-13.3-6-13.3-13.3 0-7.4 6-13.3 13.3-13.3 7.4 0 13.3 6 13.3 13.3s-5.9 13.3-13.3 13.3zm0-24c-5.9 0-10.7 4.8-10.7 10.7s4.8 10.7 10.7 10.7 10.7-4.8 10.7-10.7-4.8-10.7-10.7-10.7zm-6.7 53.3h-16c-.7 0-1.3-.6-1.3-1.3V268a12.04 12.04 0 0 1 12-12h24c3.3 0 6.4 1.3 8.6 3.7.5.5.5 1.4-.1 1.9-.5.5-1.4.5-1.9-.1-1.7-1.8-4.2-2.9-6.7-2.9h-24c-5.1 0-9.3 4.2-9.3 9.3v9.3h14.7c.7 0 1.3.6 1.3 1.3.1.9-.5 1.5-1.3 1.5zm21.4 8c-.5 0-1-.3-1.2-.7l-5-9.9h-7.2c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3h8c.5 0 1 .3 1.2.7l4 8.1 6.9-16a1.3 1.3 0 0 1 1.2-.8c.5 0 1 .3 1.2.7l7.6 15.3h7.2c.7 0 1.3.6 1.3 1.3s-.6 1.3-1.3 1.3h-8c-.5 0-1-.3-1.2-.7l-6.7-13.4-6.9 16c-.1.4-.6.7-1.1.7h0z" />
+                </svg>
+            </div>
+            <div>
+                <b>{{profile.firstName}} {{profile.lastName}}</b> <br>
+                {{profile.countryCode}} {{profile.phone}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav nav-tabs nav-justified nav-tabs-custom">
+            <li [ngbNavItem]="1" class="nav-item">
+                <a ngbNavLink class="nav-link">
+                    <i class="uil uil-user-circle font-size-20"></i>
+                    <span class="d-none d-sm-block">Details</span>
+                </a>
+                <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabUserDetails"></ng-template>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2" class="nav-item">
+                <a ngbNavLink class="nav-link">
+                    <i class="uil-calendar-alt font-size-20"></i>
+                    <span class="d-none d-sm-block">Appointments <i>({{pagination.appointments.count}})</i></span>
+                </a>
+                <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabApptDetails"></ng-template>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="3" class="nav-item">
+                <a ngbNavLink class="nav-link">
+                    <i class="uil uil-clipboard-notes font-size-20"></i>
+                    <span class="d-none d-sm-block">Prescriptions <i>({{pagination.prescriptions.count}})</i></span>
+                </a>
+                <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabPrescription"></ng-template>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="4" class="nav-item">
+                <a ngbNavLink class="nav-link">
+                    <i class="uil-folder-medical font-size-20"></i>
+                    <span class="d-none d-sm-block">Medical Records <i>({{pagination.medicalRecords.count}})</i></span>
+                </a>
+                <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabMedicalRecords"></ng-template>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="5" class="nav-item">
+                <a ngbNavLink class="nav-link" (click)="onChangetab()">
+                    <i class="uil-chart-line font-size-20"></i>
+                    <span class="d-none d-sm-block">Health Stats</span>
+                </a>
+                <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabHealth"></ng-template>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="6" class="nav-item">
+                <a ngbNavLink class="nav-link" (click)="onChangetab()">
+                    <i class="mdi mdi-bank-outline font-size-20"></i>
+                    <span class="d-none d-sm-block">Payments <i>({{pagination.payments.count}})</i></span>
+                </a>
+                <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabPayments"></ng-template>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="justifiednav"></div>
+        <ng-template #TabUserDetails>
+            <div class="tab-content p-4">
+                <div class="tab-pane active">
+                    <div *ngIf="profile">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>{{profile.email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>D.O.B</td>
+                                        <td>{{profile.DOB | date:"mediumDate"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Body Type</td>
+                                        <td>{{profile.bodyType}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #TabApptDetails>
+            <div class="tab-content p-4">
+                <div class="tab-pane active">
+                    <div class="text-end mb-3">
+                        <a routerLink="create-appointment" class="btn btn-success waves-effect waves-light">
+                            <i class="mdi mdi-plus me-2"></i> Create New</a>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>Doctor</th>
+                                <th>Appt Date</th>
+                                <th>Booking Date</th>
+                                <th>Amount</th>
+                                <th>Follow Up</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let appt of appointments; index as i">
+                                <td>{{i + 1}}</td>
+                                <td>
+                                    <div class="d-flex doc">
+                                        <img *ngIf="appt.consultantId?.profilePhoto?.savedName" class="me-2"
+                                            [src]="imgBase + appt.consultantId?.profilePhoto?.savedName">
+                                        <div *ngIf="!appt.consultantId?.profilePhoto?.savedName"
+                                            class="avatar-xs d-inline-block me-3">
+                                            <div class="avatar-title bg-soft-primary rounded-circle text-primary">
+                                                <i class="mdi mdi-account-circle m-0"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <b *ngIf="appt.consultantId">{{appt.consultantId.firstName}}
+                                                {{appt.consultantId.lastName}}</b>
+                                            <b *ngIf="!appt.consultantId">HB Consultant</b>
+                                            <span *ngIf="appt.consultantId"
+                                                class="d-block">{{appt.consultantId?.designation}}</span>
+                                            <!-- <span *ngIf="!appt.consultantId" class="d-block">Dental</span> -->
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td class="apptDate">{{appt.date | date:'dd MMM yyyy'}} <b>{{appt.primaryTimeSlot}} </b>
+                                </td>
+                                <td>{{appt.createdAt | date:'dd MMM yyyy'}}</td>
+                                <td>Rs.{{appt.fee}}</td>
+                                <td>{{appt.parentAppointmentId?'Yes':'No'}}</td>
+                                <td><span>{{appt.status}}</span></td>
+                                <td class="text-end">
+                                    <a [routerLink]="['/consultant/appointments', appt.parentAppointmentId || appt._id]"
+                                        [queryParams]="appt.parentAppointmentId?{view: 'followUp'}:{}"
+                                        class="btn btn-sm btn-soft-info me-2"><i class="uil-eye"></i> View</a>
+                                    <!-- <a href="#" class="btn btn-sm btn-soft-primary"><i class="uil-print"></i> Print</a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-end">
+                        <ngb-pagination class="d-inline-block" [(page)]="pagination.appointments.page"
+                            [pageSize]="pagination.appointments.limit" [maxSize]="3"
+                            [collectionSize]="pagination.appointments.count" (pageChange)="change('appointments')"
+                            [rotate]="true" [boundaryLinks]="true">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #TabPrescription>
+            <div class="tab-content p-4">
+                <div class="tab-pane active">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Created by</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let pres of prescriptions">
+                                <td>{{pres.createdAt | date: 'dd MMM, yyyy'}}</td>
+                                <td>{{pres.title}}</td>
+                                <td>
+                                    <div *ngIf="pres.consultantId" class="d-flex doc">
+                                        <img class="me-2" [src]="imgBase + pres.consultantId.profilePhoto?.savedName"
+                                            alt="">
+                                        <div>
+                                            <b>{{pres.consultantId.firstName}} {{pres.consultantId.lastName}}</b>
+                                            <span class="d-block oneLine">{{pres.consultantId.designation}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-soft-info" (click)="onViewPrescription(pres._id)"><i
+                                            class="uil-eye"></i> View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-end">
+                        <ngb-pagination class="d-inline-block" [(page)]="pagination.prescriptions.page"
+                            [pageSize]="pagination.prescriptions.limit" [maxSize]="3"
+                            [collectionSize]="pagination.prescriptions.count" (pageChange)="change('prescriptions')"
+                            [rotate]="true" [boundaryLinks]="true">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #TabMedicalRecords>
+            <div class="tab-content p-4">
+                <div class="tab-pane active">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 105px;">Date</th>
+                                <th>Description</th>
+                                <th class="text-end" style="min-width: 210px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let record of medicalRecords">
+                                <td>{{record.dateTime | date:'dd MMM yyyy'}}</td>
+                                <td>{{record.description}}</td>
+                                <td class="text-end">
+                                    <button *ngIf="record.attachment"
+                                        (click)="onViewMedicalRecord(record.attachment.savedName)"
+                                        class="btn btn-sm btn-soft-info me-3"><i class="uil-eye"></i> View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-end">
+                        <ngb-pagination class="d-inline-block" [(page)]="pagination.medicalRecords.page"
+                            [pageSize]="pagination.medicalRecords.limit" [maxSize]="3"
+                            [collectionSize]="pagination.medicalRecords.count" (pageChange)="change('medicalRecords')"
+                            [rotate]="true" [boundaryLinks]="true">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #TabHealth>
+            <div class="tab-content p-4">
+                <div class="tab-pane active">
+                    <app-health-stats [userId]="userId"></app-health-stats>
+                    <div *ngIf="false" id="calendar">
+                        <div class="d-flex align-items-center mb-5">
+                            <div class="dropdown mt-4 mt-sm-0" ngbDropdown>
+                                <a class="btn btn-light dropdown-toggle" ngbDropdownToggle>
+                                    Symptoms <i class="mdi mdi-menu-down"></i>
+                                </a>
+                                <div class="dropdown-menu" ngbDropdownMenu>
+                                    <a class="dropdown-item" href="javascript: void(0);">Symptoms</a>
+                                    <a class="dropdown-item" href="javascript: void(0);">Symptoms</a>
+                                    <a class="dropdown-item" href="javascript: void(0);">Symptoms</a>
+                                </div>
+                            </div>
+                            <hr class="line">
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between dateMain">
+                            <div class="d-flex">
+                                <div class="d-flex align-items-center healthDate">
+                                    <div class="text">
+                                        FROM
+                                    </div>
+                                    <div class="dropdown mt-4 mt-sm-0" ngbDropdown>
+                                        <a class="btn btn-light dropdown-toggle" ngbDropdownToggle>
+                                            SELECT DATE <i class="mdi mdi-menu-down"></i>
+                                        </a>
+                                        <div class="dropdown-menu" ngbDropdownMenu>
+                                            <a class="dropdown-item" href="javascript: void(0);">01/07/22</a>
+                                            <a class="dropdown-item" href="javascript: void(0);">01/07/22</a>
+                                            <a class="dropdown-item" href="javascript: void(0);">01/07/22</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="dateLine">
+                                <div class="d-flex align-items-center healthDate">
+                                    <div class="text">
+                                        TO
+                                    </div>
+                                    <div class="dropdown mt-4 mt-sm-0" ngbDropdown>
+                                        <a class="btn btn-light dropdown-toggle" ngbDropdownToggle>
+                                            SELECT DATE <i class="mdi mdi-menu-down"></i>
+                                        </a>
+                                        <div class="dropdown-menu" ngbDropdownMenu>
+                                            <a class="dropdown-item" href="javascript: void(0);">01/07/22</a>
+                                            <a class="dropdown-item" href="javascript: void(0);">01/07/22</a>
+                                            <a class="dropdown-item" href="javascript: void(0);">01/07/22</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary">
+                                    <i class="mdi mdi-plus"></i>
+                                    ADD SYMPTOMS
+                                </button>
+                            </div>
+                        </div>
+                        <!-- calendar -->
+                        <full-calendar class="fullcalendar" [options]="calendarOptions"></full-calendar>
+                    </div>
+
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #TabPayments>
+            <div class="tab-content p-4">
+                <div class="tab-pane active">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 105px;">Date</th>
+                                <th>Fee</th>
+                                <th class="text-end" style="min-width: 210px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let payment of payments">
+                                <td>{{payment.createdAt | date:'dd MMM yyyy'}}</td>
+                                <td>{{payment.fee}}</td>
+                                <td class="text-end">
+                                    <a [routerLink]="['/consultant/appointments', payment.parentAppointmentId || payment._id]"
+                                        class="btn btn-sm btn-soft-info"><i class="uil-eye"></i> View Appointment</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-end">
+                        <ngb-pagination class="d-inline-block" [(page)]="pagination.payments.page"
+                            [pageSize]="pagination.payments.limit" [maxSize]="3"
+                            [collectionSize]="pagination.payments.count" (pageChange)="change('payments')"
+                            [rotate]="true" [boundaryLinks]="true">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<app-view-prescription></app-view-prescription>
+<app-view-medical-record></app-view-medical-record>

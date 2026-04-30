@@ -1,0 +1,25 @@
+.schedule-widget {
+  .nav-item {
+    margin: 5px 10px 5px 0;
+  }
+  .nav-link:not(.active){
+    border: 1px solid #ccc;
+  }
+  .navLinkDanger{
+    border-color: red !important;
+    color: red;
+  }
+  // .slotsList {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   li {
+  //     background-color: #d9534f;
+  //     border: 1px solid #d43f3a;
+  //     border-radius: 4px;
+  //     color: #fff;
+  //     font-size: 14px;
+  //     margin: 10px 10px 0 0;
+  //     padding: 6px 15px;
+  //   }
+  // }
+}

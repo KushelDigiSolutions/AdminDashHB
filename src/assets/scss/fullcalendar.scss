@@ -1,0 +1,58 @@
+.calendarView {
+  ::ng-deep {
+    .fc-event {
+      cursor: pointer;
+    }
+
+    .fc-view:not(.fc-dayGridMonth-view) {
+      .fc-v-event {
+        .fc-event-main-frame {
+          flex-direction: row;
+          align-items: center;
+        }
+        .fc-event-title-container {
+          white-space: nowrap;
+          padding-left: 5px;
+          font-weight: 700;
+        }
+      }
+    }
+    .bg-success {
+      .fc-daygrid-event-dot {
+        border-color: darken(#34c38f, 15) !important;
+      }
+    }
+    .bg-warning {
+      .fc-daygrid-event-dot {
+        border-color: darken(#f1b44c, 15) !important;
+      }
+    }
+    .bg-secondary {
+      .fc-daygrid-event-dot {
+        border-color: darken(#74788d, 15) !important;
+      }
+    }
+    .bg-primary {
+      .fc-daygrid-event-dot {
+        border-color: darken(#5b73e8, 15) !important;
+      }
+    }
+    .bg-danger {
+      .fc-daygrid-event-dot {
+        border-color: darken(#f46a6a, 15) !important;
+      }
+    }
+  }
+}
+.statusSwatch {
+  li {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  span {
+    display: inline-block;
+    padding: 10px 30px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+}

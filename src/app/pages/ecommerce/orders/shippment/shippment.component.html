@@ -1,0 +1,285 @@
+<div class="container-fluid">
+  <div class="row">
+    <form [formGroup]="form">
+      <div class="col-md-12">
+        <div>
+          <div ngbAccordion [closeOthers]="true"  activeIds="toggle-1">
+            <div ngbAccordionItem="toggle-1" >
+              <h2 ngbAccordionHeader><button ngbAccordionButton>
+                <a class="text-dark" style="text-align: left">
+                  <div class="d-flex align-items-center">
+                    <div class="me-3">
+                      <div class="avatar-xs">
+                        <div class="
+                            avatar-title
+                            rounded-circle
+                            bg-soft-primary
+                            text-primary
+                          ">
+                          01
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-1 overflow-hidden">
+                      <h5 class="font-size-16 mb-1">Shipping Info</h5>
+                      <p class="text-muted text-truncate mb-0">
+                        Fill all information below
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </button></h2>
+              <div ngbAccordionCollapse><div ngbAccordionBody><ng-template>
+                <div id="addproduct-billinginfo-collapse" class="show">
+                  <div class="row mt-1">
+                    <!-- <div class="col-md-4">
+                          <label> Tracking Code </label>
+                          <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Tracking Code"
+                          />
+                        </div> -->
+
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label class="control-label">Select Carrier</label>
+                        <ng-select class="select2" [ngClass]="{
+                            'is-invalid':
+                              form.get('shippingPartner').touched &&
+                              form.get('shippingPartner').invalid
+                          }" name="carrier" bindLabel="carrier" placeholder="Select Carrier" [multiple]="false"
+                          formControlName="shippingPartner" (change)="onChangeShippingPartner($event)">
+                          <ng-option value="Delhivery"> Delhivery </ng-option>
+                          <ng-option value="DTDC"> DTDC </ng-option>
+                          <ng-option value="Indian Post">
+                            Indian Post
+                          </ng-option>
+                          <ng-option value="Other"> Other </ng-option>
+                        </ng-select>
+                        <div *ngIf="
+                            form.get('shippingPartner').touched &&
+                            form.get('shippingPartner').invalid
+                          " class="invalid-feedback">
+                          This field is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                          <label> Shipping Fee &#8377; </label>
+                          <input
+                            class="form-control"
+                            type="text"
+                            placeholder="Shipping Fee"
+                          />
+                        </div> -->
+
+                    <div class="col-md-4">
+                      <label> Pickup Time </label>
+                      <input class="form-control" [ngClass]="{
+                          'is-invalid':
+                            form.get('pickup_time').touched &&
+                            form.get('pickup_time').invalid
+                        }" type="time" placeholder="Pickup Time" formControlName="pickup_time" />
+                      <div *ngIf="
+                          form.get('pickup_time').touched &&
+                          form.get('pickup_time').invalid
+                        " class="invalid-feedback">
+                        This field is required
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label> Shipping Date </label>
+                      <input class="form-control" [ngClass]="{
+                          'is-invalid':
+                            form.get('pickup_date').touched &&
+                            form.get('pickup_date').invalid
+                        }" type="date" placeholder="DD-MM-YYYY" formControlName="pickup_date" />
+                      <div *ngIf="
+                          form.get('pickup_date').touched &&
+                          form.get('pickup_date').invalid
+                        " class="invalid-feedback">
+                        This field is required
+                      </div>
+                    </div>
+                    <ng-container *ngIf="form.get('shippingPartner').value == 'Delhivery'">
+                      <div class="col-md-4">
+                        <label> Shipment Width (cm)</label>
+                        <input class="form-control" [ngClass]="{
+                            'is-invalid':
+                              form.get('shipment_width').touched &&
+                              form.get('shipment_width').invalid
+                          }" type="number" formControlName="shipment_width" />
+                        <div *ngIf="
+                            form.get('shipment_width').touched &&
+                            form.get('shipment_width').invalid
+                          " class="invalid-feedback">
+                          Enter valid number
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label> Shipment Height (cm) </label>
+                        <input class="form-control" [ngClass]="{
+                            'is-invalid':
+                              form.get('shipment_height').touched &&
+                              form.get('shipment_height').invalid
+                          }" type="number" formControlName="shipment_height" />
+                        <div *ngIf="
+                            form.get('shipment_height').touched &&
+                            form.get('shipment_height').invalid
+                          " class="invalid-feedback">
+                          Enter valid number
+                        </div>
+                      </div>
+                      
+                    </ng-container>
+                    <!--  -->
+                    <ng-container *ngIf="
+                        form.get('shippingPartner').value != 'Delhivery'
+                      ">
+                      <div class="col-md-3 mb-3">
+                        <label> Tracking Code </label>
+                        <input class="form-control" [ngClass]="{
+                            'is-invalid':
+                              form.get('trackingCode').touched &&
+                              form.get('trackingCode').invalid
+                          }" type="text" placeholder="Tracking code" formControlName="trackingCode" />
+                        <div *ngIf="
+                            form.get('trackingCode').touched &&
+                            form.get('trackingCode').invalid
+                          " class="invalid-feedback">
+                          This field is required
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <label> Tracking URL </label>
+                        <input class="form-control" [ngClass]="{
+                            'is-invalid':
+                              form.get('trackingUrl').touched &&
+                              form.get('trackingUrl').invalid
+                          }" type="url" placeholder="Tracking URL" formControlName="trackingUrl" />
+                        <div *ngIf="
+                            form.get('trackingUrl').touched &&
+                            form.get('trackingUrl').errors?.required
+                          " class="invalid-feedback">
+                          This field is required
+                        </div>
+                        <div *ngIf="form.get('trackingUrl').touched && form.get('trackingUrl').errors?.pattern"
+                          class="invalid-feedback">
+                          Please enter a valid URL
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="form.get('shippingPartner').value != 'Delhivery'">
+                      <div class="col-md-3 mb-3">
+                        <label> Shipping Price </label>
+                        <input class="form-control" [ngClass]="{
+                            'is-invalid':
+                              form.get('fee').touched &&
+                              form.get('fee').invalid
+                          }" type="number" placeholder="Shipping Price" formControlName="fee" min="0" />
+                        <div *ngIf="
+                            form.get('fee').touched &&
+                            form.get('fee').invalid
+                          " class="invalid-feedback">
+                          This field is required
+                        </div>
+                      </div>
+                      <div class="col-md-3 mb-3">
+                        <label> Shipping Status </label>
+                        <ng-select class="select2" [ngClass]="{
+                            'is-invalid':
+                              form.get('status').touched &&
+                              form.get('status').invalid
+                          }" placeholder="Shipping Status" [multiple]="false" formControlName="status">
+                          <ng-option value="processing"> Processing </ng-option>
+                          <ng-option value="dispatched"> Dispatched </ng-option>
+                          <ng-option value="outForDelivery"> Out for Delivery </ng-option>
+                          <ng-option value="delivered"> Delivered </ng-option>
+                          <ng-option value="cancelled"> Cancelled </ng-option>
+                          <ng-option value="refunded"> Refunded </ng-option>
+                        </ng-select>
+                        <div *ngIf="
+                            form.get('status').touched &&
+                            form.get('status').invalid
+                          " class="invalid-feedback">
+                          This field is required
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <div class="col-md-3">
+                      <label>Fragile</label>
+                      <div>
+                        <div class="form-check d-inline-block">
+                          <input type="radio" formControlName="fragile_shipment" value="true" id="fragile1"
+                            class="form-check-input" (change)="onChangefragile()" />
+                          <label for="fragile1" class="form-check-label">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check d-inline-block mx-4">
+                          <input type="radio" formControlName="fragile_shipment" value="false" id="fragile2"
+                            class="form-check-input" (change)="onChangefragile()" />
+                          <label for="fragile2" class="form-check-label">
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-3">
+                      <label>Category</label>
+                      <textarea class="w-100 h-100 form-check-input" style="resize: none" placeholder="Category"
+                        formControlName="category_of_goods"></textarea>
+                    </div>
+
+                    <div class="col-md-12 mt-5">
+                      <textarea class="w-100 h-100 p-1" style="resize: none" placeholder="Comments"
+                        formControlName="comments"></textarea>
+                    </div>
+                  </div>
+
+                  <div formArrayName="products">
+                    <div class="row mt-5">
+                      <ng-container *ngFor="
+                          let product of form.get('products').controls;
+                          let i = index
+                        " [formGroupName]="i">
+                        <div class="col-md-4">
+                          <div class="mb-3">
+                            <label class="control-label">Selected Products to ship</label>
+                            <input class="form-control" type="text" placeholder="Products Selected"
+                              formControlName="name" readonly />
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <label>Product Qty Ordered</label>
+                          <input class="form-control" type="text" placeholder="Qty Ordered" formControlName="quantity"
+                            readonly />
+                        </div>
+
+                        <div class="col-md-4">
+                          <label>Product Qty to ship</label>
+                          <input class="form-control" type="number" placeholder="Qty to Ship" min="0"
+                            [max]="product.value.quantity" formControlName="quantityToShip" />
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </ng-template></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <button class="btn btn-primary px-5 mb-4" [disabled]="form.invalid" (click)="type?updateShipment():addShipment()">
+    Save
+  </button>
+</div>

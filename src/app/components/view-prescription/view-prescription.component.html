@@ -1,0 +1,244 @@
+<ng-template #prescriptionModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">
+      {{ prescriptionModalData?.title || "Prescription" }}
+    </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body prescriptionModalBody" *ngIf="prescriptionModalData">
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="downloadPrescription()">
+        <i class="uil uil-clipboard-notes"></i> Download Prescription
+      </button>
+    </div>
+    <div [innerHTML]="prescriptionModalData.prescriptionHtml"></div>
+
+    <div *ngIf="false" class="resPres overflow-auto">
+      <div class="pres" id="presCont">
+        <div class="row">
+          <div class="col-6 logoCont">
+            <img src="/assets/images/logo.png" />
+            <p class="fw-500 mb-2">Tatvamasmi Consulting Pvt. Ltd.</p>
+          </div>
+          <div class="col-6 text-end">
+            <div class="d-inline-block text-start">
+              <ul class="list-unstyled reach mt-2 mb-0">
+                <li>
+                  <a href="https://healthybazar.com"><i class="uil-globe"></i>
+                    www.healthybazar.com</a>
+                </li>
+                <li>
+                  <a href="mailto:contact@healthybazar.com"><i class="uil-envelope"></i>
+                    contact@healthybazar.com</a>
+                </li>
+                <li>
+                  <a href="tel:+919119008008"><i class="uil-phone-alt"></i> +91 9119008008</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <table class="table docInfo borderLessTable">
+          <tbody>
+            <tr>
+              <td>
+                <p class="fw-500 mb-1">
+                  {{
+                  prescriptionModalData.consultantId.firstName +
+                  " " +
+                  prescriptionModalData.consultantId.lastName || ""
+                  }}
+                </p>
+                <p class="mb-0">
+                  {{ prescriptionModalData.consultantId.designation }}
+                </p>
+                <p class="mb-0">{{ prescriptionModalData.consultantId.email }}</p>
+              </td>
+              <td style="width: 225px">
+                <p class="mb-1">
+                  <b>Appointment ID:</b>
+                  {{ prescriptionModalData.appointmentId.appointmentId }}
+                </p>
+                <p class="mb-1">
+                  <b>Prescription No.:</b>
+                  {{ prescriptionModalData.prescriptionNo }}
+                </p>
+                <p class="mb-1">
+                  <b>Date:</b>
+                  {{ prescriptionModalData.createdAt | date: "mediumDate" }}
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="divider" colspan="2">
+                <div></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p class="mb-1">
+                  <b>Patient:</b>
+                  {{prescriptionModalData.userId.firstName}} {{prescriptionModalData.userId.lastName}}
+                  <span *ngIf="prescriptionModalData.userId.DOB"> /
+                    {{prescriptionModalData.userId.DOBYear}}y <span
+                      *ngIf="prescriptionModalData.userId.DOBMonth">{{prescriptionModalData.userId.DOBMonth}}m</span>
+                  </span>
+                  <span *ngIf="prescriptionModalData.userId.gender"> /
+                    {{prescriptionModalData.userId.gender |
+                    titlecase}}</span>
+                  <span *ngIf="prescriptionModalData.userId.weight"> /
+                    {{prescriptionModalData.userId.weight}}Kg</span>
+                </p>
+                <!-- <p class="mb-1"><b>Age:</b> 26</p> -->
+              </td>
+              <!-- <td>
+                  <p class="mb-1"><b>Gender:</b> Male</p>
+                  <p class="mb-1"><b>Weight:</b> 64</p>
+                </td> -->
+            </tr>
+            <tr>
+              <td class="divider" colspan="2">
+                <div></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-0" colspan="2">
+                <table class="table table-sm borderLessTable">
+                  <tbody>
+                    <tr>
+                      <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                      <td class="vitalTestsCol">
+                        <b class="mb-2 d-block">Vitals:</b>
+                        <ul *ngIf="prescriptionModalData.vitals" class="vitalsList">
+                          <li *ngFor="let vital of prescriptionModalData.vitals"><span class="name">{{vital.name}}
+                            </span> <span class="value">{{vital.value}} <div></div></span>
+                            {{vital.unit}}</li>
+                        </ul>
+                        <b class="mb-2 d-block">Investigations:</b>
+                        <ul *ngIf="prescriptionModalData.investigations" class="vitalsList">
+                          <li *ngFor="let inves of prescriptionModalData.investigations">✓
+                            <span class="name">{{inves.name}}</span>
+                          </li>
+                        </ul>
+                        <ng-container *ngIf="prescriptionModalData.appetite">
+                          <b class="mb-2 d-block">Appetite at Present:</b>
+                          <p>{{prescriptionModalData.appetite}}</p>
+                        </ng-container>
+                      </td>
+                      <td class="pt-0">
+                        <table class="table table-sm borderLessTable">
+                          <tbody>
+                            <tr>
+                              <td class="pt-0 p-1" colspan="2">
+                                <table class="table table-sm borderLessTable">
+                                  <tbody>
+
+                                    <tr *ngIf="prescriptionModalData.chiefComplaints">
+                                      <th width="130">Chief Complaints:</th>
+                                      <td>{{prescriptionModalData.chiefComplaints}}
+                                      </td>
+                                    </tr>
+                                    <tr *ngIf="prescriptionModalData.examination">
+                                      <th>Examination:</th>
+                                      <td>{{prescriptionModalData.examination}}
+                                      </td>
+                                    </tr>
+                                    <tr *ngIf="prescriptionModalData.treatment">
+                                      <th>Treatment:</th>
+                                      <td>{{prescriptionModalData.treatment}}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <table class="table table-sm borderLessTable medicineTable">
+                                  <thead>
+                                    <tr>
+                                      <th class="pe-2">SN.</th>
+                                      <th class="pe-3">PRODUCT NAME</th>
+                                      <th class="pe-3">DAYS</th>
+                                      <th class="pe-3">DOSAGE</th>
+                                      <th>TIME</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="
+                                          let item of prescriptionModalData.medicines;
+                                          let i = index
+                                        ">
+                                      <td>{{ i + 1 }}</td>
+                                      <td>{{ item.name }}</td>
+                                      <td>{{ item.days }}</td>
+                                      <td>{{ item.dosage }} <span *ngIf="item.repeat">({{item.repeat}})</span>
+                                      </td>
+                                      <td>
+                                        {{ item.meal }} (<span *ngFor="let time of item.time; let j = index">{{
+                                          time
+                                          }}<span *ngIf="j < item.time.length - 1">,
+                                          </span></span>)
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                              <td>
+                                <b class="mb-2 d-block" style="min-width: 90px;">Past
+                                  History:</b>
+                                <ul class="vitalsList">
+                                  <li *ngFor="let history of prescriptionModalData.pastHistory">
+                                    <span class="name">{{history.name}} (Y)</span>
+                                  </li>
+                                  <li *ngIf="prescriptionModalData.otherPastHistory">
+                                    <span class="name">{{prescriptionModalData.otherPastHistory}}
+                                      (Y)</span>
+                                  </li>
+                                </ul>
+                              </td>
+                            </tr>
+                            <tr *ngIf="prescriptionModalData.note">
+                              <td class="divider" colspan="2">
+                                <div></div>
+                              </td>
+                            </tr>
+                            <tr *ngIf="prescriptionModalData.note">
+                              <td colspan="2">
+                                <b>Diet &amp; Precaution explained: </b>
+                                <div class="note" [innerHTML]="prescriptionModalData.note"></div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" style="text-align: right;">
+                                <p class="mb-0">Name & Signature of Consultant</p>
+                                <img *ngIf="prescriptionModalData.consultantId.signature" class="signature"
+                                  [src]="imageUrl + prescriptionModalData.consultantId.signature.savedName"
+                                  alt="signature">
+                                <p class="mb-2">
+                                  {{prescriptionModalData.consultantId.firstName + " "
+                                  +
+                                  prescriptionModalData.consultantId.lastName || ""}}
+                                </p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <div class="presFooter">
+          Reg 405, New Shivpuri, Hapur, 245101, Uttar Pradesh
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

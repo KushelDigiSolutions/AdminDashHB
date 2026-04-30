@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <div class="font-14 b-5">{{data.title}}</div>
+    <div class="row">
+      <div class="col-md-6 pt-5">
+        <div class="mb-3" *ngFor="let chatData of data.chartData;index as index">
+          <div class="font-12">{{chatData.label}}</div>
+          <span class="chartValue"><span class="colorDot" [style]="{backgroundColor: pieChart.colors[index] || '#bbb'}"></span> {{chatData.labelValue}}</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <apx-chart class="apex-charts" dir="ltr" [series]="pieChart.series" [chart]="pieChart.chart"
+          [labels]="pieChart.labels" [legend]="pieChart.legend" [colors]="pieChart.colors"
+          [responsive]="pieChart.responsive">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+</div>

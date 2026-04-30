@@ -1,0 +1,163 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 p-3">
+        <h3 class="mb-5">{{ editId ? "Update" : "Add" }} Category</h3>
+  
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col-lg-12 mb-3">
+              <label>Category Icon</label>
+              <ngx-dropzone
+                [ngClass]="{
+                  'is-invalid':
+                    form.get('image').touched && form.get('image').invalid
+                }"
+                (change)="onSelect($event)"
+              >
+                <ngx-dropzone-label
+                  >Drop files here or click to upload.</ngx-dropzone-label
+                >
+                <ngx-dropzone-preview
+                  class="oldImagePreview"
+                  *ngFor="let f of oldFiles; index as i"
+                  [removable]="true"
+                  (removed)="onRemoveOldFile(i)"
+                >
+                  <ngx-dropzone-label
+                    ><img [src]="s3Base + f.savedName"
+                  /></ngx-dropzone-label>
+                </ngx-dropzone-preview>
+                <ngx-dropzone-image-preview
+                  ngProjectAs="ngx-dropzone-preview"
+                  *ngFor="let f of files; index as i"
+                  [file]="f"
+                  [removable]="true"
+                  (removed)="onRemove(i)"
+                >
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+              <div
+                *ngIf="form.get('image').touched && form.get('image').invalid"
+                class="invalid-feedback"
+              >
+                <span>This field is required.</span>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <label for="name">Category Name</label>
+  
+              <input
+                type="text"
+                [ngClass]="{
+                  'is-invalid':
+                    form.get('name').touched && form.get('name').invalid
+                }"
+                class="form-control"
+                name="name"
+                formControlName="name"
+                placeholder="Name"
+              />
+              <div
+                *ngIf="form.get('name').touched && form.get('name').invalid"
+                class="invalid-feedback"
+              >
+                <span>This field is required.</span>
+              </div>
+            </div>
+  
+            <div class="col-lg-6">
+              <label for="metaTitle">Meta Title</label>
+  
+              <input
+                type="text"
+                class="form-control"
+                name="metaTitle"
+                placeholder="Meta Title"
+                formControlName="metaTitle"
+              />
+            </div>
+  
+            <div class="col-lg-9 mt-3">
+              <label for="metaDescription">Meta Description</label>
+  
+              <textarea
+                class="form-control text-area"
+                name="metaDescription"
+                placeholder="Meta Description"
+                formControlName="metaDescription"
+                rows="5"
+              >
+              </textarea>
+            </div>
+  
+            <div class="col-lg-3 mt-3" *ngIf="!hasParent">
+              <label class="control-label"
+              >Category</label
+            >
+            <ng-select
+              class="select2"
+              name="parent"
+              bindLabel="parent"
+              placeholder="Choose Parent"
+              formControlName="parent"
+              (change)="categorySelected($event)"
+              [multiple]="false"
+            >
+              <ng-option disabled value="">Choose Parent</ng-option>
+              <ng-option
+                *ngFor="let item of categoriesList"
+                [value]="item?._id"
+              >
+                {{ item?.name }}
+              </ng-option>
+            </ng-select>
+            </div>
+  
+            <!-- <div class="col-lg-3 mt-3"
+            *ngIf="subCategoryList.length">
+              <label class="control-label"
+              >Choose Child Category</label
+            >
+            <ng-select
+              class="select2"
+              name="parent"
+              bindLabel="parent"
+              placeholder="Choose Child"
+              formControlName="child"
+              [multiple]="false"
+            >
+              <ng-option disabled value="">Choose Child</ng-option>
+              <ng-option
+                *ngFor="let item of subCategoryList"
+                [value]="item?._id"
+              >
+                {{ item?.name }}
+              </ng-option>
+            </ng-select>
+            </div> -->
+          </div>
+  
+          <div class="row">
+            <div class="col-md-12 mt-3">
+              <div class="mb-3 mb-0">
+                <label for="productdesc">Category Detail</label>
+                <ckeditor
+                  [editor]="Editor"
+                  formControlName="description"
+                ></ckeditor>
+              </div>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="form.invalid"
+            (click)="addCategory()"
+          >
+            {{ editId ? "Update" : "Add" }} Category
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

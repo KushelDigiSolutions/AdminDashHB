@@ -1,0 +1,33 @@
+.blogDetails {
+    ::ng-deep {
+        * {
+            line-height: 1.8;
+        }
+        p,
+        li {
+            font-size: 17px;
+        }
+        img {
+            max-width: 100%;
+        }
+    }
+}
+.sticky {
+    position: sticky;
+    top: 100px;
+}
+.ckeditorCont {
+    border: 1px solid #ccc;
+    ::ng-deep {
+        .ck-editor__editable {
+            border: 0 !important;
+        }
+    }
+}
+.remark {
+    ::ng-deep {
+        p {
+            margin-bottom: 5px;
+        }
+    }
+}

@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row" style="text-align: center">
+    <div class="col-lg-12 mt-4">
+      <h2>
+        Are you sure want to
+        {{
+          data == "appointment"
+            ? "remove"
+            : data == "cancelAppointment"
+            ? "cancel"
+            : data == "consultant"
+            ? "remove"
+            : ""
+        }}
+        {{
+          data == "appointment"
+            ? "appointment"
+            : data == "cancelAppointment"
+            ? "appointment"
+            : data == "consultant"
+            ? "consultant"
+            : ""
+        }}
+      </h2>
+    </div>
+    <div class="col-lg-12 my-3">
+      <button
+        class="btn-lg border-0 btn-danger mx-3"
+        (click)="fetchValue('yes')"
+      >
+        Yes
+      </button>
+      <button class="btn-lg border-0 btn-primary" (click)="fetchValue('no')">
+        No
+      </button>
+    </div>
+  </div>
+</div>

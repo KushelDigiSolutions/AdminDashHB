@@ -1,0 +1,117 @@
+<div class="container-fluuid">
+    <div class="row">
+        <div class="col-lg-12 p-3">
+
+
+            <div class="table-responsive mb-4">
+                <div
+                  id="DataTables_Table_0_wrapper"
+                  class="dataTables_wrapper dt-bootstrap4 no-footer"
+                >
+                  <form>
+                    <table
+                      class="table table-centered datatables dt-responsive nowrap table-card-list"
+                      style="border-spacing: 0 12px; width: 100%"
+                    >
+                      <thead>
+                        <tr class="bg-transparent">
+                          <!-- <th style="width: 24px">
+                            <div class="form-check text-center font-size-16">
+                              <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="ordercheck"
+                              />
+                              <label class="form-check-label" for="ordercheck"></label>
+                            </div>
+                          </th> -->
+                          <th scope="col">
+                            
+                          </th>
+                          <th scope="col">
+                            {{'Blogs.blogId'|translate}}
+                          </th>
+                          <th scope="col" >
+                            {{'Blogs.blogTitle'|translate}}
+                          </th>
+                          <th scope="col">
+                            {{'Blogs.blogAuthor'|translate}}
+                          </th>
+                          <th scope="col">
+                              {{'Blogs.related'|translate}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of dataArray;let i = index" class="odd">
+                          <!-- <td>
+                            <div class="form-check text-center">
+                              <input
+                                id="productcheck{{ i }}"
+                                type="checkbox"
+                                class="form-check-input"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="productcheck{{ i }}"
+                                >&nbsp;</label
+                              >
+                            </div>
+                          </td> -->
+                          <td>
+                            <img src="{{data?.image}}" />
+                          </td>                          
+                          <td>
+                            <ngb-highlight
+                              [result]="data?._id"
+                              [term]="service?.searchTerm"
+                            ></ngb-highlight>
+                          </td>
+                          <td>
+                            <ngb-highlight
+                              [result]="data?.title"
+                              [term]="service?.searchTerm"
+                            ></ngb-highlight>
+                          </td>
+                          <td>
+                              <ngb-highlight
+                                [result]="data?.author?.name"
+                                [term]="service?.searchTerm"
+                              ></ngb-highlight>
+                            </td>
+                          <td>
+      
+                              <div>
+                                <app-hb-switch
+                                 defaultBoColor="#dfdfdf"
+                                 size="small"
+                                 color="#f46a6a"
+                                 name= "statusButton"
+                                 [checked]="data.related"
+                                 (click)="toggleFxn(data)">
+                                </app-hb-switch>
+                              </div>
+          
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+        
+                    <div class="float-end">
+                      <ngb-pagination
+                        [collectionSize]="(total$ | async)!"
+                        [(page)]="service.page"
+                        [pageSize]="service.pageSize"
+                      >
+                        <ng-template ngbPaginationPrevious>Previous</ng-template>
+                        <ng-template ngbPaginationNext>Next</ng-template>
+                      </ngb-pagination>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+.account-card {
+  border-radius: 10px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  padding: 10px;
+  text-align: center;
+}
+.account-card span {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+.bg-success-light {
+  background-color: rgba(15, 183, 107, 0.12) !important;
+  color: #26af48 !important;
+}
+.bg-warning-light {
+  background-color: rgba(255, 152, 0, 0.12) !important;
+  color: #f39c12 !important;
+}
+.bg-purple-light {
+  background-color: rgba(197, 128, 255, 0.12) !important;
+  color: #c580ff !important;
+}
+.bg-blue-light {
+  background-color: rgba(56, 102, 255, 0.12) !important;
+  color: #3866ff !important;
+}

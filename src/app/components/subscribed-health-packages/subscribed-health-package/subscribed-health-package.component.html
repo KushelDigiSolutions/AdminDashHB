@@ -1,0 +1,318 @@
+<div class="container-fluid">
+  <app-page-title title="Subscribed Package" [breadcrumbItems]="breadcrumb"></app-page-title>
+
+  <ngb-alert *ngIf="data && (data.isCancel || !data.isActive)" [dismissible]="false" type="danger" class="custom-alert">
+    <span *ngIf="data.isCancel">
+      <i class="mdi mdi-alert-outline me-2"></i> Subscription is cancelled.
+    </span>
+    <span *ngIf="!data.isActive">
+      <i class="mdi mdi-alert-outline me-2"></i> Subscription is not active yet!
+    </span>
+  </ngb-alert>
+
+  <div *ngIf="data" class="card">
+    <div class="card-body">
+      <ul ngbNav #justifiednav="ngbNav" [activeId]="activeTab" (activeIdChange)="onChangeTab($event)"
+        class="nav nav-tabs nav-justified nav-tabs-custom">
+        <li ngbNavItem="TabUserDetails" class="nav-item">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-user-circle font-size-20"></i>
+            <span class="d-none d-sm-block">User Details</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabUserDetails"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="TabAppt" class="nav-item" [disabled]="data.isCancel || !data.isActive">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-calendar-alt font-size-20"></i>
+            <span class="d-none d-sm-block">Appointments
+              (<i>{{data.usedAppointments}}/{{data.totalAppointments}}</i>)</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabAppt"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="TabLabTests" class="nav-item" [disabled]="data.isCancel || !data.isActive">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-calendar-alt font-size-20"></i>
+            <span class="d-none d-sm-block">Lab Tests (<i>{{data.bookedTests}}/{{data.testProducts.length}}</i>)</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabLabTests"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="TabNoti" class="nav-item" [disabled]="data.isCancel || !data.isActive">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-clipboard-notes font-size-20"></i>
+            <span class="d-none d-sm-block">Notifications</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabNoti"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="TabInsights" class="nav-item" [disabled]="data.isCancel || !data.isActive">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-clipboard-notes font-size-20"></i>
+            <span class="d-none d-sm-block">Insights</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabInsights"></ng-template>
+          </ng-template>
+        </li>
+
+      </ul>
+      <div [ngbNavOutlet]="justifiednav"></div>
+
+      <ng-template #TabUserDetails>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5>{{data.name}}</h5>
+                <ul *ngIf="data.highlights" class="list-unstyled">
+                  <li *ngFor="let item of data.highlights; index as i">({{i+1}}). {{item}}</li>
+                </ul>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex mb-3 avatar">
+                  <img class="me-3" src="/assets/images/user-thumbnail.png" alt="avatar" />
+                  <div>
+                    <h5 class="mt-2">
+                      {{
+                      !data.user?.firstName && !data.user?.lastName
+                      ? "HB User"
+                      : ""
+                      }}{{ data.user?.firstName }}
+                      {{ data.user?.lastName }}
+                    </h5>
+                    <!-- <a href="javascript:void(0)"><b>View Profile</b></a> -->
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-sm table-borderless">
+                    <tbody>
+                      <tr>
+                        <th>Mobile</th>
+                        <td>{{ data.user?.phone }}</td>
+                      </tr>
+                      <tr>
+                        <th>Email</th>
+                        <td>{{ data.user?.email }}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr *ngIf="consultationForName">
+                        <th>Patient Name</th>
+                        <td>{{ data.consultationForName }}</td>
+                      </tr>
+                      <tr>
+                        <th>Gender</th>
+                        <td>{{ data.user?.gender | titlecase }}</td>
+                      </tr>
+                      <tr>
+                        <th>D.O.B</th>
+                        <td>{{ data.user?.DOB | date: "dd-MM-YYYY" }} ({{calculateAge(data.user?.DOB)}} yr)</td>
+                      </tr>
+                      <tr>
+                        <th>Weight</th>
+                        <td>
+                          {{ data.user?.weight
+                          }}{{ data.user?.weightUnit || "KG" }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <!-- <apx-chart class="apex-charts" dir="ltr" [series]="simplePieChart.series" [chart]="simplePieChart.chart"
+                  [labels]="simplePieChart.labels" [legend]="simplePieChart.legend" [colors]="simplePieChart.colors"
+                  [responsive]="simplePieChart.responsive">
+                </apx-chart> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabAppt>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="table-responsive mb-4">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Consulatnt</th>
+                    <th scope="col">Appt. Date</th>
+                    <th scope="col">Slot</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" style="width: 200px; text-align: right"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let appt of data.appointments; let index = index">
+                    <td>
+                      <ngb-highlight [result]="appt.appointmentId"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="appt.consultantId | consultant:'fullname'">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="appt.date | date:'d MMM y'">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="appt.primaryTimeSlot | consultation:'slot'"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="appt.status" class="badge rounded-pill font-size-12" [ngClass]="{'bg-soft-success': appt.status == 'Confirmed' || appt.status == 'Re-scheduled',
+                      'bg-soft-light': appt.status == 'Completed' || appt.status == 'Closed',
+                      'bg-soft-warning': appt.status == 'Payment-Awaited',
+                      'bg-soft-danger': appt.status == 'Cancelled'}">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ul class="list-inline mb-0 text-end">
+                        <li class="list-inline-item">
+                          <a [routerLink]="['/',isConsultant ?'consultant':'consultation',isConsultant?'appointments':'appointment',appt.parentAppointmentId || appt._id]"
+                            [queryParams]="appt.parentAppointmentId? {view: 'followUp'}:{}" class="px-2 text-primary"
+                            ngbTooltip="View Details"><i class="uil uil-eye font-size-18"></i>
+                            View</a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div *ngIf="!data.isCancel && data.usedAppointments < data.totalAppointments" class="text-center">
+              <a [routerLink]="['/patients',data.user?._id,'create-appointment']"
+                [queryParams]="{healthPackageBuyId: data._id, consultant: data.consultant._id, redir: router.url}" class="btn btn-primary">Book
+                Appointment</a>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabLabTests>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="table-responsive mb-4">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Test Name</th>
+                    <th scope="col">Booked</th>
+                    <th scope="col" style="width: 200px; text-align: right"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of data.testProducts; let index = index">
+                    <td>
+                      <ngb-highlight [result]="data.code"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.name">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.diagnosticBookingId?'Yes':'No'">
+                      </ngb-highlight>
+                    </td>
+
+                    <td>
+                      <ngb-highlight [result]="data.status" class="badge rounded-pill font-size-12" [ngClass]="{'bg-soft-success': data.status == 'Confirmed' || data.status == 'Re-scheduled',
+                      'bg-soft-light': data.status == 'Completed' || data.status == 'Closed',
+                      'bg-soft-warning': data.status == 'Payment-Awaited',
+                      'bg-soft-danger': data.status == 'Cancelled'}">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ul class="list-inline mb-0 text-end">
+                        <li class="list-inline-item">
+                          <a [href]="userAppHost + pathService.labTestDetail(data.testProductId?.slug)" target="_blank"
+                            class="px-2 text-primary" ngbTooltip="View Details"><i class="uil uil-eye font-size-18"></i>
+                            View</a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabNoti>
+        <div class="tab-content p-4">
+          <div class="tab-pane active notiTab">
+            <div class="text-end">
+              <a routerLink="notifications"
+                [queryParams]="{healthPackageId: (data.parentHealthPackageId || data.healthPackageId)?._id}"
+                class="btn btn-primary px-4"><i class="uil-edit"></i> Edit</a>
+            </div>
+            <div class="row">
+              <div class="col-md-4 notiCal">
+                <ngb-datepicker #dp [(ngModel)]="date" [startDate]="date" (navigate)="onNavigate($event)"
+                  (dateSelect)="onDateSelect($event)"></ngb-datepicker>
+              </div>
+              <div class="col-md-8 notiTL">
+                <ol class="activity-feed mb-0 pl-2">
+                  <li class="feed-item" *ngFor="let noti of notifications;">
+                    <p class="text-muted mb-1 font-size-13">{{format24to12(noti.time)}}
+                      <!-- <small class="d-inline-block ms-1">12:36pm</small> -->
+                    </p>
+                    <div class="d-flex">
+                      <div class="flex-grow-1 mr-2">
+                        <p class="mt-0 mb-0"><b>{{(noti.templateId || noti).title}}</b></p>
+                        <p class="mt-0 mb-0">{{(noti.templateId || noti).message || noti.description}}</p>
+                        <p *ngIf="noti.notificationType == 'healthPackage_survey'" class="mt-0 mb-0">Patient Ans: <span
+                            class="b-5">{{noti.survey?noti.survey.answer?'Yes':'No':'pending'}}</span></p>
+                      </div>
+                      <img *ngIf="(noti.templateId || noti).image" class="flex-shrink-0 avatar-sm rounded notiImg"
+                        [src]="imgBase + (noti.templateId || noti).image?.savedName">
+                      <img *ngIf="!(noti.templateId || noti).image" class="flex-shrink-0 avatar-sm rounded notiImg"
+                        src="/assets/images/notification-img.png">
+                    </div>
+                  </li>
+
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabInsights>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="py-4">
+              <div class="font-12 mb-2">PACKAGE VAILDITY</div>
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center font-12 mb-3">
+                    <span>Subscription valid till <span class="b-5">{{data.expirayDate | date:"dd MMM,
+                        yyyy"}}</span></span>
+                  </div>
+                  <div class="progress" style="height:10px">
+                    <div class="progress-bar" style="height:10px" [ngStyle]="{'width.%': data.expirationProgress}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="activeTab == 'TabInsights'" class="row no-gutters chartsRow">
+                <div class="col-md-6 mb-4" *ngFor="let insightsChart of insightsCharts">
+                  <app-insights-chart [data]="insightsChart"></app-insights-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

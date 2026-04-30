@@ -1,0 +1,1082 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title title="Appointment Details" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!-- end page title -->
+  <div *ngIf="apptData && apptData.status != 'Closed'" class="text-end mb-3">
+    <ng-container *ngIf="apptData.appointmentMode && apptData.canConnect">
+      <div *ngIf="apptData.appointmentMode != 'chat'" class="btn-group me-2" ngbDropdown>
+        <a class="btn btn-success" [href]="apptData.event?.link" target="_blank">
+          <i class="mdi"
+            [ngClass]="{'mdi-phone-outline': apptData.appointmentMode == 'audio', 'mdi-video-outline': apptData.appointmentMode == 'video'}"></i>
+          {{apptData.appointmentMode == 'audio'? 'Join Audio Call': 'Join Video Call'}}
+        </a>
+        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" ngbDropdownToggle>
+          <i class="mdi mdi-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <a class="dropdown-item" href="javascript: void(0);"
+            (click)="openCallDetailsModal(callDetailsModal,apptData)">Call Details</a>
+        </div>
+      </div>
+      <a *ngIf="apptData.appointmentMode == 'chat'" class="btn btn-success me-2" target="_blank">
+        <i class="mdi mdi-message-outline"></i>
+        Start Chat
+      </a>
+    </ng-container>
+    <button *ngIf="apptData.canRescheduleConsultant" class="btn btn-primary me-2"
+      (click)="openModal(scheduleModal, 'reschedule', apptData)">
+      <i class="uil-clock"></i> Reschedule
+    </button>
+
+    <button class="btn btn-primary me-2" (click)="openModal(scheduleModal, 'followUp', apptData)">
+      <i class="uil-calendar-alt"></i> Follow Up
+    </button>
+
+    <button *ngIf="apptData.status != 'Completed'" class="btn btn-primary me-2" (click)="markCompleted(apptData._id)">
+      Mark Completed
+    </button>
+    <button *ngIf="apptData.status == 'Completed'" class="btn btn-primary me-2" (click)="markClosed(apptData._id)">
+      Mark Closed
+    </button>
+
+    <div class="dropdown" style="width: fit-content; float: right">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ngbTooltip=""
+        (click)="onChangeView()">
+        <i class="uil uil-ellipsis-h"></i>
+      </button>
+    </div>
+    <div class="dropdown-menu dropdown-menu-right" style="z-index: 9999;"
+      [ngStyle]="{'display':showDropdown?'contents':'none'}">
+      <ul class="link-list-opt no-bdr" [ngClass]="{'showDropdown':showDropdown}">
+        <li class="p-2" [ngClass]="{disabled: !apptData.canCancelConsultant}">
+          <span class="list-items" (click)="cancelAppointment()">Cancel Appointment</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div *ngIf="apptData" class="card">
+    <div class="card-body">
+      <ul ngbNav #justifiednav="ngbNav" [activeId]="activeTab" class="nav nav-tabs nav-justified nav-tabs-custom">
+        <li [ngbNavItem]="1" class="nav-item" (click)="activeTab = 1">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-user-circle font-size-20"></i>
+            <span class="d-none d-sm-block">Details</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabApptDetails"></ng-template>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2" class="nav-item" (click)="activeTab = 2">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-calendar-alt font-size-20"></i>
+            <span class="d-none d-sm-block">Follow Up <i>({{followUps.length}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabFollowUp"></ng-template>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3" class="nav-item" (click)="activeTab = 3">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-clipboard-notes font-size-20"></i>
+            <span class="d-none d-sm-block">Prescription <i>({{prescriptionsCount}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabPrescription"></ng-template>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="4" class="nav-item" (click)="activeTab = 4">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-folder-medical font-size-20"></i>
+            <span class="d-none d-sm-block">Medical Records <i>({{medicalRecordsCount}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabMedicalRecords"></ng-template>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="justifiednav"></div>
+      <ng-template #TabApptDetails>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="d-inline-flex mb-3 avatar">
+                  <img class="me-3" src="/assets/images/user-thumbnail.png" alt="avatar" />
+                  <div>
+                    <h5 class="mt-2">
+                      {{
+                      !apptData.userId?.firstName && !apptData.userId?.lastName
+                      ? "HB User"
+                      : ""
+                      }}{{ apptData.userId?.firstName }}
+                      {{ apptData.userId?.lastName }}
+                    </h5>
+                    <a *ngIf="isConsultant" [routerLink]="['/patients',apptData.userId?._id]"><b>View Patient</b></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-5 offset-sm-1">
+                <div *ngIf="isAdmin" class="d-flex mb-3 avatar">
+                  <img class="me-3" src="/assets/images/user-thumbnail.png" alt="avatar" />
+                  <div>
+                    <h5 class="mt-2">{{apptData.consultantId | consultant:'fullname'}}</h5>
+                    <p class="mb-0">{{apptData.consultantId | consultant:'desQual'}}</p>
+                    <p class="mb-0">{{apptData.consultantId | consultant:'consultantType'}}</p>
+                    <!-- <a href="javascript:void(0)"><b>View Profile</b></a> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="table-responsive">
+                  <table class="table table-sm table-borderless">
+                    <tbody>
+                      <tr>
+                        <th>Mobile</th>
+                        <td>{{ apptData.userId?.phone }}</td>
+                      </tr>
+                      <tr>
+                        <th>Email</th>
+                        <td>{{ apptData.userId?.email }}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr *ngIf="consultationForName">
+                        <th>Patient Name</th>
+                        <td>{{ apptData.consultationForName }}</td>
+                      </tr>
+                      <tr>
+                        <th>Gender</th>
+                        <td>{{ apptData.userId?.gender | titlecase }}</td>
+                      </tr>
+                      <tr>
+                        <th>D.O.B</th>
+                        <td>{{ apptData.userId?.DOB | date: "dd-MM-YYYY" }} ({{getAge(apptData.userId?.DOB) +' years'}})
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Weight</th>
+                        <td>
+                          {{ apptData.userId?.weight
+                          }}{{ apptData.userId?.weightUnit || "KG" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Concerns</th>
+                        <td *ngIf="apptData.userId?.diseases">
+                          <span *ngFor="let disease of apptData.userId?.diseases">{{disease.name}}, </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-5 offset-sm-1">
+                <div class="table-responsive">
+                  <table class="table table-sm borderLessTable">
+                    <tbody>
+                      <tr *ngIf="followUps.length">
+                        <th>Follow Up</th>
+                        <td>
+                          {{
+                          followUps[followUps.length - 1].date
+                          | date: "MMM d, y"
+                          }}
+                          |
+                          {{ followUps[followUps.length - 1].primaryTimeSlot }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Booking Date</th>
+                        <td>
+                          {{ apptData.createdAt | date: "MMM d, y" }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Appt. Date</th>
+                        <td>
+                          {{ apptData.date | date: "MMM d, y" }} |
+                          {{ apptData.primaryTimeSlot }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Fee</th>
+                        <td>₹{{ apptData.fee }}</td>
+                      </tr>
+                      <tr>
+                        <th>Status</th>
+                        <td>{{ apptData.status }}</td>
+                      </tr>
+                      <tr *ngIf="apptData.payment?.paymentId">
+                        <th>Txn. ID</th>
+                        <td>{{apptData.payment.paymentId}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabFollowUp>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>SR.</th>
+                  <th>Date</th>
+                  <th>Slot</th>
+                  <th>Fee</th>
+                  <th>Satus</th>
+                  <th>Payment Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody class="">
+                <tr *ngFor="let followUp of followUps; index as i">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ followUp.date | date: "mediumDate" }}</td>
+                  <td>{{ followUp.primaryTimeSlot }}</td>
+                  <td>₹{{ followUp.fee }}</td>
+                  <td>{{ followUp.status }}</td>
+                  <th *ngIf="followUp.fee"><span class="badge rounded-pill "
+                      [ngClass]="followUp.paymentStatus == 'accepted'? 'bg-soft-success':'bg-soft-danger'">{{followUp.paymentStatus
+                      == 'accepted'? 'Accepted' : 'Pending'}}</span></th>
+                  <th *ngIf="!followUp.fee"><span class="badge rounded-pill bg-soft-success">Free</span></th>
+                  <td class="text-end">
+                    <ng-container *ngIf="followUp.appointmentMode && followUp.canConnect">
+                      <div *ngIf="followUp.appointmentMode != 'chat'" class="btn-group me-2" ngbDropdown>
+                        <a class="btn btn-success" [href]="followUp.event?.hostUrl" target="_blank">
+                          <i class="mdi"
+                            [ngClass]="{'mdi-phone-outline': followUp.appointmentMode == 'audio', 'mdi-video-outline': followUp.appointmentMode == 'video'}"></i>
+                          {{apptData.appointmentMode == 'audio'? 'Join Call': 'Join Call'}}
+                        </a>
+                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+                          ngbDropdownToggle>
+                          <i class="mdi mdi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" ngbDropdownMenu>
+                          <a class="dropdown-item" href="javascript: void(0);"
+                            (click)="openCallDetailsModal(callDetailsModal,followUp)">Call Details</a>
+                        </div>
+                      </div>
+                      <a *ngIf="apptData.appointmentMode == 'chat'" class="btn btn-success me-2" target="_blank">
+                        <i class="mdi mdi-message-outline"></i>
+                        Start Chat
+                      </a>
+                    </ng-container>
+                    <ng-container *ngIf="followUp.status != 'Completed'">
+                      <button *ngIf="followUp.canRescheduleConsultant" class="btn btn-primary" (click)="
+                          openModal(scheduleModal, 'reschedule', followUp)
+                        ">
+                        <i class="uil-clock"></i> Reschedule
+                      </button>
+                      &nbsp;
+                      <button *ngIf="followUp.status != 'Cancelled'" class="btn btn-primary"
+                        (click)="markCompleted(followUp._id, true)">
+                        Mark Completed
+                      </button>
+                      &nbsp;
+                      <button class="btn btn-primary" (click)="cancelAppointment(followUp._id)"
+                        *ngIf="followUp.canCancelConsultant">
+                        Cancel
+                      </button>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabPrescription>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <ng-container *ngIf="!writePrescription">
+              <div class="text-center px-3" [ngClass]="prescriptionList.length ? 'py-3' : 'py-5'">
+                <p *ngIf="!prescriptionList.length">No Prescription Found!</p>
+                <button class="btn btn-primary" (click)="startWritingPres()">
+                  Write Prescription
+                </button>
+              </div>
+
+              <ul class="list-unstyled prescriptions" *ngFor="let prescription of prescriptionList; index as i">
+                <li class="p-3 pointer d-flex" (click)="viewPrescription(prescription)">
+                  <span class="flex-grow-1">
+                    <span class="
+                        d-inline-flex
+                        justify-content-center
+                        align-items-center
+                        srNo
+                      ">{{ i + 1 }}</span>
+                    <b>{{ prescription.createdAt | date: "dd MMM YYYY" }}</b>
+                    &nbsp; {{ prescription.title }}
+                  </span>
+                  <i class="uil uil-arrow-right font-size-20"></i>
+                </li>
+              </ul>
+              <div class="text-center">
+                <button *ngIf="prescriptionList.length < prescriptionsCount" type="button" class="btn btn-primary"
+                  (click)="loadMorePrescription()">Load More</button>
+              </div>
+            </ng-container>
+
+            <form [formGroup]="form" *ngIf="writePrescription" (submit)="submitPrescription()">
+              <div class="mb-3">
+                <label class="required">Title/Diagnosis</label>
+                <input formControlName="title" class="form-control"
+                  [ngClass]="{'is-invalid': form.get('title').invalid && (form.get('title').touched || submit.pres)}"
+                  type="text" placeholder="Enter title" />
+                <div class="invalid-feedback">This field is required</div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-sm-4 mb-3">
+                  <label>Chief Complaints</label>
+                  <textarea formControlName="chiefComplaints" rows="2" class="form-control"></textarea>
+                </div>
+                <div class="col-sm-4 mb-3">
+                  <label>Examination</label>
+                  <textarea formControlName="examination" rows="2" class="form-control"></textarea>
+                </div>
+                <div class="col-sm-4 mb-3">
+                  <label>Treatment</label>
+                  <textarea formControlName="treatment" rows="2" class="form-control"></textarea>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <label>Investigations</label>
+                  <br>
+                  <div class="row row-cols-lg-auto m-0 gx-3 gy-2">
+                    <div class="col-12" *ngFor="let invs of investigations; let ii = index"
+                      formArrayName="investigations">
+                      <label class="form-check col-12">
+                        <input [formControlName]="ii" class="form-check-input" type="checkbox"> {{invs}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-4">
+                  <label>Past History</label>
+                  <br>
+                  <div class="row row-cols-lg-auto m-0 gx-3 gy-2">
+                    <div class="col-12" *ngFor="let hx of history; let phi = index" formArrayName="pastHistory">
+                      <label class="form-check">
+                        <input [formControlName]="phi" [value]="hx" class="form-check-input" type="checkbox"
+                          (change)="changePastHistory($event)"> {{hx}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="showOtherHistory" class="col-sm-6 offset-sm-6 mb-4">
+                  <label>Other Past History</label>
+                  <textarea formControlName="otherPastHistory" class="form-control" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="col-sm-6 mb-4">
+                <label>Appetite at Present</label>
+                <div class=" row row-cols-lg-auto m-0 gx-3 gy-2 align-items-center">
+                  <div class="col-12 form-check">
+                    <label class="form-check-label">
+                      <input formControlName="appetite" name="appetite" value="Normal" type="radio"
+                        class="form-check-input" />
+                      Normal
+                    </label>
+                  </div>
+                  <div class="col-12 form-check">
+                    <label class="form-check-label">
+                      <input formControlName="appetite" name="appetite" value="Low" type="radio"
+                        class="form-check-input" />
+                      Low
+                    </label>
+                  </div>
+                  <div class="col-12 form-check">
+                    <label class="form-check-label">
+                      <input formControlName="appetite" name="appetite" value="High" type="radio"
+                        class="form-check-input" />
+                      High
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 mb-4">
+                <label>Vitals</label>
+                <div formArrayName="vitals" class="row">
+                  <div class="col-sm-3 mb-3" *ngFor="let vital of vitals; index as vi">
+                    <label>{{vital.name}} <small>{{vital.unit}}</small></label>
+                    <input [formControlName]="vi" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div formArrayName="medicines" class="mb-5">
+                <div class="medicineGroup" *ngFor="
+                    let control of form.get('medicines')['controls'];
+                    let i = index
+                  " [formGroupName]="i">
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label class="required">Medicine/Product Name</label>
+                      <ng-select name="product" formControlName="name" [items]="productList" bindLabel="name"
+                        [autofocus]="false" bindValue="_id" placeholder="Search Product"
+                        (change)="onSelectProduct($event, control)" (input)="searchProducts($event, i)"
+                        [ngClass]="{'is-invalid':control.get('name').invalid && (control.get('name').touched || submit.pres)}">
+                        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                          <div>
+                            <span>{{ item.name }}</span>
+                          </div>
+                          <small><b>{{ item.brandId.name }}</b></small>
+                        </ng-template>
+                      </ng-select>
+                      <div class="invalid-feedback">This field is required</div>
+                      <div class="variationQty mt-1">
+                        <ng-container *ngIf="
+                            control.value.product &&
+                            control.value.product.data.selectedVariation
+                          ">
+                          <ng-container *ngFor="
+                              let label of control.value.product.data
+                                .selectedVariation.label;
+                              index as ii
+                            ">
+                            <span class="me-2"><b>{{
+                                control.value.product.data.selectedVariation
+                                .title[ii]
+                                }}:</b>
+                              {{ label }}</span>
+                          </ng-container>
+                          <span class="mx-3"><b>Qty: </b>{{ control.value.product.qty }}</span>
+                          <a href="javascript:void(0)" (click)="
+                              openUpdateVariationModal(
+                                control.value.product,
+                                control
+                              )
+                            "><b>Change</b></a>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label class="required">Dosage/Usage</label>
+                      <input formControlName="dosage" type="text" class="form-control"
+                        [ngClass]="{'is-invalid': control.get('dosage').invalid && (control.get('dosage').touched || submit.pres)}"
+                        placeholder="eg. 1 tablet or 1 tsp" />
+                      <div class="invalid-feedback">This field is required</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label>Frequency/Repeat <i class="uil-info-circle" placement="top"
+                          ngbTooltip="eg. Daily, Alternate Days or After every 7 days"></i></label>
+                      <input formControlName="repeat" type="text" class="form-control"
+                        placeholder="eg. Daily or After every 7 days" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label>Repeat After Days <i class="uil-info-circle" placement="top"
+                          ngbTooltip="For e.g. 1 for daily or 7 for after every week "></i></label>
+                      <input formControlName="repeatAfterDays" type="number" min="1" class="form-control"
+                        placeholder="e.g. 1 or 7" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <label class="required">Day(s)</label>
+                      <input formControlName="days" type="text" class="form-control"
+                        [ngClass]="{'is-invalid': control.get('days').invalid && (control.get('days').touched || submit.pres)}"
+                        placeholder="eg. 2" mask="0*" />
+                      <div class="invalid-feedback">This field is required</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label>Take Dosage</label>
+                      <div class="
+                          row row-cols-lg-auto
+                          m-0
+                          gx-3
+                          gy-2
+                          align-items-center
+                        ">
+                        <div class="col-12 form-check" *ngFor="let time of takeDosage">
+                          <input formControlName="meal" [value]="time" type="radio" [id]="time + i"
+                            class="form-check-input" />
+                          <label [for]="time + i" class="form-check-label">
+                            {{ time }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label>Time</label>
+                      <div class="
+                          row row-cols-lg-auto
+                          m-0
+                          gx-3
+                          gy-2
+                          align-items-center
+                        ">
+                        <div class="col-12" *ngFor="let time of timings; let ti = index" formArrayName="time">
+                          <div class="form-check">
+                            <input [formControlName]="ti" type="checkbox" [id]="'time' + ti + i"
+                              class="form-check-input" />
+                            <label [for]="'time' + ti + i" class="form-check-label">
+                              {{ time }}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a *ngIf="form.value.medicines.length > 1" href="javascript:void(0)" class="addMore text-danger"
+                    (click)="removeMedicine(i)"><i class="uil uil-minus-circle"></i>
+                    Remove</a>
+                </div>
+                <a href="javascript:void(0)" class="addMore" (click)="addMedicine()"><i class="uil uil-plus-circle"></i>
+                  Add More</a>
+              </div>
+              <div class="mb-3">
+                <label>Diet & Precaution explaine</label>
+                <ckeditor formControlName="note" [editor]="Editor"></ckeditor>
+              </div>
+              <!-- <app-select-product (addproduct)="onAddProduct($event)"></app-select-product> -->
+              <div *ngIf="selectedProducts.length" class="table-responsive mt-5">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Product Id</th>
+                      <th>Brand</th>
+                      <th>Product</th>
+                      <th>Variation</th>
+                      <th>Qty</th>
+                      <th>MRP</th>
+                      <th>Selling Price</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let prod of selectedProducts; index as i">
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ prod.productId }}</td>
+                      <td>{{ prod.product.brandId.name }}</td>
+                      <td>{{ prod.product.name }}</td>
+                      <td>
+                        <ng-container *ngIf="prod.product.selectedVariation">
+                          <ng-container *ngFor="
+                              let label of prod.product.selectedVariation.label;
+                              index as ii
+                            ">
+                            <span class="mr-3"><b>{{
+                                prod.product.selectedVariation.title[ii]
+                                }}:</b>
+                              {{ label }}</span>
+                            <br />
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                      <td>{{ prod.qty }}</td>
+                      <td>{{ prod.product.price.mrp }}</td>
+                      <td>{{ prod.product.price.minPrice }}</td>
+                      <td>
+                        <i class="mdi mdi-trash-can-outline pointer h4" (click)="deleteProduct(i)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="">
+                <button type="submit" class="btn btn-primary">
+                  Submit
+                </button>
+                <button type="button" class="btn btn-default mx-3"
+                  (click)="writePrescription = false; submit.pres = false;">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #TabMedicalRecords>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="text-center px-3" [ngClass]="medicalRecordList.length ? 'py-3' : 'py-5'">
+              <p *ngIf="!medicalRecordList.length">No Medical Record Found!</p>
+              <button class="btn btn-primary" (click)="addMedicalRecord()">
+                Add Medical Record
+              </button>
+            </div>
+            <table *ngIf="medicalRecordList.length" class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of medicalRecordList; let i = index">
+                  <td>{{ item.createdAt | date: "mediumDate" }}</td>
+                  <td>{{ item.description || 'N/A' }}</td>
+                  <td class="text-end">
+                    <a (click)="viewImage(item.attachment.savedName)" class="btn btn-sm btn-soft-info"><i
+                        class="uil-eye"></i> View</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center">
+              <button *ngIf="medicalRecordList.length < medicalRecordsCount" type="button" class="btn btn-primary"
+                (click)="loadMoreRecords()">Load More</button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<app-view-prescription></app-view-prescription>
+<app-view-medical-record></app-view-medical-record>
+<ng-template #scheduleModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">
+      {{ modalData[activeModalData.type].title }}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="apptScheduleForm" id="apptScheduleForm" (submit)="onSubmitAttpSchedule()">
+      <div class="mb-3">
+        <label>Date</label>
+        <!-- <input type="text" class="form-control date" (click)="hidden=!hidden" [min]="minDate" autocomplete="off" /> -->
+        <div class="input-group clockpicker">
+          <input ngbDatepicker [minDate]="minDate" formControlName="date" class="form-control" [autoClose]="true"
+            placeholder="yyyy-mm-dd" #date="ngbDatepicker" (dateSelect)="onDateSelect($event)" />
+          <div class="input-group-append" (click)="date.toggle()">
+            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label>Slot</label>
+        <select formControlName="primaryTimeSlot" class="form-control">
+          <option value="">-- Select slot --</option>
+          <option [value]="slot.startTime + ' - ' + slot.endTime" *ngFor="let slot of selectedTimeSlot.slots">
+            {{ slot.startTime + ' - ' + slot.endTime }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+      Close
+    </button>
+    <button type="submit" form="apptScheduleForm" [disabled]="apptScheduleForm.invalid" class="btn btn-primary">
+      Save changes
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #variationModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Choose Quantity &amp; Variation</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="selectedProduct" class="prodDetail">
+      <div class="row">
+        <div class="col-md-3">
+          <img [src]="imageUrl + selectedProduct.thumbnail.savedName" />
+        </div>
+        <div class="col-md-8">
+          <p class="brand mb-2">{{ selectedProduct.brandId.name }}</p>
+          <h3 class="title">{{ selectedProduct.name }}</h3>
+          <div class="price mb-3">
+            <span class="selling">₹{{
+              selectedProduct.price.minPrice || selectedProduct.price.mrp
+              }}</span>
+            <span *ngIf="
+                selectedProduct.price.minPrice != selectedProduct.price.mrp
+              " class="mrp">₹{{ selectedProduct.price.mrp }}</span>
+          </div>
+          <div class="mb-3 variations" *ngIf="selectedProduct.variations.length">
+            <div *ngIf="selectedProduct.variationsStructureType == 'single'">
+              <div class="row" *ngFor="let variation of selectedProduct.mainVariations">
+                <div class="col-lg-1 col-md-2 pr-md-0">
+                  <p class="gray-text">
+                    {{ variation.variationId.title }}
+                  </p>
+                </div>
+                <div class="col-md-10">
+                  <ul class="list-unstyled m-0">
+                    <li class="pr-3 pointer notActiveSizeClass" *ngFor="let value of variation.values; let i = index"
+                      [ngClass]="{
+                        activeSizeClass: variation.selectedIndex == i
+                      }" (click)="selectVariation(selectedProduct, variation, i)">
+                      {{ value }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="selectedProduct.variationsStructureType == 'group'">
+              <ul class="list-unstyled m-0">
+                <li class="pr-3 pointer notActiveSizeClass group" *ngFor="
+                    let variation of selectedProduct.variations;
+                    let i = index
+                  " [ngClass]="{ activeSizeClass: variation.isSelected }"
+                  (click)="selectVariation(selectedProduct, variation)">
+                  <span class="d-inline-block" *ngFor="let label of variation.label; let i2 = index">{{
+                    variation.title[i2]
+                    }}<b class="d-block">{{ label }}</b></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="mb-3 d-inline-flex align-items-center qtyCont">
+            <i class="mdi mdi-minus-circle-outline pointer" (click)="changeQty('minus')"></i>
+            <span class="px-3">{{ qty }}</span>
+            <i class="mdi mdi-plus-circle-outline pointer" (click)="changeQty('plus')"></i>
+          </div>
+          <div class="mb-3">
+            <button class="btn btn-primary me-2" (click)="updateProduct(modal)">
+              Update Changes
+            </button>
+            <button class="btn btn-light" (click)="modal.dismiss('Cross click')">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #medicalRecordModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Medical Records</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="recordForm" (submit)="onSubmitMedicalRecord()">
+      <div class="mb-3">
+        <label class="required">Date</label>
+        <input formControlName="date" type="date" class="form-control" [ngClass]="{
+            'is-invalid':
+              recordForm.get('date').invalid && recordForm.get('date').touched
+          }" />
+        <div class="invalid-feedback">This field is required</div>
+      </div>
+      <div class="mb-3">
+        <label>Description ( Optional )</label>
+        <textarea formControlName="description" name="description" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="mb-5">
+        <label class="required mb-0">Upload File</label> <br />
+        <small class="mb-2">(Allowed JPG, JPEG, PNG or PDF.)</small>
+        <input type="file" class="form-control" [ngClass]="{
+            'is-invalid':
+              recordForm.get('attachment').invalid &&
+              recordForm.get('attachment').touched
+          }" accept=".jpg,.jpeg,.png,.pdf" (change)="onAttachment($event)" (blur)="onBlurAttachment()" />
+        <div class="invalid-feedback">This field is required</div>
+      </div>
+      <div class="mb-3">
+        <button type="submit" [disabled]="recordForm.invalid" class="btn btn-primary me-2">
+          Submit
+        </button>
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #prescriptionModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">
+      {{ prescriptionModalData?.title || "Prescription" }}
+    </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-hidden="true"></button>
+  </div>
+  <div class="modal-body prescriptionModalBody" *ngIf="prescriptionModalData">
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="downloadPrescription()">
+        <i class="uil uil-clipboard-notes"></i> Download Prescription
+      </button>
+    </div>
+    <div [innerHTML]="prescriptionModalData.prescriptionHtml"></div>
+
+    <div *ngIf="false" class="resPres overflow-auto">
+      <div class="pres" id="presCont">
+        <div class="row">
+          <div class="col-6 logoCont">
+            <img src="/assets/images/logo.png" />
+            <p class="fw-500 mb-2">Tatvamasmi Consulting Pvt. Ltd.</p>
+          </div>
+          <div class="col-6 text-end">
+            <div class="d-inline-block text-start">
+              <ul class="list-unstyled reach mt-2 mb-0">
+                <li>
+                  <a href="https://healthybazar.com"><i class="uil-globe"></i> www.healthybazar.com</a>
+                </li>
+                <li>
+                  <a href="mailto:contact@healthybazar.com"><i class="uil-envelope"></i> contact@healthybazar.com</a>
+                </li>
+                <li>
+                  <a href="tel:+919119008008"><i class="uil-phone-alt"></i> +91 9119008008</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <table class="table docInfo borderLessTable">
+          <tbody>
+            <tr>
+              <td>
+                <p class="fw-500 mb-1">
+                  {{
+                  prescriptionModalData.consultantId.firstName +
+                  " " +
+                  prescriptionModalData.consultantId.lastName || ""
+                  }}
+                </p>
+                <p class="mb-0">
+                  {{ prescriptionModalData.consultantId.designation }}
+                </p>
+                <p class="mb-0">{{ prescriptionModalData.consultantId.email }}</p>
+              </td>
+              <td style="width: 225px">
+                <p class="mb-1">
+                  <b>Appointment ID:</b>
+                  {{ prescriptionModalData.appointmentId.appointmentId }}
+                </p>
+                <p class="mb-1">
+                  <b>Prescription No.:</b>
+                  {{ prescriptionModalData.prescriptionNo }}
+                </p>
+                <p class="mb-1">
+                  <b>Date:</b>
+                  {{ prescriptionModalData.createdAt | date: "mediumDate" }}
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="divider" colspan="2">
+                <div></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p class="mb-1">
+                  <b>Patient:</b>
+                  {{prescriptionModalData.userId.firstName}} {{prescriptionModalData.userId.lastName}}
+                  <span *ngIf="prescriptionModalData.userId.DOB"> / {{prescriptionModalData.userId.DOBYear}}y <span
+                      *ngIf="prescriptionModalData.userId.DOBMonth">{{prescriptionModalData.userId.DOBMonth}}m</span>
+                  </span>
+                  <span *ngIf="prescriptionModalData.userId.gender"> / {{prescriptionModalData.userId.gender |
+                    titlecase}}</span>
+                  <span *ngIf="prescriptionModalData.userId.weight"> / {{prescriptionModalData.userId.weight}}Kg</span>
+                </p>
+                <!-- <p class="mb-1"><b>Age:</b> 26</p> -->
+              </td>
+              <!-- <td>
+                <p class="mb-1"><b>Gender:</b> Male</p>
+                <p class="mb-1"><b>Weight:</b> 64</p>
+              </td> -->
+            </tr>
+            <tr>
+              <td class="divider" colspan="2">
+                <div></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-0" colspan="2">
+                <table class="table table-sm borderLessTable">
+                  <tbody>
+                    <tr>
+                      <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                      <td class="vitalTestsCol">
+                        <b class="mb-2 d-block">Vitals:</b>
+                        <ul *ngIf="prescriptionModalData.vitals" class="vitalsList">
+                          <li *ngFor="let vital of prescriptionModalData.vitals"><span class="name">{{vital.name}}
+                            </span> <span class="value">{{vital.value}} <div></div></span> {{vital.unit}}</li>
+                        </ul>
+                        <b class="mb-2 d-block">Investigations:</b>
+                        <ul *ngIf="prescriptionModalData.investigations" class="vitalsList">
+                          <li *ngFor="let inves of prescriptionModalData.investigations">✓ <span
+                              class="name">{{inves.name}}</span></li>
+                        </ul>
+                        <ng-container *ngIf="prescriptionModalData.appetite">
+                          <b class="mb-2 d-block">Appetite at Present:</b>
+                          <p>{{prescriptionModalData.appetite}}</p>
+                        </ng-container>
+                      </td>
+                      <td class="pt-0">
+                        <table class="table table-sm borderLessTable">
+                          <tbody>
+                            <tr>
+                              <td class="pt-0 p-1" colspan="2">
+                                <table class="table table-sm borderLessTable">
+                                  <tbody>
+
+                                    <tr *ngIf="prescriptionModalData.chiefComplaints">
+                                      <th width="130">Chief Complaints:</th>
+                                      <td>{{prescriptionModalData.chiefComplaints}}</td>
+                                    </tr>
+                                    <tr *ngIf="prescriptionModalData.examination">
+                                      <th>Examination:</th>
+                                      <td>{{prescriptionModalData.examination}}</td>
+                                    </tr>
+                                    <tr *ngIf="prescriptionModalData.treatment">
+                                      <th>Treatment:</th>
+                                      <td>{{prescriptionModalData.treatment}}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <table class="table table-sm borderLessTable medicineTable">
+                                  <thead>
+                                    <tr>
+                                      <th class="pe-2">SN.</th>
+                                      <th class="pe-3">PRODUCT NAME</th>
+                                      <th class="pe-3">DAYS</th>
+                                      <th class="pe-3">DOSAGE</th>
+                                      <th>TIME</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="
+                                        let item of prescriptionModalData.medicines;
+                                        let i = index
+                                      ">
+                                      <td>{{ i + 1 }}</td>
+                                      <td>{{ item.name }}</td>
+                                      <td>{{ item.days }}</td>
+                                      <td>{{ item.dosage }} <span *ngIf="item.repeat">({{item.repeat}})</span></td>
+                                      <td>
+                                        {{ item.meal }} (<span *ngFor="let time of item.time; let j = index">{{ time
+                                          }}<span *ngIf="j < item.time.length - 1">, </span></span>)
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                              <td>
+                                <b class="mb-2 d-block" style="min-width: 90px;">Past History:</b>
+                                <ul class="vitalsList">
+                                  <li *ngFor="let history of prescriptionModalData.pastHistory"><span
+                                      class="name">{{history.name}} (Y)</span></li>
+                                  <li *ngIf="prescriptionModalData.otherPastHistory"><span
+                                      class="name">{{prescriptionModalData.otherPastHistory}} (Y)</span></li>
+                                </ul>
+                              </td>
+                            </tr>
+                            <tr *ngIf="prescriptionModalData.note">
+                              <td class="divider" colspan="2">
+                                <div></div>
+                              </td>
+                            </tr>
+                            <tr *ngIf="prescriptionModalData.note">
+                              <td colspan="2">
+                                <b>Diet &amp; Precaution explained: </b>
+                                <div class="note" [innerHTML]="prescriptionModalData.note"></div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" style="text-align: right;">
+                                <p class="mb-0">Name & Signature of Consultant</p>
+                                <img *ngIf="prescriptionModalData.consultantId.signature" class="signature"
+                                  [src]="imageUrl + prescriptionModalData.consultantId.signature.savedName"
+                                  alt="signature">
+                                <p class="mb-2">{{prescriptionModalData.consultantId.firstName + " " +
+                                  prescriptionModalData.consultantId.lastName || ""}}</p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <div class="presFooter">
+          Reg 405, New Shivpuri, Hapur, 245101, Uttar Pradesh
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #medicalAttachmentModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Attachment</h5>
+    <span>
+      <i class="uil-multiply float-end font-size-20 pointer" (click)="modal.dismiss('Cross click')">
+      </i>
+    </span>
+  </div>
+
+  <div class="modal-body">
+    <div class="d-block" style="text-align: center">
+      <ng-container *ngIf="showImageBlock">
+        <img [src]="imageUrl + currentOpenedAttachment" />
+      </ng-container>
+      <ng-container *ngIf="!showImageBlock">
+        <iframe width="100%" height="450" title="Medical Record" [src]="currentOpenedAttachment"></iframe>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #callDetailsModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">
+      Call Details
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table table-borderless">
+        <tbody>
+          <!-- <tr>
+            <th>Host Link</th>
+            <td>{{callDetails.hostUrl}}
+              <button (click)="copyToClipboard(callDetails.hostUrl)" class="btn btn-primary ms-3" title="Copy Link"><i
+                class="mdi mdi-content-copy"></i></button>
+            </td>
+          </tr> -->
+          <tr>
+            <th>Meeting Link</th>
+            <td>{{callDetails.link}}
+              <button (click)="copyToClipboard(callDetails.link)" class="btn btn-primary ms-3" title="Copy Link"><i
+                  class="mdi mdi-content-copy"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <th>Meeting ID</th>
+            <td>{{callDetails.meetingId}}
+              <button (click)="copyToClipboard(callDetails.meetingId)" class="btn btn-primary ms-3" title="Copy ID"><i
+                  class="mdi mdi-content-copy"></i></button>
+            </td>
+          </tr>
+          <tr *ngIf="callDetails.password">
+            <th>Password</th>
+            <td>{{callDetails.password}}
+              <button (click)="copyToClipboard(callDetails.password)" class="btn btn-primary ms-3"
+                title="Copy Password"><i class="mdi mdi-content-copy"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>

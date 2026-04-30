@@ -1,0 +1,674 @@
+<div class="container-fluid">
+  <app-page-title [title]="this.editId? 'Update Package': 'Create Package'" [breadcrumbItems]="breadcrumb">
+  </app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <ul ngbNav #justifiednav="ngbNav" [activeId]="activeTab" class="nav nav-tabs nav-justified nav-tabs-custom">
+        <li [ngbNavItem]="1" class="nav-item">
+          <a ngbNavLink class="nav-link">
+            <i class="uil uil-user-circle font-size-20"></i>
+            <span class="d-none d-sm-block">Details</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="Tab1"></ng-template>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2" class="nav-item" [disabled]="!editId">
+          <a ngbNavLink class="nav-link">
+            <i class="mdi mdi-lightbulb-outline font-size-20"></i>
+            <span class="d-none d-sm-block">Lifestyle Tips<i>({{pagination.lifestyleTips.total}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="Tab2"></ng-template>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="3" class="nav-item" [disabled]="!editId">
+          <a ngbNavLink class="nav-link">
+            <i class="mdi mdi-play-outline font-size-20"></i>
+            <span class="d-none d-sm-block">Webinar List <i>({{pagination.webinars.total}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="Tab3"></ng-template>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="4" class="nav-item" [disabled]="!editId">
+          <a ngbNavLink class="nav-link">
+            <i class="mdi mdi-email-outline font-size-20"></i>
+            <span class="d-none d-sm-block">Email Logs <i>({{pagination.emails.total}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="Tab4"></ng-template>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="5" class="nav-item" [disabled]="!editId">
+          <a ngbNavLink class="nav-link">
+            <i class="mdi mdi-test-tube font-size-20"></i>
+            <span class="d-none d-sm-block">Diagnostics <i>({{pagination.diagnostics.total}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="Tab5"></ng-template>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="6" class="nav-item" [disabled]="!editId">
+          <a ngbNavLink class="nav-link">
+            <i class="uil-heart-medical font-size-20"></i>
+            <span class="d-none d-sm-block">Camp <i>({{pagination.camp.total}})</i></span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="Tab6"></ng-template>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="justifiednav"></div>
+      <ng-template #Tab1>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <form [formGroup]="form" (submit)="onSubmit()">
+              <div class="row">
+                <div class="col-lg-12 mb-3">
+                  <label class="required">Package name</label>
+                  <input type="text" class="form-control"
+                    [ngClass]="{'is-invalid': (submitted || form.get('name').touched) && form.get('name').invalid}"
+                    formControlName="name" placeholder="Name" (blur)="trimInput(form.get('name'))" />
+                  <div class="invalid-feedback">
+                    <span>This field is required.</span>
+                  </div>
+                </div>
+                <div class="col-lg-12 mb-3">
+                  <label>Description</label>
+                  <textarea formControlName="description" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="col-lg-12 mb-3">
+                  <label class="required">Company</label>
+                  <ng-select [items]="companies" bindLabel="name" bindValue="_id" class="select2"
+                    placeholder="Search Company" formControlName="company" [multiple]="false"
+                    [ngClass]="{'is-invalid': (submitted || form.get('company').touched) && form.get('company').invalid}">
+                  </ng-select>
+                  <div class="invalid-feedback">
+                    <span>This field is required.</span>
+                  </div>
+                </div>
+                <div class="col-lg-12 mb-3">
+                  <label class="required">Consultants </label>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4">
+                      <select formControlName="consultantType" class="form-control" (change)="onChangeConsultantType()">
+                        <option value="">Search by All Types</option>
+                        <option [value]="type._id" *ngFor="let type of doctorTypes">{{type.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                      <ng-select [items]="consultants" bindLabel="firstName" bindValue="_id" class="select2"
+                        placeholder="Choose Consultants" formControlName="consultants" [multiple]="true"
+                        [ngClass]="{'is-invalid': (submitted || form.get('consultants').touched) && form.get('consultants').invalid}"
+                        (input)="onSearchConsultants($event)">
+                        <ng-template ng-label-tmp let-item="item">
+                          <div class="px-2 py-1">
+                            {{ item.firstName + " " + (item.lastName || "") }} -
+                            <small><b><span *ngFor="let type of item.consultantType;last as last">{{type.name}}
+                                  <ng-container *ngIf="!last">,</ng-container>
+                                </span> </b></small>
+                          </div>
+                        </ng-template>
+
+                        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                          <div>
+                            {{ item.firstName + " " + (item.lastName || "") }} -
+                            <small><b><span *ngFor="let type of item.consultantType;last as last">{{type.name}}
+                                  <ng-container *ngIf="!last">,</ng-container>
+                                </span> </b></small>
+                          </div>
+
+                        </ng-template>
+                      </ng-select>
+                      <div class="invalid-feedback">
+                        <span>This field is required.</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                  <label class="required">Total Appointments (Per month)</label>
+                  <input formControlName="totalAppointments" type="number" class="form-control"
+                    [ngClass]="{'is-invalid': (submitted || form.get('totalAppointments').touched) && form.get('totalAppointments').invalid}"
+                    placeholder="" />
+                  <div class="invalid-feedback">
+                    <ng-container *ngIf="form.get('totalAppointments').errors?.required">This field is required.</ng-container>
+                    <ng-container *ngIf="form.get('totalAppointments').errors?.min || form.get('totalAppointments').errors?.max">Appointments count should be between 0 to 10</ng-container>
+                  </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                  <label class="required">Duration</label>
+                  <ng-select class="select2"
+                    [ngClass]="{'is-invalid': (submitted || form.get('duration').touched) && form.get('duration').invalid}"
+                    bindLabel="months" placeholder="Choose Duration" formControlName="duration" [multiple]="false">
+                    <ng-option disabled value="">Choose Duration</ng-option>
+                    <ng-option *ngFor="let item of durations" [value]="item">
+                      {{ item.label }}
+                    </ng-option>
+                  </ng-select>
+                  <div class="invalid-feedback">
+                    <span>This field is required.</span>
+                  </div>
+                </div>
+                <div class="col-lg-4 mb-3"></div>
+                <ng-container formGroupName="price">
+                  <div class="col-lg-4 mb-3">
+                    <label class="required">Package MRP</label>
+                    <input formControlName="mrp" type="number" min="0" class="form-control"
+                      [ngClass]="{'is-invalid': (submitted || form.get('price').get('mrp').touched) && form.get('price').get('mrp').invalid}" placeholder="" />
+                      <div class="invalid-feedback">
+                        <ng-container *ngIf="form.get('price').get('mrp').errors?.required">This field is required</ng-container>
+                        <ng-container *ngIf="form.get('price').get('mrp').errors?.min">Value can't be less than 0</ng-container>
+                      </div>
+                  </div>
+                  <div class="col-lg-4 mb-3">
+                    <label>Package Selling Price</label>
+                    <input formControlName="sellingPrice" type="number" min="0" class="form-control"
+                      [ngClass]="{'is-invalid': (submitted || form.get('price').get('sellingPrice').touched) && form.get('price').get('sellingPrice').invalid}" placeholder=""
+                      (input)="calculate('discount')" />
+                      <div class="invalid-feedback">
+                        Value can't be less than 0
+                      </div>
+                  </div>
+                  <div class="col-lg-4 mb-3">
+                    <label>Package Discount (%)</label>
+                    <input formControlName="discount" type="number" min="0" max="100" class="form-control"
+                      [ngClass]="{'is-invalid': (submitted || form.get('price').get('discount').touched) && form.get('price').get('discount').invalid}"
+                      placeholder="e.g. 10" (input)="calculate('sp')" />
+                      <div class="invalid-feedback">
+                        Value should be between 0 to 100
+                      </div>
+                  </div>
+                </ng-container>
+                <div class="col-lg-4 mb-3">
+                  <label>Package Cost Price</label>
+                  <input formControlName="costPrice" type="number" min="0" max="100" class="form-control"
+                  [ngClass]="{'is-invalid': (submitted || form.get('costPrice').touched) && form.get('costPrice').invalid}"
+                    (input)="calculate('margin')" />
+                    <div class="invalid-feedback">
+                      Value can't be less than 0
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-3">
+                  <label>Package Margin (%)</label>
+                  <input formControlName="margin" type="number" min="0" max="100" class="form-control"
+                    [ngClass]="{'is-invalid': (submitted || form.get('margin').touched) && form.get('margin').invalid}"
+                    placeholder="e.g. 10" (input)="calculate('cp')" />
+                  <div><small>Eqn.: (SP - CP) / SP * 100</small></div>
+                  <div class="invalid-feedback">
+                    <span>Value should be between 0 to 100</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-12 mb-3">
+                  <div class="form-check form-switch mb-3" dir="ltr">
+                    <input formControlName="isActive" type="checkbox" class="form-check-input" id="ActiveSwitch1">
+                    <label class="form-check-label" for="ActiveSwitch1"> Active</label>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">{{this.editId?'Update':'Submit'}}</button>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #Tab2>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="text-end mb-3">
+              <a routerLink="../../lifestyle-tips/create" [queryParams]="{package: oldData?._id}"
+                class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i>
+                Create New</a>
+            </div>
+            <div class="table-responsive mb-4">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">S.no.</th>
+                    <th scope="col">Lifestyle Tip</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Active</th>
+                    <th scope="col" style="width: 200px;text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of lifestyleTips;let index = index">
+                    <td>
+                      <ngb-highlight
+                        [result]="pagination.lifestyleTips.limit * pagination.lifestyleTips.page - pagination.lifestyleTips.limit + index+1">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.lifestyleTip?.title"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.createdAt | date: 'MMM d, y, h:mm a'"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.isActive"></ngb-highlight>
+                    </td>
+
+                    <td>
+                      <ul class="list-inline mb-0 text-end">
+                        <li class="list-inline-item">
+                          <a [routerLink]="['../../lifestyle-tips', data._id]" [queryParams]="{package: oldData?._id}"
+                            class="px-2 text-primary" ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a (click)="deleteLifestyle(data,index)" href="javascript:void(0);" class="px-2 text-danger"
+                            ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="float-end">
+                  <ngb-pagination [collectionSize]="pagination.lifestyleTips.total"
+                    [pageSize]="pagination.lifestyleTips.limit" [(page)]="pagination.lifestyleTips.page"
+                    [boundaryLinks]="true" (pageChange)="pageChanged('lifestyleTips')">
+                    <ng-template ngbPaginationPages let-page let-pages="pages">
+                      <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                        <div class="form-group d-flex flex-nowrap px-2">
+                          <label id="paginationInputLabel" for="paginationInput"
+                            class="col-form-label mr-2 ml-1">Page</label>
+                          <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                            class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                            (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                            (input)="formatInput($any($event).target)"
+                            aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                          <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                            of {{pages.length}}</span>
+                        </div>
+                      </li>
+                    </ng-template>
+                  </ngb-pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #Tab3>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="text-end mb-3">
+              <a routerLink="../../webinars/create" [queryParams]="{package: oldData?._id}"
+                class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i>
+                Create New</a>
+            </div>
+            <div class="table-responsive mb-4">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">S.no.</th>
+                    <th scope="col">Webinar</th>
+                    <th scope="col">Date Time</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Active</th>
+                    <th scope="col" style="width: 200px;text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of webinars;let index = index">
+                    <td>
+                      <ngb-highlight
+                        [result]="pagination.webinars.limit * pagination.webinars.page - pagination.webinars.limit + index+1">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.webinarId.title"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.date | date: 'MMM d, y, h:mm a'"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.duration"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.isActive"></ngb-highlight>
+                    </td>
+
+                    <td>
+                      <ul class="list-inline mb-0 text-end">
+                        <li class="list-inline-item">
+                          <a [routerLink]="['../../webinars', data._id]" [queryParams]="{package: oldData?._id}"
+                            class="px-2 text-primary" ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a (click)="deleteWebinar(data,index)" href="javascript:void(0);" class="px-2 text-danger"
+                            ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="float-end">
+                  <ngb-pagination [collectionSize]="pagination.webinars.total" [pageSize]="pagination.webinars.limit"
+                    [(page)]="pagination.webinars.page" [boundaryLinks]="true" (pageChange)="pageChanged('webinars')">
+                    <ng-template ngbPaginationPages let-page let-pages="pages">
+                      <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                        <div class="form-group d-flex flex-nowrap px-2">
+                          <label id="paginationInputLabel" for="paginationInput"
+                            class="col-form-label mr-2 ml-1">Page</label>
+                          <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                            class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                            (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                            (input)="formatInput($any($event).target)"
+                            aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                          <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                            of {{pages.length}}</span>
+                        </div>
+                      </li>
+                    </ng-template>
+                  </ngb-pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #Tab4>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="text-end mb-3">
+              <a routerLink="../../emails/create" [queryParams]="{package: oldData?._id}"
+                class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i>
+                Create New</a>
+            </div>
+            <div class="table-responsive mb-4">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">S.no.</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Date Time</th>
+                    <th scope="col" style="width: 200px;text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of emails;let index = index">
+                    <td>
+                      <ngb-highlight
+                        [result]="pagination.emails.limit * pagination.emails.page - pagination.emails.limit + index+1">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.subject"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.createdAt | date: 'MMM d, y, h:mm a'"></ngb-highlight>
+                    </td>
+                    <td>
+                      <ul class="list-inline mb-0 text-end">
+                        <li class="list-inline-item">
+                          <a (click)="deleteEmailLog(data,index)" href="javascript:void(0);" class="px-2 text-danger"
+                            ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="float-end">
+                  <ngb-pagination [collectionSize]="pagination.emails.total" [pageSize]="pagination.emails.limit"
+                    [(page)]="pagination.emails.page" [boundaryLinks]="true" (pageChange)="pageChanged('emails')">
+                    <ng-template ngbPaginationPages let-page let-pages="pages">
+                      <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                        <div class="form-group d-flex flex-nowrap px-2">
+                          <label id="paginationInputLabel" for="paginationInput"
+                            class="col-form-label mr-2 ml-1">Page</label>
+                          <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                            class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                            (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                            (input)="formatInput($any($event).target)"
+                            aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                          <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                            of {{pages.length}}</span>
+                        </div>
+                      </li>
+                    </ng-template>
+                  </ngb-pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #Tab5>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="text-end mb-3">
+              <a routerLink="../../diagnostics/create" [queryParams]="{package: oldData?._id}"
+                class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i>
+                Create New</a>
+            </div>
+            <div class="table-responsive mb-4">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">S.no.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Included Tests</th>
+                    <th scope="col">Camp</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col" style="width: 200px;text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of diagnosticPackages;let index = index">
+                    <td>
+                      <ngb-highlight
+                        [result]="pagination.diagnostics.limit * pagination.diagnostics.page - pagination.diagnostics.limit + index+1">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.testId.name"></ngb-highlight>
+                    </td>
+
+                    <td style="white-space: break-spaces;">
+                      <span>{{data.testId?.childs?.length || 1}}</span>
+                    </td>
+                    <td>
+                      {{data.isAvailableInCampCollection}}
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.createdAt | date: 'MMM d, y, h:mm a'"></ngb-highlight>
+                    </td>
+                    <td class="text-end">
+                      <a [routerLink]="'../../diagnostics/' + data._id" [queryParams]="{package: editId}"  class="px-2 text-primary" placement="top"
+                        ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                      <a (click)="deleteDiagnosticPackage(data,i)" href="javascript:void(0);" class="px-2 text-danger"
+                        placement="top" ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="float-end">
+                  <ngb-pagination [collectionSize]="pagination.diagnostics.total"
+                    [pageSize]="pagination.diagnostics.limit" [(page)]="pagination.diagnostics.page"
+                    [boundaryLinks]="true" (pageChange)="pageChanged('diagnostics')">
+                    <ng-template ngbPaginationPages let-page let-pages="pages">
+                      <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                        <div class="form-group d-flex flex-nowrap px-2">
+                          <label id="paginationInputLabel" for="paginationInput"
+                            class="col-form-label mr-2 ml-1">Page</label>
+                          <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                            class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                            (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                            (input)="formatInput($any($event).target)"
+                            aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                          <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                            of {{pages.length}}</span>
+                        </div>
+                      </li>
+                    </ng-template>
+                  </ngb-pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #Tab6>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div class="text-end mb-3">
+              <a routerLink="../../camp-collections/create" [queryParams]="{package: oldData?._id}"
+                class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus me-2"></i>
+                Create New</a>
+            </div>
+            <div class="table-responsive mb-4">
+              <table class="table table-centered table-nowrap mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">S.no.</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date Time</th>
+                    <th scope="col">Venue</th>
+                    <!-- <th scope="col">Tests</th> -->
+                    <th scope="col">Created At</th>
+                    <th scope="col" style="width: 200px;text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of campCollectionList;let index = index">
+                    <td>
+                      <ngb-highlight
+                        [result]="pagination.camp.limit * pagination.camp.page - pagination.camp.limit + index+1">
+                      </ngb-highlight>
+                    </td>
+                    <td>
+                      <ngb-highlight [result]="data.title"></ngb-highlight>
+                    </td>
+                    <td>
+                      {{data.dateTime | date: 'MMM d, y, h:mm a'}} {{data.time}}
+                    </td>
+                    <td>{{data.venue}}</td>
+                    <!-- <td style="white-space: break-spaces;">
+                      <span *ngFor="let test of data.testId; last as last">{{test.testNames}}<ng-container *ngIf="!last">, </ng-container> </span>
+                    </td> -->
+                    <td>
+                      <ngb-highlight [result]="data.createdAt | date: 'MMM d, y, h:mm a'"></ngb-highlight>
+                    </td>
+                    <td class="text-end">
+                      <a href="javascript:void(0)" class="px-2 text-primary" placement="top"
+                        ngbTooltip="View Registrations" (click)="openModal(modalRef, data)"><i class="mdi mdi-eye-outline
+                        font-size-18"></i></a>
+                      <a [routerLink]="'../../camp-collections/' + data._id" [queryParams]="{package: editId}" class="px-2 text-primary" placement="top"
+                        ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                      <a (click)="deleteCampCollection(data,i)" href="javascript:void(0);" class="px-2 text-danger"
+                        placement="top" ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-12">
+                <div class="float-end">
+                  <ngb-pagination [collectionSize]="pagination.camp.total" [pageSize]="pagination.camp.limit"
+                    [(page)]="pagination.camp.page" [boundaryLinks]="true" (pageChange)="pageChanged('camp')">
+                    <ng-template ngbPaginationPages let-page let-pages="pages">
+                      <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                        <div class="form-group d-flex flex-nowrap px-2">
+                          <label id="paginationInputLabel" for="paginationInput"
+                            class="col-form-label mr-2 ml-1">Page</label>
+                          <input #i type="text" inputmode="numeric" pattern="[0-9]*"
+                            class="form-control custom-pages-input" id="paginationInput" [value]="page"
+                            (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                            (input)="formatInput($any($event).target)"
+                            aria-labelledby="paginationInputLabel paginationDescription" style="width: 4rem" />
+                          <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                            of {{pages.length}}</span>
+                        </div>
+                      </li>
+                    </ng-template>
+                  </ngb-pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<ng-template #modalRef let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Registered Employees</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive mb-4">
+      <table class="table table-centered table-nowrap mb-0 align-middle">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Age</th>
+            <th scope="col">Booking Time</th>
+            <th scope="col" style="width: 200px;text-align: right;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of bookings;let index = index">
+            <td>
+              <ngb-highlight [result]="data.orderBy"></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight [result]="data.email"></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight [result]="data.mobile"></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight [result]="data.gender"></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight [result]="data.age"></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight [result]="data.createdAt | date: 'MMM d, y, h:mm a'"></ngb-highlight>
+            </td>
+            <td>
+              <ul class="list-inline mb-0 text-end">
+                <!-- <li class="list-inline-item">
+                  <a [routerLink]="[data._id]" href="javascript:void(0);" class="px-2 text-primary"
+                    ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                </li> -->
+                <li class="list-inline-item">
+                  <a (click)="onDeleteDiagnosticBooking(data, index)" href="javascript:void(0);" class="px-2 text-danger"
+                    ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

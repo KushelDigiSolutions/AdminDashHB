@@ -1,0 +1,189 @@
+<div class="container-fluid">
+  <app-page-title title="Lifestyle Category" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <div class="float-end">
+          <form class="d-inline-flex mb-3">
+            <label class="form-check-label my-2 me-2" for="order-selectinput">Lifestyle</label>
+            <select class="form-select" id="order-selectinput">
+              <option selected>All</option>
+              <option value="1">Active</option>
+              <option value="2">Unpaid</option>
+            </select>
+          </form>
+        </div>
+        <button type="button" routerLink="/lifeStyleCategories/add-lifeStyle-category" class="btn btn-success mb-3">
+          <i class="mdi mdi-plus me-1"></i> Add New Lifestyle Category
+        </button>
+      </div>
+      <div class="row mb-md-2">
+        <div class="col-sm-12 col-md-6">
+          <div class="dataTables_length">
+            <label class="d-inline-flex align-items-center">Show<select name="pageSize" [(ngModel)]="pageSize" class="
+                    custom-select custom-select-sm
+                    form-control form-control-sm form-select form-select-sm
+                  " (change)="changeValue(pageSize,'limit')">
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="25">25</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+              </select>
+              entries</label>
+          </div>
+        </div>
+        <!-- Search -->
+        <div class="col-sm-12 col-md-6">
+          <div id="tickets-table_filter" class="dataTables_filter text-md-end">
+            <label class="d-inline-flex align-items-center">Search:
+              <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                aria-controls="tickets-table" [(ngModel)]="tempsearchTerm" /></label>
+          </div>
+        </div>
+        <!-- End search -->
+      </div>
+      <div class="table-responsive mb-4">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+          <form>
+            <table class="
+                  table table-centered
+                  datatables
+                  dt-responsive
+                  nowrap
+                  table-card-list
+                " style="border-spacing: 0 12px; width: 100%">
+              <thead>
+                <tr class="bg-transparent">
+                  <th style="width: 24px">
+                    <div class="form-check text-center font-size-16">
+                      <input type="checkbox" class="form-check-input" id="ordercheck" />
+                      <label class="form-check-label" for="ordercheck"></label>
+                    </div>
+                  </th>
+                  <th scope="col" sortable="id" (sort)="onSort($event)">
+                    {{ "Categories.image" | translate }}
+                  </th>
+                  <th scope="col" sortable="name" (sort)="onSort($event)">
+                    {{ "Categories.categoryName" | translate }}
+                  </th>
+                  <th scope="col" sortable="top" (sort)="onSort($event)">
+                    {{ "Categories.categoryTop" | translate }}
+                  </th>
+                  <th scope="col" sortable="featured" (sort)="onSort($event)">
+                    {{ "Categories.categoryFeatured" | translate }}
+                  </th>
+                  <th style="width: 170px">{{ "Order.action" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let data of dataArray; let i = index">
+                  <tr class="odd">
+                    <td>
+                      <div class="form-check text-center">
+                        <input id="ordercheck{{ i + 1 }}" type="checkbox" class="form-check-input" />
+                        <label class="form-check-label" for="ordercheck{{ i + 1 }}">&nbsp;</label>
+                      </div>
+                    </td>
+                    <td>
+                      <img style="width: 80px;" [src]="imgUrl+data.image.savedName" />
+                    </td>
+                    <td>
+                      {{data.name}}
+                    </td>
+                    <td>
+                      <div>
+                        <app-hb-switch defaultBoColor="#dfdfdf" size="small" color="#f46a6a"
+                          [loading]="data.toggleTopLoading || false" [beforeChange]="toggleTop(data)"
+                          [checked]="data?.isTop">
+                          <i class="fa fa-spinner fa-pulse" *ngIf="data.toggleTopLoading || false"></i>
+                        </app-hb-switch>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <app-hb-switch defaultBoColor="#dfdfdf" size="small" color="#f46a6a"
+                          [loading]="data.toggleFeaturedLoading || false" [beforeChange]="toggleFeatured(data)"
+                          [checked]="data?.isFeatured">
+                          <i class="fa fa-spinner fa-pulse" *ngIf="data.toggleFeaturedLoading || false"></i>
+                        </app-hb-switch>
+                      </div>
+                    </td>
+                    <td>
+                      <a *ngIf="data.children.length" href="javascript:void(0);" href="javascript:void(0);"
+                        class="px-1 text-primary" placement="top" ngbTooltip="View"
+                        (click)="data.showSubMenu = !data.showSubMenu"><i class="uil uil-eye font-size-18"></i></a>
+                      <a [routerLink]="['edit', data._id]" class="px-3 text-primary" placement="top"
+                        ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                      <a (click)="removeCategory(data._id)" href="javascript:void(0);" class="px-3 text-danger"
+                        placement="top" ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="data.children.length" class="subList" [ngClass]="{'d-none': !data.showSubMenu}">
+                    <td colspan="5" style="padding-left: 30px;">
+                      <table class="table">
+                        <tbody>
+                          <tr *ngFor="let child of data.children">
+                            <td>
+                              <div class="form-check text-center">
+                                <input id="ordercheck{{ i + 1 }}" type="checkbox" class="form-check-input" />
+                                <label class="form-check-label" for="ordercheck{{ i + 1 }}">&nbsp;</label>
+                              </div>
+                            </td>
+                            <td>
+                              <img style="width: 60px;" [src]="imgUrl+child.image.savedName" />
+                            </td>
+                            <td>
+                              {{child.name}}
+                            </td>
+                            <td>
+                              <div>
+                                <app-hb-switch defaultBoColor="#dfdfdf" size="small" color="#f46a6a"
+                                  [loading]="child.toggleTopLoading || false" [beforeChange]="toggleTop(data)"
+                                  [checked]="data?.isTop">
+                                  <i class="fa fa-spinner fa-pulse" *ngIf="child.toggleTopLoading || false"></i>
+                                </app-hb-switch>
+                              </div>
+                            </td>
+                            <td>
+                              <div>
+                                <app-hb-switch defaultBoColor="#dfdfdf" size="small" color="#f46a6a"
+                                  [loading]="child.toggleFeaturedLoading || false" [beforeChange]="toggleFeatured(data)"
+                                  [checked]="data?.isFeatured">
+                                  <i class="fa fa-spinner fa-pulse" *ngIf="child.toggleFeaturedLoading || false"></i>
+                                </app-hb-switch>
+                              </div>
+                            </td>
+                            <td>
+                              <a *ngIf="child.children.length" [routerLink]="[child._id]" href="javascript:void(0);"
+                                class="px-1 text-primary" placement="top" ngbTooltip="View"><i
+                                  class="uil uil-eye font-size-18"></i></a>
+                              <a [routerLink]="['edit', child._id]" class="px-3 text-primary" placement="top"
+                                ngbTooltip="Edit"><i class="uil uil-pen font-size-18"></i></a>
+                              <a (click)="removeCategory(child._id)" href="javascript:void(0);" class="px-3 text-danger"
+                                placement="top" ngbTooltip="Delete"><i class="uil uil-trash-alt font-size-18"></i></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+
+            <div class="float-end">
+              <ngb-pagination [collectionSize]="dataArray.length" [(page)]="page" [pageSize]="pageSize"
+                (pageChange)="changeValue($event,'page')">
+                <ng-template ngbPaginationPrevious>Previous</ng-template>
+                <ng-template ngbPaginationNext>Next</ng-template>
+              </ngb-pagination>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

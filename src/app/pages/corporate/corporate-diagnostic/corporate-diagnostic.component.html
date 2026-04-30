@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <app-page-title [title]="this.editId? 'Update': 'Create' + ' Diagnostic Package'"
+    [breadcrumbItems]="breadcrumb">
+  </app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="required">Choose Test <i class="uil-info-circle" placement="top"
+                  ngbTooltip="You can choose multiple tests"></i></label>
+              <ng-select formControlName="testId" [items]="testList" bindLabel="testNames" bindValue="_id"
+                placeholder="Search Product" (input)="onSearchProducts($event)" [multiple]="false"
+                [ngClass]="{'is-invalid': (submitted || form.get('testId').touched) && form.get('testId').invalid}">
+                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                  <div>
+                    <span>{{ item.testNames }}</span>
+                  </div>
+                  <small><b>Test Included: {{ item.childs.length }}</b></small>
+                </ng-template>
+              </ng-select>
+              <div class="invalid-feedback">
+                <span>This field is required.</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label>Available In Camp Collection</label>
+              <div dir="ltr" class="form-check form-switch form-switch-md mb-3">
+                <label class="form-check-label">
+                  <input type="checkbox" formControlName="isAvailableInCampCollection" class="form-check-input">
+                  </label>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+          <!-- <div class="col-lg-12 mb-3">
+              <div class="form-check form-switch mb-3" dir="ltr">
+                <input formControlName="isActive" type="checkbox" class="form-check-input" id="ActiveSwitch1">
+                <label class="form-check-label" for="ActiveSwitch1"> Active</label>
+              </div>
+            </div> -->
+        </div>
+        <button type="submit" class="btn btn-primary">{{editId?'Update':'Submit'}}</button>
+      </form>
+    </div>
+  </div>
+</div>

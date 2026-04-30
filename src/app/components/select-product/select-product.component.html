@@ -1,0 +1,82 @@
+<div class="mb-3">
+    <label>Select Products *</label>
+    <ng-select name="product" [items]="productList" bindLabel="name" autofocus bindValue="_id"
+        placeholder="Search Product" (change)="onSelectProduct($event)" (input)="searchProducts($event)">
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+            <div>
+                <span>{{ item.name }}</span>
+            </div>
+            <small><b>{{ item.brandId.name }}</b></small>
+        </ng-template>
+    </ng-select>
+</div>
+<hr *ngIf="selectedProduct" />
+<div *ngIf="selectedProduct" class="prodDetail">
+    <div class="row">
+        <div class="col-md-3">
+            <img [src]="imageUrl + selectedProduct.thumbnail.savedName" />
+        </div>
+        <div class="col-md-8">
+            <p class="brand mb-2">{{ selectedProduct.brandId.name }}</p>
+            <h3 class="title">{{ selectedProduct.name }}</h3>
+            <div class="price mb-3">
+                <span class="selling">₹{{
+                    selectedProduct.price.minPrice ||
+                    selectedProduct.price.mrp
+                    }}</span>
+                <span *ngIf="
+              selectedProduct.price.minPrice !=
+              selectedProduct.price.mrp
+            " class="mrp">₹{{ selectedProduct.price.mrp }}</span>
+            </div>
+            <div class="mb-3 variations" *ngIf="selectedProduct.variations.length">
+                <div *ngIf="selectedProduct.variationsStructureType == 'single'">
+                    <div class="row" *ngFor="let variation of selectedProduct.mainVariations">
+                        <div class="col-lg-1 col-md-2 pr-md-0">
+                            <p class="gray-text">
+                                {{ variation.variationId.title }}
+                            </p>
+                        </div>
+                        <div class="col-md-10">
+                            <ul class="list-unstyled m-0">
+                                <li class="pr-3 pointer notActiveSizeClass" *ngFor="
+                      let value of variation.values;
+                      let i = index
+                    " [ngClass]="{
+                      activeSizeClass: variation.selectedIndex == i
+                    }" (click)="
+                      selectVariation(selectedProduct, variation, i)
+                    ">
+                                    {{ value }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selectedProduct.variationsStructureType == 'group'">
+                    <ul class="list-unstyled m-0">
+                        <li class="pr-3 pointer notActiveSizeClass group" *ngFor="
+                  let variation of selectedProduct.variations;
+                  let i = index
+                " [ngClass]="{ activeSizeClass: variation.isSelected }"
+                            (click)="selectVariation(selectedProduct, variation)">
+                            <span class="d-inline-block" *ngFor="let label of variation.label; let i2 = index">{{
+                                variation.title[i2]
+                                }}<b class="d-block">{{ label }}</b></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mb-3 d-inline-flex align-items-center qtyCont">
+                <i class="mdi mdi-minus-circle-outline pointer" (click)="changeQty('minus')"></i>
+                <span class="px-3">{{ qty }}</span>
+                <i class="mdi mdi-plus-circle-outline pointer" (click)="changeQty('plus')"></i>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary" (click)="addProduct()">
+                    Add Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

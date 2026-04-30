@@ -1,0 +1,94 @@
+<form [formGroup]="form" id="healthStatsForm" (submit)="onSubmit()">
+  <div *ngIf="type == 'vitals'" formGroupName="vitals">
+    <div class="row">
+      <div formGroupName="height" class="col-md-6 mb-3">
+        <label>Height ({{v.height.get('unit').value}})</label>
+        <input formControlName="value" class="form-control"
+          [ngClass]="{'is-invalid': (submitted || v.height.get('value').touched) && v.height.get('value').invalid}"
+          mask="0*" type="text" placeholder="eg. 175">
+        <div class="invalid-feedback">
+          Please enter value between 20 to 300
+        </div>
+      </div>
+      <div formGroupName="weight" class="col-md-6 mb-3">
+        <label>Weight ({{v.weight.get('unit').value}})</label>
+        <input formControlName="value" class="form-control"
+          [ngClass]="{'is-invalid': (submitted || v.weight.get('value').touched) && v.weight.get('value').invalid}"
+          mask="0*" type="text" placeholder="eg. 62">
+        <div class="invalid-feedback">
+          Please enter value between 1 to 500
+        </div>
+      </div>
+      <div formGroupName="pulse" class="col-md-6 mb-3">
+        <label>Pulse ({{v.pulse.get('unit').value}})</label>
+        <input formControlName="value" class="form-control"
+          [ngClass]="{'is-invalid': (submitted || v.pulse.get('value').touched) && v.pulse.get('value').invalid}"
+          mask="0*" type="text" placeholder="eg. 65">
+        <div class="invalid-feedback">
+          Please enter value between 40 to 180
+        </div>
+      </div>
+      <div formGroupName="temperature" class="col-md-6 mb-3">
+        <label>Temperature ({{v.temperature.get('unit').value}})</label>
+        <input formControlName="value" class="form-control"
+          [ngClass]="{'is-invalid': (submitted || v.temperature.get('value').touched) && v.temperature.get('value').invalid}"
+          type="text" placeholder="eg. 98.5">
+        <div class="invalid-feedback">
+          <!-- {{v.temperature.get('value').errors | json}} -->
+          <ng-container *ngIf="v.temperature.get('value').errors?.pattern">Please enter value in valid format
+          </ng-container>
+          <ng-container
+            *ngIf="!v.temperature.get('value').errors?.pattern && v.temperature.get('value').errors?.invalidRange">
+            Please enter value between 32 to 110</ng-container>
+        </div>
+      </div>
+      <div formGroupName="respiratoryRate" class="col-md-6 mb-3">
+        <label>Respiratory Rate ({{v.respiratoryRate.get('unit').value}})</label>
+        <input formControlName="value" class="form-control"
+          [ngClass]="{'is-invalid': (submitted || v.respiratoryRate.get('value').touched) && v.respiratoryRate.get('value').invalid}"
+          mask="0*" type="text" placeholder="eg. 16">
+        <div class="invalid-feedback">
+          Please enter value between 5 to 30
+        </div>
+      </div>
+      <div formGroupName="spo" class="col-md-6 mb-3">
+        <label>SPO2 ({{v.spo.get('unit').value}})</label>
+        <input formControlName="value" class="form-control"
+          [ngClass]="{'is-invalid': (submitted || v.spo.get('value').touched) && v.spo.get('value').invalid}" mask="0*"
+          type="text" placeholder="eg. 99">
+        <div class="invalid-feedback">
+          Please enter value between 80 to 100
+        </div>
+      </div>
+      <div formGroupName="bloodPressure" class="col-md-6 mb-3">
+        <label>Blood Pressure ({{v.bloodPressure.get('unit').value}})</label>
+        <input formControlName="value" class="form-control"
+          [ngClass]="{'is-invalid': (submitted || v.bloodPressure.get('value').touched) && v.bloodPressure.get('value').invalid}"
+          type="text" placeholder="eg. 90/110">
+        <div class="invalid-feedback">
+          Please enter a valid value
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="type != 'vitals'" formGroupName="symptom">
+    <div class="mb-3">
+      <label>Title </label>
+      <input formControlName="name" class="form-control"
+        [ngClass]="{'is-invalid': (submitted || s.name.touched) && s.name.invalid}" type="text" placeholder="eg.">
+      <div class="invalid-feedback">
+        Please enter value between 20 to 300
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Description </label>
+      <textarea formControlName="description" class="form-control" [ngClass]="{'is-invalid': (submitted || s.description.touched) && s.description.invalid}" rows="3"></textarea>
+      <div class="invalid-feedback">
+        Please enter value between 20 to 300
+      </div>
+    </div>
+  </div>
+</form>

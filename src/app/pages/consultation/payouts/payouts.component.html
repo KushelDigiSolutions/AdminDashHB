@@ -1,0 +1,110 @@
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <app-page-title title="Payout List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="float-end">
+                <form class="d-inline-flex mb-3">
+                    <select class="form-select" id="order-selectinput">
+                        <option selected>All</option>
+                        <option value="1">Paid</option>
+                        <option value="2">Unpaid</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <button type="button" class="btn btn-success mb-3"><i class="mdi mdi-file-upload-outline me-1"></i>
+                    Upload Sheet</button>
+            </div>
+        </div>
+        <div class="col-md-8">
+
+
+            <div class="float-end">
+                <div class="mb-3">
+                    <div class="input-daterange input-group" id="datepicker6" data-date-format="dd M, yyyy"
+                        data-date-autoclose="true" data-provide="datepicker" data-date-container='#datepicker6'>
+                        <input type="date" class="form-control" placeholder="From">
+                        <input type="date" class="form-control" placeholder="To">
+                        <button type="button" class="btn btn-primary"><i class="mdi mdi-filter-variant"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="row mb-md-2">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length"><label class="d-inline-flex align-items-center">Show<select
+                                name="pageSize" [(ngModel)]="pageSize"
+                                class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm">
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="25">25</option>
+                                <option [ngValue]="50">50</option>
+                                <option [ngValue]="100">100</option>
+                            </select> entries</label></div>
+                </div>
+                <!-- Search -->
+                <div class="col-sm-12 col-md-6">
+                    <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                            class="d-inline-flex align-items-center">Search:
+                            <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                                aria-controls="tickets-table"></label></div>
+                </div>
+                <!-- End search -->
+            </div>
+            <div class="table-responsive mb-4">
+                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <form>
+                        <table class="table table-centered dt-responsive nowrap table-card-list"
+                            style="border-spacing: 0 12px; width: 100%;">
+                            <thead>
+                                <tr class="bg-transparent">
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of listData">
+                                    <td>
+                                        <ngb-highlight [result]="data.payoutId"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <b>
+                                            <ngb-highlight [result]="data.name"></ngb-highlight>
+                                        </b> <br>
+                                        <ngb-highlight [result]="data.email"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        Rs.<ngb-highlight [result]="data.amount"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.date"></ngb-highlight>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="float-end">
+                            <ngb-pagination [collectionSize]="total" [(page)]="page" [pageSize]="pageSize">
+                                <ng-template ngbPaginationPrevious>Previous</ng-template>
+                                <ng-template ngbPaginationNext>Next</ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+    </div> <!-- container-fluid -->

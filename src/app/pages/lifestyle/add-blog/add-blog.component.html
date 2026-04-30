@@ -1,0 +1,277 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title [title]="editId? 'Edit Blog':'Add Blog'" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!-- end page title -->
+
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-12 col-lg-12 mb-3">
+            <label class="form-label required" for="blogTitle">Blog Title</label>
+            <input id="blogTitle" name="blogTitle" type="text" class="form-control" formControlName="title" />
+          </div>
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label required" for="titleName">Slug</label>
+            <input id="titleName" name="titleName" type="text" class="form-control" formControlName="titleName" />
+          </div>
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="url">Url</label>
+            <input id="url" name="url" type="text" class="form-control" formControlName="url" />
+          </div>
+          <div class="col-4 col-lg-4 mb-3">
+            <label class="form-label" for="canonical">Canonical Url</label>
+            <input id="canonical" name="canonical" type="text" class="form-control" formControlName="canonical" />
+          </div>
+          <div class="col-4 col-lg-4 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="author">Author <i class="uil-info-circle" placement="top"
+                  ngbTooltip="If you don't choose any author then by default the author will be you."></i></label>
+              <ng-select id="author" name="author" class="select2" formControlName="author" placeholder="Choose Author"
+                [multiple]="false" (change)="onChangeAuthor()">
+                <ng-option value="">
+                  Choose Author
+                </ng-option>
+                <ng-option *ngFor="let item of authors" [value]="item?._id">
+                  {{ item.firstName + ' ' + (item.lastName?item.lastName:'') }}
+                </ng-option>
+                <ng-option value="other">
+                  Other Author
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <ng-container formGroupName="otherAuthor">
+            <div *ngIf="f.author.value == 'other'" class="col-4 col-lg-4 mb-3">
+              <label class="form-label required" for="author">Other Author</label>
+              <input formControlName="name" type="text" class="form-control" placeholder="Enter author name">
+            </div>
+          </ng-container>
+          <div class="col-2 col-lg-2 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="blogType">Blog Type</label>
+              <ng-select id="blogType" name="blogType" class="select2" formControlName="blogType"
+                placeholder="Choose Blog Type" [multiple]="false">
+                <ng-option disabled value="">
+                  Choose Blog Type
+                </ng-option>
+                <ng-option *ngFor="let item of blogType" [value]="item?.value">
+                  {{ item?.value }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-6 col-lg-6 mb-3">
+            <div class="mb-3">
+              <label class="form-label required" for="primaryhealthConcern">Primary Health Concerns</label>
+              <ng-select id="primaryhealthConcern" name="primaryhealthConcern" class="select2"
+                formControlName="primaryHealthConcern" placeholder="Choose Primary Health Concerns" [multiple]="false">
+                <ng-option disabled value="">
+                  Choose Primary Health Concern
+                </ng-option>
+                <ng-option *ngFor="let item of healthConcerns" [value]="item?._id">
+                  {{ item?.name }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-6 col-lg-6 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="healthConcern">Health Concerns</label>
+              <ng-select id="healthConcern" name="healthConcern" class="select2" formControlName="healthConcerns"
+                placeholder="Choose Health Concerns" [multiple]="true">
+                <ng-option disabled value="">
+                  Choose Health Concern
+                </ng-option>
+                <ng-option *ngFor="let item of healthConcerns" [value]="item?._id">
+                  {{ item?.name }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-6 col-lg-6 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="categories">Categories</label>
+              <ng-select id="categories" name="categories" class="select2" formControlName="categories"
+                placeholder="Choose Categories" [multiple]="true">
+                <ng-option disabled value="">
+                  Choose Categories
+                </ng-option>
+                <ng-option *ngFor="let item of categories" [value]="item?._id">
+                  {{ item?.name }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-6 col-lg-6 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="products">Products</label>
+              <ng-select id="products" name="products" class="select2" formControlName="products"
+                placeholder="Choose Related Products" [multiple]="true">
+                <ng-option disabled value="">
+                  Choose Related Products
+                </ng-option>
+                <ng-option *ngFor="let item of products" [value]="item?._id">
+                  {{ item?.name }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-6 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="relatedArticle">Related Article (App)</label>
+              <ng-select id="relatedArticle" class="select2" formControlName="relatedArticle"
+                placeholder="Choose Related Article" [multiple]="false"
+                (input)="searchSubject$.next($event.target.value)">
+                <ng-option disabled value="">
+                  Choose Related Article
+                </ng-option>
+                <ng-option *ngFor="let item of articles" [value]="item._id">
+                  {{ item.title }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-6 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="relatedArticles">Related Articles (Website)</label>
+              <ng-select id="relatedArticles" class="select2" formControlName="websiteRelatedBlog"
+                placeholder="Choose Related Articles" [multiple]="true"
+                (input)="searchSubject$.next($event.target.value)">
+                <ng-option disabled value="">
+                  Choose Related Article
+                </ng-option>
+                <ng-option *ngFor="let item of articles" [value]="item._id">
+                  {{ item.title }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="col-6 col-lg-6 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="createdAt">Date Published</label>
+              <input id="createdAt" name="createdAt" type="date" class="form-control" formControlName="createdAt" />
+            </div>
+          </div> -
+          <div class="row">
+            <div class="col-lg-6 mb-3">
+              <label class="required">Featured Image <sub>882PX (width) * auto (height)</sub></label>
+              <ngx-dropzone accept="image/webp,image/jpeg,image/png,image/webp" [ngClass]="{
+                'is-invalid':
+                  form.get('featuredImage').touched &&
+                  form.get('featuredImage')?.invalid
+              }" [multiple]="false" (change)="onSelect($event,'featuredImage')">
+                <ngx-dropzone-label>Drop files here or click to
+                  upload.</ngx-dropzone-label>
+                <ngx-dropzone-preview class="oldImagePreview" *ngFor="let f of oldFiles; index as i" [removable]="true"
+                  (removed)="onRemoveOldFile(i,'featuredImage')">
+                  <ngx-dropzone-label><img [src]="s3Base + f.savedName" /></ngx-dropzone-label>
+                </ngx-dropzone-preview>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files; index as i"
+                  [file]="f" [removable]="true" (removed)="onRemove(i,'featuredImage')">
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+              <div *ngIf="
+                form.get('featuredImage')?.touched &&
+                form.get('featuredImage')?.invalid
+              " class="invalid-feedback">
+                <span>This field is required.</span>
+              </div>
+            </div>
+            <div class="col-lg-6 mb-3">
+
+              <label>Thumbnail Image <sub>406PX * 171PX</sub></label>
+              <ngx-dropzone accept="image/webp,image/jpeg,image/png,image/webp" [ngClass]="{
+                'is-invalid':
+                  form.get('thumbnail')?.touched &&
+                  form.get('thumbnail')?.invalid
+              }" [multiple]="false" (change)="onSelect($event,'thumbnail')">
+                <!-- (change)="onSelectThumbnail($event,'thumbNail')" -->
+                <ngx-dropzone-label>Drop files here or click to
+                  upload.</ngx-dropzone-label>
+                <ngx-dropzone-preview class="oldImagePreview" *ngFor="let f of thumbnailOldFiles; index as i"
+                  [removable]="true" (removed)="onRemoveOldFile(i,'thumbnail')">
+                  <ngx-dropzone-label><img [src]="s3Base + f.savedName" /></ngx-dropzone-label>
+                </ngx-dropzone-preview>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                  *ngFor="let f of thumbnailFiles; index as i" [file]="f" [removable]="true"
+                  (removed)="onRemove(i,'thumbnail')">
+                </ngx-dropzone-image-preview>
+              </ngx-dropzone>
+
+
+
+              <div *ngIf="
+                form.get('thumbnail')?.touched &&
+                form.get('thumbnail')?.invalid
+              " class="invalid-feedback">
+                <span>This field is required.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 mb-3">
+            <label for="metaTitle">Meta Title</label>
+            <input placeholder="Enter Meta Title" type="text" formControlName="metaTitle" class="form-control" />
+          </div>
+
+          <div class="col-12 col-lg-6 mb-3">
+            <label for="metaDescription">Meta Description</label>
+            <textarea placeholder="Enter Meta Description" class="form-control" formControlName="metaDescription"
+              style="resize: none"></textarea>
+          </div>
+
+          <div class="col-12 col-lg-12 mb-3">
+            <label for="excerpt">Excerpt</label>
+            <textarea [ngStyle]="{
+                border: validExcerpt ? '' : '1px solid #ff4400'
+              }" placeholder="Enter Excerpt" class="form-control" formControlName="excerpt"
+              (keyup)="countWords($event)" style="resize: none"></textarea>
+          </div>
+
+          <div class="col-12 col-lg-12 mb-3">
+            <label class="form-label" for="description">Blog Content</label>
+            <ckeditor #editor [config]="config" [editor]="Editor" name="editor" formControlName="description"
+              (ready)="onReadyEditor($event)"></ckeditor>
+          </div>
+
+          <div class="col-4 col-lg-4 mb-3">
+            <div class="mb-3">
+              <label class="form-label" for="language">Language <i class="uil-info-circle" placement="top"
+                  ngbTooltip="If you don't choose any language then by default the language will be English."></i></label>
+              <ng-select id="language" name="language" class="select2" formControlName="language"
+                placeholder="Choose Language" [multiple]="false">
+                <ng-option *ngFor="let lang of language" [value]="lang?.value">
+                  {{ lang.name}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <label class="label">10 Sec Read</label>
+              <app-hb-switch formControlName="isShortLength" defaultBoColor="#dfdfdf" size="small" color="#f46a6a">
+              </app-hb-switch>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <label class="label">isHerbs</label>
+              <app-hb-switch formControlName="isHerbRelated" defaultBoColor="#dfdfdf" size="small" color="#f46a6a">
+              </app-hb-switch>
+            </div>
+          </div>
+
+          <div class="col-2 col-lg-2">
+            <button [disabled]="!validExcerpt || (form.invalid)" type="submit" class="btn btn-primary"
+              (click)="publishBlog()">{{editId?'Update':'Publish'}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
