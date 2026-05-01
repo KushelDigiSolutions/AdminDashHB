@@ -5,12 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 
 import { environment } from '../environments/environment';
 
-import {
-  NgbNavModule,
-  NgbAccordionModule,
-  NgbTooltipModule,
-  NgbModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbAccordionModule, NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { LayoutsModule } from './layouts/layouts.module';
@@ -23,10 +18,11 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { initFirebaseBackend } from './authUtils';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { FakeBackendInterceptor } from './core/helpers/fake-backend';
-import { provideToastr } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PublicInterceptor } from './core/helpers/http.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+
 
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
@@ -38,13 +34,15 @@ if (environment.defaultauth === 'firebase') {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    TranslateModule,
+    TranslateModule.forRoot(),
     LayoutsModule,
     AppRoutingModule,
     CarouselModule,
@@ -52,15 +50,18 @@ if (environment.defaultauth === 'firebase') {
     NgbNavModule,
     NgbTooltipModule,
     NgbModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
     NgxSpinnerModule,
   ],
   bootstrap: [AppComponent],
   providers: [
-    provideToastr(),
     provideTranslateHttpLoader({ prefix: 'assets/i18n/', suffix: '.json' }),
     provideCharts(withDefaultRegisterables()),
     { provide: HTTP_INTERCEPTORS, useClass: PublicInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
+
 })
-export class AppModule {}
+export class AppModule { }

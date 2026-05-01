@@ -1,4 +1,4 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   onAuthStateChanged,
@@ -10,12 +10,13 @@ import {
 } from 'firebase/auth';
 
 class FirebaseAuthBackend {
-  auth: Auth | null = null;
+  private auth: Auth | null = null;
 
-  constructor(firebaseConfig) {
+  constructor(firebaseConfig: any) {
     if (firebaseConfig) {
-      const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+      const app = initializeApp(firebaseConfig);
       this.auth = getAuth(app);
+
       onAuthStateChanged(this.auth, (user) => {
         if (user) {
           sessionStorage.setItem('authUser', JSON.stringify(user));
@@ -26,61 +27,49 @@ class FirebaseAuthBackend {
     }
   }
 
+  private getAuth(): Auth {
+    if (!this.auth) {
+      throw new Error('Firebase auth is not initialized.');
+    }
+    return this.auth;
+  }
+
   /**
    * Registers the user with given details
    */
-  registerUser = (email, password) => {
+  registerUser = (email: string, password: string) => {
     return new Promise((resolve, reject) => {
-      if (!this.auth) {
-        reject('Firebase auth is not initialized');
-        return;
-      }
-
-      createUserWithEmailAndPassword(this.auth, email, password).then(
-        () => {
-          const user = this.auth?.currentUser;
-          resolve(user);
-        },
-        (error) => {
+      createUserWithEmailAndPassword(this.getAuth(), email, password)
+        .then(() => {
+          resolve(this.getAuth().currentUser);
+        })
+        .catch((error) => {
           reject(this._handleError(error));
-        },
-      );
+        });
     });
   };
 
   /**
    * Login user with given details
    */
-  loginUser = (email, password) => {
+  loginUser = (email: string, password: string) => {
     return new Promise((resolve, reject) => {
-      if (!this.auth) {
-        reject('Firebase auth is not initialized');
-        return;
-      }
-
-      signInWithEmailAndPassword(this.auth, email, password).then(
-        () => {
-          const user = this.auth?.currentUser;
-          resolve(user);
-        },
-        (error) => {
+      signInWithEmailAndPassword(this.getAuth(), email, password)
+        .then(() => {
+          resolve(this.getAuth().currentUser);
+        })
+        .catch((error) => {
           reject(this._handleError(error));
-        },
-      );
+        });
     });
   };
 
   /**
    * forget Password user with given details
    */
-  forgetPassword = (email) => {
+  forgetPassword = (email: string) => {
     return new Promise((resolve, reject) => {
-      if (!this.auth) {
-        reject('Firebase auth is not initialized');
-        return;
-      }
-
-      sendPasswordResetEmail(this.auth, email, {
+      sendPasswordResetEmail(this.getAuth(), email, {
         url: window.location.protocol + '//' + window.location.host + '/login',
       })
         .then(() => {
@@ -97,12 +86,7 @@ class FirebaseAuthBackend {
    */
   logout = () => {
     return new Promise((resolve, reject) => {
-      if (!this.auth) {
-        reject('Firebase auth is not initialized');
-        return;
-      }
-
-      signOut(this.auth)
+      signOut(this.getAuth())
         .then(() => {
           resolve(true);
         })
@@ -112,7 +96,7 @@ class FirebaseAuthBackend {
     });
   };
 
-  setLoggeedInUser = (user) => {
+  setLoggeedInUser = (user: any) => {
     sessionStorage.setItem('authUser', JSON.stringify(user));
   };
 
@@ -120,30 +104,31 @@ class FirebaseAuthBackend {
    * Returns the authenticated user
    */
   getAuthenticatedUser = () => {
-    if (!sessionStorage.getItem('authUser')) {
+    const storedUser = sessionStorage.getItem('authUser');
+    if (!storedUser) {
       return null;
     }
-    return JSON.parse(sessionStorage.getItem('authUser'));
+    return JSON.parse(storedUser);
   };
 
   /**
    * Handle the error
    * @param {*} error
    */
-  _handleError(error) {
-    const errorMessage = error?.message ?? error;
+  _handleError(error: any) {
+    const errorMessage = error?.message || error?.toString() || 'An unknown error occurred';
     return errorMessage;
   }
 }
 
 // tslint:disable-next-line: variable-name
-let _fireBaseBackend = null;
+let _fireBaseBackend: FirebaseAuthBackend | null = null;
 
 /**
  * Initilize the backend
  * @param {*} config
  */
-const initFirebaseBackend = (config) => {
+const initFirebaseBackend = (config: any) => {
   if (!_fireBaseBackend) {
     _fireBaseBackend = new FirebaseAuthBackend(config);
   }
