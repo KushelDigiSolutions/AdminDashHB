@@ -28,18 +28,17 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "node_modules/intl-tel-input/build/img",
-                "output": "assets/intl-tel-input/img"
-              }
+              "src/assets"
             ],
             "polyfills": ["@angular/localize/init", "zone.js"],
             "styles": [
               "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/styles.scss",
               "src/assets/scss/bootstrap.scss",
+              "node_modules/ng-wizard/themes/ng_wizard.min.css",
+              "node_modules/ng-wizard/themes/ng_wizard_theme_arrows.min.css",
+              "node_modules/ng-wizard/themes/ng_wizard_theme_circles.min.css",
+              "node_modules/ng-wizard/themes/ng_wizard_theme_dots.min.css",
               "src/assets/scss/app.scss",
               "src/assets/scss/icons.scss",
               "node_modules/ngx-toastr/toastr.css",

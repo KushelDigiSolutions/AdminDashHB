@@ -6,7 +6,7 @@ if (fs.existsSync(f1)) {
     t1 = t1.replace(/let\s+\{\s*type\s*\}\s*=\s*this\.form\.value;/g, 'let { type } = this.form.value as any;');
     t1 = t1.replace(/let\s+value\s*=\s*\{\s*\.\.\.this\.form\.value\s*\};/g, 'let value: any = { ...this.form.value };');
     fs.writeFileSync(f1, t1, 'utf8');
-} 
+}
 
 let f2 = './src/app/pages/maps/maps.module.ts';
 if (fs.existsSync(f2)) {
