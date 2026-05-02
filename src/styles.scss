@@ -183,3 +183,14 @@ body .ck.ck-editor__main > .ck-editor__editable {
 .custom-day.faded {
     background-color: #5b73e8;
 }
+
+/* Global Modal Fix */
+.modal {
+    z-index: 1065 !important;
+}
+.modal-backdrop {
+    z-index: 1055 !important;
+}
+.modal-holder {
+    z-index: 1066 !important;
+}

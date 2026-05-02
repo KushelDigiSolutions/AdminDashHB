@@ -1,14 +1,12 @@
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12 pt-4 pb-2 align-center">
-        <h2>Are you sure you want to {{data?.type=='blog'?'remove':'cancel'}} this {{data.value}}</h2>
+<div class="modal-body text-center p-4">
+  <div class="mt-2">
+      <i class="uil uil-trash-alt display-4 text-danger"></i>
+      <h4 class="mt-4">Are you sure you want to {{data?.type=='blog'?'remove':'cancel'}} this {{data.value}}?</h4>
+      <div class="mt-4">
+          <button class="btn btn-success mx-2 px-4 yes-button" (click)="cancel('yes')">Yes</button>
+          <button class="btn btn-danger mx-2 px-4 no-button" (click)="cancel('no')">No</button>
       </div>
-      <div class="col-md-12 py-3 align-center">
-        <button class="mx-xl-3 py-2 px-5 no-outline border-0 yes-button"
-        (click)="cancel('yes')">Yes</button>
-        <button class="py-2 px-5 no-outline border-0 no-button"
-        (click)="cancel('no')">No</button>
-      </div>
-    </div>
   </div>
+</div>
+
   

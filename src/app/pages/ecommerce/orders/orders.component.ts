@@ -227,7 +227,7 @@ export class OrdersComponent implements OnInit {
       value: "Order",
     };
 
-    let modal = this.modal.open(RemoveModalComponent, { size: "lg" });
+    let modal = this.modal.open(RemoveModalComponent, { size: "lg", centered: true, windowClass: 'modal-holder' });
 
     modal.componentInstance.data = data;
 
