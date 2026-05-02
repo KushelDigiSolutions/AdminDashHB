@@ -154,7 +154,7 @@
                       </tr>
                       <tr>
                         <th>D.O.B</th>
-                        <td>{{ apptData.userId?.DOB | date: "dd-MM-YYYY" }} ({{getAge(apptData.userId?.DOB) +' years'}})
+                        <td>{{ apptData.userId?.DOB | date: "dd-MM-yyyy" }} ({{getAge(apptData.userId?.DOB) +' years'}})
                         </td>
                       </tr>
                       <tr>
@@ -314,7 +314,7 @@
                         align-items-center
                         srNo
                       ">{{ i + 1 }}</span>
-                    <b>{{ prescription.createdAt | date: "dd MMM YYYY" }}</b>
+                    <b>{{ prescription.createdAt | date: "dd MMM yyyy" }}</b>
                     &nbsp; {{ prescription.title }}
                   </span>
                   <i class="uil uil-arrow-right font-size-20"></i>

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -33,6 +33,7 @@ export class NotificationTemplatesComponent implements OnInit {
     private notificationsService: NotificationsService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -56,15 +57,17 @@ export class NotificationTemplatesComponent implements OnInit {
     this.spinner.show()
     this.notificationsService.getNotificationTemplates(params).subscribe(res => {
       this.spinner.hide()
-      let { data, success, total } = res;
-      if (success) {
-        this.templates = res.data
-        this.total = total;
-        this.templates = data
-      }
+      setTimeout(() => {
+        let { data, success, total } = res;
+        if (success) {
+          this.templates = res.data
+          this.total = total;
+          this.templates = data
+        }
+        this.cdr.detectChanges();
+      });
     }, (err: HttpErrorResponse) => {
       this.spinner.hide()
-
     })
   }
 

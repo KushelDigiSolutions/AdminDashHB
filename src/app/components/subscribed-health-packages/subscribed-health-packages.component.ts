@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
@@ -33,6 +33,7 @@ export class SubscribedHealthPackagesComponent implements OnInit {
     private authService: AuthenticationService,
     private toast: ToastService,
     private spinner: NgxSpinnerService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -54,13 +55,15 @@ export class SubscribedHealthPackagesComponent implements OnInit {
     if (!(this.isAdmin || this.isHealthpackageEditor)) req = this.healthPackagesService.getSubscribedPackagesforConsultant(params)
 
     req.subscribe(res => {
-      let { success, data, total } = res
-      if (success && data) {
-        this.list = data;
-        this.total = total
-      }
+      setTimeout(() => {
+        let { success, data, total } = res
+        if (success && data) {
+          this.list = data;
+          this.total = total
+        }
+        this.cdr.detectChanges();
+      });
     }, (err: HttpErrorResponse) => {
-
     })
 
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, firstValueFrom } from 'rxjs';
@@ -33,7 +33,8 @@ export class LifeStyleCategoryListComponent implements OnInit {
     private cmsService: CmsService,
     private router: Router,
     private route: ActivatedRoute,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -51,9 +52,12 @@ export class LifeStyleCategoryListComponent implements OnInit {
     const url = `limit=${this.pageSize}&page=${this.page}`;
     firstValueFrom(this.cmsService.getLifestyleCategoryList(url))
       .then((res: any) => {
-        if (res.data.categories) {
-          this.dataArray = res.data.categories;
-        }
+        setTimeout(() => {
+          if (res.data.categories) {
+            this.dataArray = res.data.categories;
+          }
+          this.cdr.detectChanges();
+        });
       })
       .catch((err: any) => {
         console.log("err", err);
@@ -65,7 +69,10 @@ export class LifeStyleCategoryListComponent implements OnInit {
    
     firstValueFrom(this.cmsService.getLifestyleCategoryList(url))
      .then((res : any)=>{
-       this.dataArray = res.data.children;
+       setTimeout(() => {
+         this.dataArray = res.data.children;
+         this.cdr.detectChanges();
+       });
      })
      .catch((err:any)=>{
      })
@@ -145,4 +152,3 @@ export class LifeStyleCategoryListComponent implements OnInit {
   }
 
 }
-

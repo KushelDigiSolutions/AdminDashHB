@@ -1,6 +1,6 @@
 import { firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
+import { Component, OnInit, QueryList, ViewChildren, ChangeDetectorRef } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -43,7 +43,8 @@ export class LifestyleComponent implements OnInit {
     private toaster: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private modal: NgbModal
+    private modal: NgbModal,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -68,21 +69,26 @@ export class LifestyleComponent implements OnInit {
 
     if (this.user.role.includes('Admin') || this.user.role.includes('Publisher') && this.path == 'all') {
       this.apiService.getBlogList(params).subscribe((res: any) => {
-        if (res.data) {
-          this.dataArray = res.data;
-          console.log('this.dataArray = ', this.dataArray);
-
-          this.count = res.count;
-        }
+        setTimeout(() => {
+          if (res.data) {
+            this.dataArray = res.data;
+            console.log('this.dataArray = ', this.dataArray);
+            this.count = res.count;
+          }
+          this.cdr.detectChanges();
+        });
       }, (err: any) => {
         console.log("err", err);
       })
     } else {
       this.apiService.getMyBlogs(params).subscribe((res: any) => {
-        if (res.success) {
-          this.dataArray = res.data;
-          this.count = res.count;
-        }
+        setTimeout(() => {
+          if (res.success) {
+            this.dataArray = res.data;
+            this.count = res.count;
+          }
+          this.cdr.detectChanges();
+        });
       }, (err: any) => {
         console.log("err", err);
       })

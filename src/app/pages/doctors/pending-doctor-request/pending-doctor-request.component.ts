@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +26,8 @@ export class PendingDoctorRequestComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private doctorService: DoctorsService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -47,8 +48,11 @@ export class PendingDoctorRequestComponent implements OnInit {
     }
     this.doctorService.getPendingDoctorList(url)
       .subscribe((res: any) => {
-        this.count = res.count;
-        this.doctorArray = res.data
+        setTimeout(() => {
+          this.count = res.count;
+          this.doctorArray = res.data;
+          this.cdr.detectChanges();
+        });
       }, (err: HttpErrorResponse) => {
         console.log("err", err)
       })

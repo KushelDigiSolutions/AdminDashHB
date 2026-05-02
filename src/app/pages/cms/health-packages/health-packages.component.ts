@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
@@ -33,7 +33,8 @@ export class HealthPackagesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -57,8 +58,11 @@ export class HealthPackagesComponent implements OnInit {
     this.spinner.show()
     this.api.get((this.isAdmin || this.isHealthpackageEditor) ? 'healthPackages' : 'healthPackages/consultant', params).subscribe((res: any) => {
       this.spinner.hide()
-      this.list = res.data;
-      this.total = res.total;
+      setTimeout(() => {
+        this.list = res.data;
+        this.total = res.total;
+        this.cdr.detectChanges();
+      });
     }, (err: HttpErrorResponse) => {
       this.spinner.hide()
 

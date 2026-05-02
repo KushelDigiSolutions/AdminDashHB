@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -55,7 +55,8 @@ export class EarningListComponent implements OnInit {
     private toaster: ToastrService,
     private doctorService: DoctorsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -80,8 +81,11 @@ export class EarningListComponent implements OnInit {
     this.spinner.show();
     this.doctorService.getEarningList(params).subscribe((res: any) => {
       this.spinner.hide();
-      this.dataArray = res.data;
-      this.count = res.count;
+      setTimeout(() => {
+        this.dataArray = res.data;
+        this.count = res.count;
+        this.cdr.detectChanges();
+      });
     }, (err: HttpErrorResponse) => {
       this.spinner.hide();
     })
